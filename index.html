@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OCARCARE Grand Prix</title>
+<meta name="description" content="Bảng đua trực tuyến Sales Contest Chào sân OCARCARE — Launch Sprint (21/09 – 31/10/2026)">
+<meta name="theme-color" content="#061230">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23061230'/%3E%3Cpath d='M10 40l6-12h28l10 12v6H10z' fill='%23ff7a1a'/%3E%3Ccircle cx='20' cy='46' r='5' fill='%23fff'/%3E%3Ccircle cx='44' cy='46' r='5' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#061230; --bg2:#0a1c44; --panel:#0d2254; --panel2:#112a63; --line:rgba(148,178,255,.16);
+  --ink:#f3f6ff; --ink2:#b9c6e8; --ink3:#7f90bd;
+  --orange:#ff7a1a; --orange2:#ffb03a; --gold:#ffc93c; --silver:#d6dee9; --bronze:#e98b5b;
+  --blue:#2f7bff; --red:#e8263f; --teal:#14b8a6; --green:#35d07f; --down:#ff5a6e;
+  --road:#081536; --r:18px;
+  --f-head:"Barlow Condensed","Be Vietnam Pro",system-ui,sans-serif;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;overflow-x:hidden;
+  background-image:radial-gradient(1200px 600px at 80% -10%,#1b3f9a55,transparent 60%),radial-gradient(900px 500px at -10% 30%,#ff7a1a14,transparent 60%)}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+.num{font-family:var(--f-head);font-weight:800;letter-spacing:.2px;font-variant-numeric:tabular-nums}
+.muted{color:var(--ink2)} .dim{color:var(--ink3)}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;overflow:hidden;padding:28px 0 22px;border-bottom:1px solid var(--line)}
+.speed{position:absolute;inset:0;pointer-events:none;opacity:.55}
+.speed i{position:absolute;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#8fb4ff,transparent);animation:zoom linear infinite}
+.speed i.o{background:linear-gradient(90deg,transparent,#ff9a3d,transparent)}
+@keyframes zoom{from{transform:translateX(110vw)}to{transform:translateX(-40vw)}}
+.hero .wrap{position:relative}
+.badge{display:inline-flex;gap:8px;align-items:center;background:var(--red);color:#fff;font-weight:800;font-size:12px;letter-spacing:2px;padding:6px 12px;border-radius:999px;text-transform:uppercase;box-shadow:0 6px 20px #e8263f55}
+.brand{margin-top:10px;font-family:var(--f-head);font-weight:800;font-size:18px;letter-spacing:1px;color:#cfe0ff}
+h1{font-family:var(--f-head);font-style:italic;font-weight:800;line-height:.9;font-size:clamp(44px,11vw,92px);text-transform:uppercase;margin-top:4px;letter-spacing:-.5px}
+h1 .o{background:linear-gradient(180deg,#ffd36a,var(--orange) 55%,#e2560b);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 18px #ff7a1a55)}
+.sprint{display:inline-flex;align-items:center;gap:10px;margin-top:8px;font-family:var(--f-head);font-style:italic;font-weight:800;font-size:clamp(22px,5vw,34px);letter-spacing:3px;color:#fff;background:linear-gradient(90deg,#1f55d6,#2f7bff);padding:2px 18px 2px 14px;transform:skewX(-12deg);border-radius:6px}
+.sprint>*{transform:skewX(12deg)}
+.chev{display:inline-flex}
+.chev b{width:10px;height:18px;background:var(--orange);clip-path:polygon(0 0,55% 0,100% 50%,55% 100%,0 100%,45% 50%);animation:chev 1.2s infinite}
+.chev b:nth-child(2){animation-delay:.15s}.chev b:nth-child(3){animation-delay:.3s}
+@keyframes chev{0%,100%{opacity:.25}50%{opacity:1}}
+.tag{margin-top:12px;color:var(--ink2);font-weight:600}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:14px;font-size:13px}
+.pill{display:inline-flex;gap:6px;align-items:center;background:#ffffff10;border:1px solid var(--line);padding:5px 10px;border-radius:999px}
+.live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 #35d07f99;animation:pulse 1.8s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 8px #35d07f00}100%{box-shadow:0 0 0 0 #35d07f00}}
+
+.countdown{display:flex;gap:8px;margin-top:18px}
+.cd{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 10px;min-width:64px;text-align:center}
+.cd .num{font-size:30px;line-height:1}
+.cd small{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--ink3);margin-top:2px}
+.cd-lbl{align-self:center;font-size:13px;color:var(--ink2);margin-left:4px;max-width:120px;line-height:1.3}
+
+.timeline{margin-top:20px}
+.tl-road{position:relative;height:34px;border-radius:10px;background:var(--road);border:1px solid var(--line);overflow:hidden}
+.tl-road:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px dashed #ffffff22}
+.tl-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#1f55d633,#2f7bff88);transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+.tl-car{position:absolute;top:50%;left:0;transform:translate(-100%,-50%);transition:left 1.6s cubic-bezier(.2,.8,.2,1);color:var(--orange)}
+.tl-flag{position:absolute;right:0;top:0;bottom:0;width:18px;background:repeating-conic-gradient(#fff 0 25%,#111 0 50%) 0 0/9px 9px;opacity:.85}
+.tl-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--ink3);margin-top:6px}
+
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+@media(min-width:760px){.kpis{grid-template-columns:repeat(4,1fr)}}
+.kpi{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:12px 14px;position:relative;overflow:hidden}
+.kpi .v{font-size:clamp(28px,7vw,38px);line-height:1.05}
+.kpi .l{font-size:12px;color:var(--ink2);font-weight:600}
+.kpi .d{font-size:12px;color:var(--green);font-weight:700;margin-top:2px}
+.kpi:after{content:"";position:absolute;right:-20px;top:-20px;width:70px;height:70px;border-radius:50%;background:var(--c,#2f7bff);opacity:.12}
+
+/* ---------- TICKER ---------- */
+.ticker{background:#000a;border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+.ticker .in{display:inline-block;padding:9px 0;animation:tick 40s linear infinite}
+.ticker span{margin:0 22px;font-size:13px;font-weight:600;color:#dfe8ff}
+.ticker span b{color:var(--orange2)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ---------- SECTIONS ---------- */
+section.card{margin:22px 0;border-radius:var(--r);background:linear-gradient(180deg,#0c2155,#0a1b47);border:1px solid var(--line);overflow:hidden;box-shadow:0 20px 50px #0006}
+.sec-h{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(90deg,var(--sc),transparent 85%)}
+.sec-n{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--sc);font-family:var(--f-head);font-weight:800;font-size:30px;font-style:italic;box-shadow:0 0 0 4px #ffffff33}
+.sec-t{font-family:var(--f-head);font-weight:800;font-style:italic;font-size:clamp(20px,4.8vw,28px);line-height:1.05;text-transform:uppercase}
+.sec-s{font-size:12px;color:#e6ecff;opacity:.85;margin-top:2px}
+.sec-b{padding:16px}
+.note{font-size:12.5px;color:var(--ink2);background:#ffffff08;border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin-top:12px}
+.note b{color:var(--ink)}
+.sub-h{font-family:var(--f-head);font-weight:800;font-size:18px;letter-spacing:.5px;text-transform:uppercase;margin:4px 0 10px;color:#dce6ff}
+
+/* early 600 track */
+.e-track{position:relative;height:46px;border-radius:12px;background:var(--road);border:1px solid var(--line);overflow:visible;display:flex}
+.e-seg{position:relative;height:100%;border-right:2px solid var(--bg)}
+.e-seg:last-child{border-right:0}
+.e-seg .fill{position:absolute;left:0;top:0;bottom:0;width:0;transition:width 1.8s cubic-bezier(.2,.8,.2,1)}
+.e-seg:first-child .fill{border-radius:11px 0 0 11px}
+.e-seg .lab{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fffc;z-index:1;text-shadow:0 1px 3px #000}
+.e-car{position:absolute;top:-6px;left:0;transform:translateX(-50%);transition:left 1.8s cubic-bezier(.2,.8,.2,1);z-index:3;text-align:center}
+.e-car .bub{display:inline-block;background:#fff;color:#061230;font-weight:800;font-size:12px;padding:2px 8px;border-radius:8px;white-space:nowrap;position:relative;top:-26px}
+.e-car svg{position:absolute;left:50%;transform:translateX(-50%);top:8px}
+.e-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-top:6px}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.tier{border-radius:12px;padding:10px;text-align:center;background:#ffffff08;border:1px solid var(--line);position:relative}
+.tier .amt{font-size:clamp(15px,4.4vw,28px);line-height:1.1;white-space:nowrap}
+.tier{min-width:0;padding:10px 6px}
+.tier .t{font-size:11.5px;color:var(--ink2);font-weight:600}
+.tier .st{font-size:11.5px;font-weight:700;margin-top:4px}
+.tier.on{border-color:var(--tc);box-shadow:0 0 0 1px var(--tc) inset,0 8px 24px -10px var(--tc)}
+.tier.done{opacity:.5}
+
+.locked{position:relative;margin-top:18px;border-radius:14px;border:1px solid var(--line);overflow:hidden}
+.locked .blur{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px;filter:blur(1.5px) saturate(.6);opacity:.55}
+.lock-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:linear-gradient(180deg,#061230aa,#061230dd);padding:12px}
+.lock-ov .num{font-size:clamp(17px,4.4vw,22px);line-height:1.15;margin:2px 0 4px}
+.locked{min-height:150px}
+.lock-ov .muted{font-size:12.5px}
+
+/* podium */
+.podium{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:8px;align-items:end;margin:6px 0 16px}
+.pod{text-align:center;min-width:0}
+.pod .nm{font-weight:700;font-size:13px;line-height:1.25;min-height:34px;display:flex;align-items:flex-end;justify-content:center;padding:0 2px;overflow-wrap:anywhere}
+.pod .pv{font-size:clamp(18px,4.5vw,24px);margin-top:2px}
+.pod .blk{margin-top:6px;border-radius:12px 12px 4px 4px;padding:10px 4px;position:relative;background:linear-gradient(180deg,var(--pc),color-mix(in srgb,var(--pc) 40%,#061230))}
+.pod .blk .p{font-family:var(--f-head);font-style:italic;font-weight:800;font-size:34px;line-height:1;color:#061230}
+.pod .blk .pz{font-size:11.5px;font-weight:800;color:#061230}
+.pod.p1 .blk{height:118px}.pod.p2 .blk{height:92px}.pod.p3 .blk{height:76px}
+.pod .st{font-size:11px;margin-top:4px}
+.ok{color:var(--green)} .no{color:var(--ink3)}
+
+/* search */
+.search{position:relative;margin-bottom:14px}
+.search input{width:100%;padding:13px 14px 13px 42px;border-radius:12px;border:1px solid #3a5cb0;background:#071638;color:var(--ink);font:inherit;font-size:15px;outline:none}
+.search input:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ff7a1a33}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink3)}
+.sugg{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:#0e2458;border:1px solid var(--line);border-radius:12px;z-index:30;max-height:280px;overflow:auto;display:none;box-shadow:0 20px 40px #000a}
+.sugg button{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;background:none;border:0;padding:10px 14px;border-bottom:1px solid var(--line);font-size:14px}
+.sugg button:hover,.sugg button.act{background:#ffffff10}
+.sugg small{color:var(--ink3);white-space:nowrap}
+.found{display:none;margin-bottom:14px;border-radius:14px;padding:12px 14px;background:linear-gradient(90deg,#ff7a1a22,#ff7a1a08);border:1px solid #ff7a1a66}
+.found .h{font-weight:800}
+.found .row{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:6px;font-size:13.5px}
+
+/* lanes */
+.lanes{display:flex;flex-direction:column;gap:10px}
+.lane{border-radius:14px;padding:10px 12px 10px;background:#ffffff06;border:1px solid var(--line);transition:background .3s,border-color .3s}
+.lane.hl{background:#ff7a1a1c;border-color:var(--orange);animation:flash 1.2s 2}
+@keyframes flash{50%{box-shadow:0 0 0 4px #ff7a1a55}}
+.lane .top{display:flex;align-items:center;gap:10px}
+.rk{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-family:var(--f-head);font-weight:800;font-style:italic;font-size:20px;background:#ffffff12}
+.rk.g{background:var(--gold);color:#061230}.rk.s{background:var(--silver);color:#061230}.rk.b{background:var(--bronze);color:#061230}
+.ln{flex:1;min-width:0}
+.ln .n{font-weight:700;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ln .m{font-size:11.5px;color:var(--ink3)}
+.kind{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.5px;padding:1px 6px;border-radius:5px;background:#2f7bff33;color:#9fc1ff;margin-right:4px;vertical-align:1px}
+.kind.tttc{background:#e8263f33;color:#ff9aa8}
+.rv{text-align:right}
+.rv .v{font-size:20px;line-height:1}
+.mv{font-size:11.5px;font-weight:800}
+.mv.up{color:var(--green)}.mv.dn{color:var(--down)}.mv.eq{color:var(--ink3)}.mv.new{color:var(--orange2)}
+.road{position:relative;height:28px;margin-top:8px;border-radius:8px;background:var(--road);overflow:hidden}
+.road:before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px dashed #ffffff1c}
+.road .trail{position:absolute;left:0;top:6px;bottom:6px;width:0;border-radius:0 6px 6px 0;background:linear-gradient(90deg,transparent,var(--lc));opacity:.6;transition:width 1.6s cubic-bezier(.2,.8,.2,1)}
+.road .car{position:absolute;top:50%;left:0;transform:translate(-100%,-50%);transition:left 1.6s cubic-bezier(.2,.8,.2,1);color:var(--lc);filter:drop-shadow(0 0 6px var(--lc))}
+.road .thr{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed #fff9}
+.road .thr:after{content:"";position:absolute;left:0;top:0;width:10px;height:10px;background:repeating-conic-gradient(#fff 0 25%,#111 0 50%) 0 0/5px 5px}
+.road .ms{position:absolute;top:0;bottom:0;width:0;border-left:2px dotted #ffffff55}
+.lane .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 10px;font-size:12px;color:var(--ink2);margin-top:5px}
+.lane .foot .q{font-weight:700}
+.scale-row{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin:2px 2px 8px}
+.more{display:block;width:100%;margin-top:12px;padding:12px;border-radius:12px;border:1px solid var(--line);background:#ffffff0a;font-weight:700}
+.more:hover{background:#ffffff14}
+.prizes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.prz{flex:1;min-width:90px;border-radius:12px;padding:8px 10px;text-align:center;background:#ffffff08;border:1px solid var(--line)}
+.prz .num{font-size:clamp(17px,4.6vw,22px);line-height:1.1;white-space:nowrap}
+.prz small{display:block;font-size:11px;color:var(--ink2);font-weight:600}
+.prz.g{border-color:#ffc93c88}.prz.g .num{color:var(--gold)}
+.prz.s .num{color:var(--silver)}.prz.b .num{color:var(--bronze)}
+
+/* hub */
+.hub{border-radius:14px;padding:12px;background:#ffffff06;border:1px solid var(--line);margin-bottom:10px}
+.hub .road{height:44px;margin-top:10px}
+.hub .road .car svg{width:58px;height:26px}
+.hub-ms{position:relative;height:30px;font-size:10.5px;color:var(--ink3);margin-top:4px}
+.hub-ms span{position:absolute;transform:translateX(-50%);text-align:center;white-space:nowrap;line-height:1.2}
+.hub-ms span b{display:block;color:var(--ink2)}
+.bar{height:8px;border-radius:6px;background:#ffffff12;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--teal),#5eead4);transition:width 1.6s}
+.vs{text-align:center;font-family:var(--f-head);font-style:italic;font-weight:800;font-size:22px;color:var(--ink3);margin:-4px 0 6px}
+.grid2{display:grid;gap:14px}
+@media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+
+/* overview */
+.chart{width:100%;height:auto;display:block}
+.hbar{display:grid;grid-template-columns:minmax(90px,38%) 1fr auto;gap:8px;align-items:center;font-size:13px;margin:7px 0}
+.hbar .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink2)}
+.hbar .tr{height:10px;border-radius:6px;background:#ffffff0d;overflow:hidden}
+.hbar .tr i{display:block;height:100%;width:0;border-radius:6px;background:var(--hc,#2f7bff);transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.hbar .vv{font-family:var(--f-head);font-weight:700;font-size:15px;min-width:64px;text-align:right}
+
+footer{padding:26px 0 46px;color:var(--ink3);font-size:12px;border-top:1px solid var(--line);margin-top:10px}
+footer .slogan{font-family:var(--f-head);font-style:italic;font-weight:800;font-size:clamp(26px,6vw,40px);color:#fff;line-height:1;text-transform:uppercase}
+footer .slogan span{color:var(--orange)}
+footer ul{margin:12px 0 0 16px}
+footer li{margin:3px 0}
+.err{padding:40px 16px;text-align:center;color:var(--ink2)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+
+<header class="hero">
+  <div class="speed" id="speed"></div>
+  <div class="wrap">
+    <span class="badge">Sale Contest</span>
+    <div class="brand">BẢO HIỂM PVI</div>
+    <h1>Chào sân <span class="o">OCarCare</span></h1>
+    <div class="sprint"><span>LAUNCH SPRINT</span><span class="chev"><b></b><b></b><b></b></span></div>
+    <p class="tag">Tăng tốc doanh số — Bứt phá cùng bảo hiểm vật chất ô tô OCARCARE</p>
+    <div class="meta-row">
+      <span class="pill"><span class="live"></span> Cập nhật <b id="upd">—</b></span>
+      <span class="pill">📅 21/09 – 31/10/2026</span>
+      <span class="pill">HĐBH cấp qua OPES, đồng bảo hiểm với Bảo hiểm PVI</span>
+    </div>
+    <div class="countdown" id="cd"></div>
+    <div class="timeline">
+      <div class="tl-road"><div class="tl-fill" id="tlFill"></div><div class="tl-car" id="tlCar"></div><div class="tl-flag"></div></div>
+      <div class="tl-lbl"><span>XUẤT PHÁT 21/09</span><span id="tlDay"></span><span>VỀ ĐÍCH 31/10</span></div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+  </div>
+</header>
+
+<div class="ticker" aria-label="Tin nhanh"><div class="in" id="ticker"></div></div>
+
+<main class="wrap" id="main">
+  <!-- 1 -->
+  <section class="card" style="--sc:#1f55d6" id="s1">
+    <div class="sec-h"><div class="sec-n">1</div><div><div class="sec-t">Cá nhân — Càng sớm càng thưởng</div><div class="sec-s">600 HĐBH đầu tiên đều có thưởng</div></div></div>
+    <div class="sec-b">
+      <div class="sub-h">Đường đua 600 HĐBH</div>
+      <div style="padding-top:26px"><div class="e-track" id="eTrack"></div></div>
+      <div class="e-scale" style="position:relative;height:16px"><span style="position:absolute;left:0">Đơn 1</span><span style="position:absolute;left:50%;transform:translateX(-50%)">300</span><span style="position:absolute;left:83.33%;transform:translateX(-50%)">500</span><span style="position:absolute;right:0">600</span></div>
+      <div class="tiers" id="tiers"></div>
+      <div class="locked" id="indiv"></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="card" style="--sc:#c81e36" id="s2">
+    <div class="sec-h"><div class="sec-n">2</div><div><div class="sec-t">Chi nhánh &amp; Trung tâm thế chấp</div><div class="sec-s">Dẫn dắt tăng trưởng · Xếp hạng dành cho Giám đốc CN / TTTC</div></div></div>
+    <div class="sec-b">
+      <div class="prizes" id="bPrizes"></div>
+      <div class="search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Tìm CN / PGD / TTTC của bạn…" autocomplete="off" aria-label="Tìm đơn vị">
+        <div class="sugg" id="sugg"></div>
+      </div>
+      <div class="found" id="found"></div>
+      <div class="sub-h">Bục podium</div>
+      <div class="podium" id="podium"></div>
+      <div class="sub-h">Đường đua</div>
+      <div class="scale-row" id="bScale"></div>
+      <div class="lanes" id="lanes"></div>
+      <button class="more" id="more"></button>
+      <div class="note" id="bNote"></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="card" style="--sc:#0f8f82" id="s3">
+    <div class="sec-h"><div class="sec-n">3</div><div><div class="sec-t">Hub xe — Bứt phá doanh thu</div><div class="sec-s">Giám đốc &amp; Trưởng phòng Hub xe</div></div></div>
+    <div class="sec-b">
+      <div class="prizes" id="hPrizes"></div>
+      <div id="hubs"></div>
+      <div class="note" id="hNote"></div>
+      <div class="locked" id="hubMgr" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="card" style="--sc:#3a4f86" id="s4">
+    <div class="sec-h"><div class="sec-n">★</div><div><div class="sec-t">Toàn cảnh cuộc đua</div><div class="sec-s">Luỹ kế theo ngày · Theo miền · Theo đơn vị BH PVI đồng hành</div></div></div>
+    <div class="sec-b">
+      <div class="sub-h">Doanh thu luỹ kế &amp; HĐBH mới mỗi ngày</div>
+      <div id="chart"></div>
+      <div class="grid2" style="margin-top:14px">
+        <div><div class="sub-h">Theo miền</div><div id="regions"></div></div>
+        <div><div class="sub-h">Đơn vị BH PVI đồng hành</div><div id="pvi"></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="slogan">Tăng tốc hôm nay<br><span>Dẫn đầu ngày mai!</span></div>
+    <ul id="rules"></ul>
+    <p style="margin-top:12px">* Số liệu tạm tính từ báo cáo nghiệp vụ của Bảo hiểm PVI, dùng để theo dõi tiến độ. Chi tiết đầy đủ về điều kiện, nguyên tắc xác định doanh thu và xét thưởng tham khảo Thể lệ chương trình chính thức.</p>
+    <p style="margin-top:6px" id="src"></p>
+  </div>
+</footer>
+
+<script>window.RACE_DATA = {"meta":{"report_date":"2026-09-29","report_time":"17:00","generated_at":"2026-09-29 10:41","source":"báo cáo 17h ngày 29092026 VPBank.xlsx","total_policies":89,"total_premium":601028901,"today_policies":15,"today_premium":94100950,"active_units":24,"unmapped":{"premium":0,"policies":0}},"config":{"program":{"name":"Chào sân OCARCARE — Launch Sprint","start":"2026-09-21","end":"2026-10-31","channel_keyword":"OPES"},"early":{"tiers":[{"from":1,"to":300,"reward":300000,"label":"300 HĐBH đầu tiên"},{"from":301,"to":500,"reward":200000,"label":"200 HĐBH tiếp theo"},{"from":501,"to":600,"reward":100000,"label":"100 HĐBH cuối cùng"}]},"individual":{"threshold":125000000,"prizes":[5000000,4000000,3000000],"note":"Sẽ cập nhật sau 31/10/2026"},"branch":{"threshold":250000000,"prizes":[7000000,5000000,3000000]},"hub":{"threshold":1250000000,"prizes":[15000000,10000000],"milestones":[{"value":1250000000,"label":"Điều kiện"},{"value":1825000000,"label":"+5 triệu"},{"value":2500000000,"label":"+10 triệu"}],"manager":{"threshold":400000000,"prizes":[6000000,5000000,4000000,3000000],"note":"Chưa phân tách được cấp phòng/nhóm Hub — công bố theo kết quả chính thức"}}},"branches":[{"id":"VN0010356","kind":"CN","name":"CN Đắk Lắk","region":"Miền Trung","province":"Đắk Lắk","pvi":"BH PVI Tây Nguyên","premium":95418000,"policies":14,"rank":1,"prev_rank":1,"today_premium":5635000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010103","kind":"CN","name":"CN Hải Phòng","region":"Miền Bắc","province":"Hải Phòng","pvi":"BH PVI Duyên Hải","premium":62575000,"policies":10,"rank":2,"prev_rank":2,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010158","kind":"CN","name":"CN Ninh Bình","region":"Miền Bắc","province":"Nam Định","pvi":"BH PVI Ninh Bình","premium":52594000,"policies":7,"rank":3,"prev_rank":3,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010104","kind":"CN","name":"CN Đà Nẵng","region":"Miền Trung","province":"Đà Nẵng","pvi":"BH PVI Đà Nẵng","premium":44964000,"policies":7,"rank":4,"prev_rank":4,"today_premium":4119000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010106","kind":"CN","name":"CN Sài Gòn","region":"Miền Nam","province":"Hồ Chí Minh","pvi":"BH PVI Sài Gòn","premium":40485350,"policies":7,"rank":5,"prev_rank":5,"today_premium":6522000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010401","kind":"CN","name":"CN Bạc Liêu","region":"Miền Nam","province":"Bạc Liêu","pvi":"BH PVI An Giang","premium":28754500,"policies":5,"rank":6,"prev_rank":8,"today_premium":10128950,"today_policies":2,"qualified":false,"crossed_today":false},{"id":"VN0010223","kind":"CN","name":"CN Hà Tĩnh","region":"Miền Bắc","province":"Hà Tĩnh","pvi":"BH PVI Bắc Trung Bộ","premium":24461000,"policies":3,"rank":7,"prev_rank":7,"today_premium":5797000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010262","kind":"CN","name":"CN Vũng Tàu","region":"Miền Nam","province":"Bà Rịa Vũng Tàu","pvi":"BH PVI Sài Gòn","premium":23837000,"policies":4,"rank":8,"prev_rank":6,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010177","kind":"CN","name":"CN Quảng Bình","region":"Miền Trung","province":"Quảng Bình","pvi":"BH PVI Quảng Trị","premium":17153000,"policies":2,"rank":9,"prev_rank":9,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010435","kind":"CN","name":"CN Sở Giao Dịch 2","region":"Miền Nam","province":"Hồ Chí Minh","pvi":"BH PVI TP. Hồ Chí Minh","premium":16605541,"policies":1,"rank":10,"prev_rank":10,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010155","kind":"CN","name":"CN Đồng Nai","region":"Miền Nam","province":"Đồng Nai","pvi":"BH PVI Sài Gòn","premium":14642000,"policies":2,"rank":11,"prev_rank":13,"today_premium":6987000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010190","kind":"CN","name":"CN Ngô Quyền","region":"Miền Bắc","province":"Hà Nội","pvi":"BH PVI Đông Đô","premium":14162000,"policies":1,"rank":12,"prev_rank":11,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010191","kind":"CN","name":"CN Phú Thọ","region":"Miền Bắc","province":"Phú Thọ","pvi":"BH PVI Vĩnh Phú","premium":13031000,"policies":2,"rank":13,"prev_rank":16,"today_premium":7234000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010119","kind":"CN","name":"CN Thăng Long","region":"Miền Bắc","province":"Hà Nội","pvi":"BH PVI Đông Đô","premium":11656750,"policies":2,"rank":14,"prev_rank":12,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010418","kind":"TTTC","name":"TTTC Vùng 5","region":"Miền Bắc","province":"Ninh Bình","pvi":"BH PVI Ninh Bình","premium":10657000,"policies":2,"rank":15,"prev_rank":19,"today_premium":5095000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010261","kind":"CN","name":"CN Bình Dương","region":"Miền Nam","province":"Bình Dương","pvi":"BH PVI Sài Gòn","premium":9339000,"policies":1,"rank":16,"prev_rank":null,"today_premium":9339000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010341","kind":"CN","name":"CN Trần Não","region":"Miền Nam","province":"Hồ Chí Minh","pvi":"BH PVI TP. Hồ Chí Minh","premium":8379000,"policies":1,"rank":17,"prev_rank":null,"today_premium":8379000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010364","kind":"CN","name":"CN Tây Ninh","region":"Miền Nam","province":"Tây Ninh","pvi":"BH PVI An Giang","premium":6413000,"policies":1,"rank":18,"prev_rank":null,"today_premium":6413000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010296","kind":"CN","name":"CN Quảng Nam","region":"Miền Trung","province":"Quảng Nam","pvi":"BH PVI Đà Nẵng","premium":6096000,"policies":1,"rank":19,"prev_rank":14,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010102","kind":"CN","name":"CN TP. Hồ Chí Minh","region":"Miền Nam","province":"Hồ Chí Minh","pvi":"BH PVI TP. Hồ Chí Minh","premium":5903000,"policies":1,"rank":20,"prev_rank":null,"today_premium":5903000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010101","kind":"CN","name":"CN Hà Nội","region":"Miền Bắc","province":"Hà Nội","pvi":"BH PVI Đông Đô","premium":5835000,"policies":1,"rank":21,"prev_rank":15,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010226","kind":"CN","name":"CN Đồng Tháp","region":"Miền Nam","province":"Đồng Tháp","pvi":"BH PVI Đồng Tháp","premium":5672000,"policies":1,"rank":22,"prev_rank":null,"today_premium":5672000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010108","kind":"CN","name":"CN Quảng Ninh","region":"Miền Bắc","province":"Quảng Ninh","pvi":"BH PVI Duyên Hải","premium":5616000,"policies":1,"rank":23,"prev_rank":17,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false},{"id":"VN0010127","kind":"CN","name":"CN Hải Vân","region":"Miền Trung","province":"Đà Nẵng","pvi":"BH PVI Đà Nẵng","premium":5586000,"policies":1,"rank":24,"prev_rank":18,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false}],"hubs":[{"id":"VN0010478","kind":"HUB","name":"TTKD OTO MIEN BAC","region":"Miền Bắc","province":"Hà Nội","pvi":"BH PVI Link","premium":54317960,"policies":8,"rank":1,"prev_rank":1,"today_premium":6877000,"today_policies":1,"qualified":false,"crossed_today":false},{"id":"VN0010479","kind":"HUB","name":"TTKD OTO MIEN NAM","region":"Miền Nam","province":"Hồ Chí Minh","pvi":"BH PVI TP. Hồ Chí Minh","premium":16875800,"policies":3,"rank":2,"prev_rank":2,"today_premium":0,"today_policies":0,"qualified":false,"crossed_today":false}],"lookup":[{"n":"CN Sở Giao Dịch","t":"CN","u":"VN0010133","un":"CN Sở Giao Dịch","k":"CN","p":"Hà Nội"},{"n":"PGD Đông Hà Nội","t":"PGD","u":"VN0010133","un":"CN Sở Giao Dịch","k":"CN","p":"Hà Nội"},{"n":"PGD Thủ Đô","t":"PGD","u":"VN0010133","un":"CN Sở Giao Dịch","k":"CN","p":"Hà Nội"},{"n":"PGD Âu Cơ","t":"PGD","u":"VN0010133","un":"CN Sở Giao Dịch","k":"CN","p":"Hà Nội"},{"n":"PGD Lạc Trung","t":"PGD","u":"VN0010133","un":"CN Sở Giao Dịch","k":"CN","p":"Hà Nội"},{"n":"CN Ngô Quyền","t":"CN","u":"VN0010190","un":"CN Ngô Quyền","k":"CN","p":"Hà Nội"},{"n":"PGD Hoàn Kiếm","t":"PGD","u":"VN0010190","un":"CN Ngô Quyền","k":"CN","p":"Hà Nội"},{"n":"PGD Đông Thủ Đô","t":"PGD","u":"VN0010190","un":"CN Ngô Quyền","k":"CN","p":"Hà Nội"},{"n":"PGD Nguyễn Hữu Huân","t":"PGD","u":"VN0010190","un":"CN Ngô Quyền","k":"CN","p":"Hà Nội"},{"n":"PGD Thái Hà","t":"PGD","u":"VN0010190","un":"CN Ngô Quyền","k":"CN","p":"Hà Nội"},{"n":"PGD Chương Dương","t":"PGD","u":"VN0010190","un":"CN Ngô Quyền","k":"CN","p":"Hà Nội"},{"n":"PGD Long Biên","t":"PGD","u":"VN0010190","un":"CN Ngô Quyền","k":"CN","p":"Hà Nội"},{"n":"PGD Đông Anh","t":"PGD","u":"VN0010190","un":"CN Ngô Quyền","k":"CN","p":"Hà Nội"},{"n":"CN Hà Nội","t":"CN","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Tràng An","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Khâm Thiên","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Bắc Hà Nội","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Thành Đô","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Linh Đàm","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Nam Hà Nội","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Định Công","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Thụy Khuê","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Ba Đình","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Cửa Bắc","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Tây Hồ","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"PGD Nam Thăng Long","t":"PGD","u":"VN0010101","un":"CN Hà Nội","k":"CN","p":"Hà Nội"},{"n":"CN Đông Đô","t":"CN","u":"VN0010219","un":"CN Đông Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Hai Bà Trưng","t":"PGD","u":"VN0010219","un":"CN Đông Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Đồng Tâm","t":"PGD","u":"VN0010219","un":"CN Đông Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Hà Đông","t":"PGD","u":"VN0010219","un":"CN Đông Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Phương Mai","t":"PGD","u":"VN0010219","un":"CN Đông Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Lương Thế Vinh","t":"PGD","u":"VN0010219","un":"CN Đông Đô","k":"CN","p":"Hà Nội"},{"n":"CN Kinh Đô","t":"CN","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Lê Trọng Tấn","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Kim Liên","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Hà Thành","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Kim Mã","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Hào Nam","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Cát Linh","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Thành Công","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Hà Tây","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Văn Quán","t":"PGD","u":"VN0010271","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"PGD Thanh Xuân","t":"PGD","u":"VN0010241","un":"CN Kinh Đô","k":"CN","p":"Hà Nội"},{"n":"CN Thăng Long","t":"CN","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Văn Phú","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Tây Hà Nội","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Cầu Giấy","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Liễu Giai","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Yên Hòa","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Phạm Hùng","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Nguyễn Văn Huyên","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Trung Kính","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Trung Hòa Nhân Chính","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Trần Duy Hưng","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Vũ Trọng Phụng","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Lê Văn Lương","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Trần Thái Tông","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Phạm Văn Đồng","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Mỹ Đình","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Hoàng Quốc Việt","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Nam Từ Liêm","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"PGD Lê Đức Thọ","t":"PGD","u":"VN0010119","un":"CN Thăng Long","k":"CN","p":"Hà Nội"},{"n":"CN Trần Hưng Đạo","t":"CN","u":"VN0010328","un":"CN Trần Hưng Đạo","k":"CN","p":"Hà Nội"},{"n":"PGD Phùng","t":"PGD","u":"VN0010328","un":"CN Trần Hưng Đạo","k":"CN","p":"Hà Nội"},{"n":"PGD Gia Lâm","t":"PGD","u":"VN0010328","un":"CN Trần Hưng Đạo","k":"CN","p":"Hà Nội"},{"n":"CN Thường Tín","t":"CN","u":"VN0010370","un":"CN Thường Tín","k":"CN","p":"Hà Nội"},{"n":"PGD Thanh Oai","t":"PGD","u":"VN0010370","un":"CN Thường Tín","k":"CN","p":"Hà Nội"},{"n":"PGD Ứng Hòa","t":"PGD","u":"VN0010370","un":"CN Thường Tín","k":"CN","p":"Hà Nội"},{"n":"PGD Mỹ Đức","t":"PGD","u":"VN0010370","un":"CN Thường Tín","k":"CN","p":"Hà Nội"},{"n":"CN Sơn Tây","t":"CN","u":"VN0010382","un":"CN Sơn Tây","k":"CN","p":"Hà Nội"},{"n":"PGD Thạch Thất","t":"PGD","u":"VN0010382","un":"CN Sơn Tây","k":"CN","p":"Hà Nội"},{"n":"PGD Sóc Sơn","t":"PGD","u":"VN0010382","un":"CN Sơn Tây","k":"CN","p":"Hà Nội"},{"n":"PGD  Chương Mỹ","t":"PGD","u":"VN0010382","un":"CN Sơn Tây","k":"CN","p":"Hà Nội"},{"n":"CN Thanh Trì","t":"CN","u":"VN0010409","un":"CN Thanh Trì","k":"CN","p":"Hà Nội"},{"n":"CN Hoài Đức","t":"CN","u":"VN0010412","un":"CN Hoài Đức","k":"CN","p":"Hà Nội"},{"n":"CN Vạn Phúc","t":"CN","u":"VN0010464","un":"CN Vạn Phúc","k":"CN","p":"Hà Nội"},{"n":"CN Hoàng Mai","t":"CN","u":"VN0010462","un":"CN Hoàng Mai","k":"CN","p":"Hà Nội"},{"n":"CN  Phùng Hưng","t":"CN","u":"VN0010466","un":"CN  Phùng Hưng","k":"CN","p":"Hà Nội"},{"n":"CN Việt Hưng","t":"CN","u":"VN0010467","un":"CN  Việt Hưng","k":"CN","p":"Hà Nội"},{"n":"CN Võ Chí Công","t":"CN","u":"VN0010469","un":"CN Võ Chí Công","k":"CN","p":"Hà Nội"},{"n":"CN Hà Nam","t":"CN","u":"VN0010358","un":"CN Hà Nam","k":"CN","p":"Hà Nam"},{"n":"PGD Đồng Văn","t":"PGD","u":"VN0010358","un":"CN Hà Nam","k":"CN","p":"Hà Nam"},{"n":"PGD Lý Nhân","t":"PGD","u":"VN0010358","un":"CN Hà Nam","k":"CN","p":"Hà Nam"},{"n":"CN Hải Phòng","t":"CN","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"PGD Lê Chân","t":"PGD","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"PGD Lê Hồng Phong","t":"PGD","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"PGD Lạch Tray","t":"PGD","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"PGD Kiến An","t":"PGD","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"PGD Quang Trung","t":"PGD","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"PGD Thủy Nguyên","t":"PGD","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"PGD Hải An","t":"PGD","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"PGD Trần Nguyên Hãn","t":"PGD","u":"VN0010103","un":"CN Hải Phòng","k":"CN","p":"Hải Phòng"},{"n":"CN Hải Dương","t":"CN","u":"VN0010159","un":"CN Hải Dương","k":"CN","p":"Hải Dương"},{"n":"PGD Nguyễn Lương Bằng","t":"PGD","u":"VN0010159","un":"CN Hải Dương","k":"CN","p":"Hải Dương"},{"n":"PGD Chí Linh","t":"PGD","u":"VN0010159","un":"CN Hải Dương","k":"CN","p":"Hải Dương"},{"n":"PGD Lê Thanh Nghị","t":"PGD","u":"VN0010159","un":"CN Hải Dương","k":"CN","p":"Hải Dương"},{"n":"CN Quảng Ninh","t":"CN","u":"VN0010108","un":"CN Quảng Ninh","k":"CN","p":"Quảng Ninh"},{"n":"PGD Cẩm Phả","t":"PGD","u":"VN0010108","un":"CN Quảng Ninh","k":"CN","p":"Quảng Ninh"},{"n":"PGD Uông Bí","t":"PGD","u":"VN0010108","un":"CN Quảng Ninh","k":"CN","p":"Quảng Ninh"},{"n":"PGD Hồng Hà","t":"PGD","u":"VN0010108","un":"CN Quảng Ninh","k":"CN","p":"Quảng Ninh"},{"n":"CN Móng Cái","t":"CN","u":"VN0010279","un":"CN Móng Cái","k":"CN","p":"Quảng Ninh"},{"n":"PGD Bãi Cháy","t":"PGD","u":"VN0010279","un":"CN Móng Cái","k":"CN","p":"Quảng Ninh"},{"n":"CN Thái Bình","t":"CN","u":"VN0010221","un":"CN Thái Bình","k":"CN","p":"Thái Bình"},{"n":"PGD Trần Phú","t":"PGD","u":"VN0010221","un":"CN Thái Bình","k":"CN","p":"Thái Bình"},{"n":"PGD Trần Lãm","t":"PGD","u":"VN0010221","un":"CN Thái Bình","k":"CN","p":"Thái Bình"},{"n":"PGD Kỳ Bá","t":"PGD","u":"VN0010221","un":"CN Thái Bình","k":"CN","p":"Thái Bình"},{"n":"CN Bắc Giang","t":"CN","u":"VN0010132","un":"CN Bắc Giang","k":"CN","p":"Bắc Giang"},{"n":"PGD Lạng Giang","t":"PGD","u":"VN0010132","un":"CN Bắc Giang","k":"CN","p":"Bắc Giang"},{"n":"PGD Hiệp Hòa","t":"PGD","u":"VN0010132","un":"CN Bắc Giang","k":"CN","p":"Bắc Giang"},{"n":"PGD Kinh Bắc","t":"PGD","u":"VN0010132","un":"CN Bắc Giang","k":"CN","p":"Bắc Giang"},{"n":"CN Xương Giang","t":"CN","u":"VN0010179","un":"CN Xương Giang","k":"CN","p":"Bắc Giang"},{"n":"CN Lạng Sơn","t":"CN","u":"VN0010360","un":"CN Lạng Sơn","k":"CN","p":"Lạng Sơn"},{"n":"CN Hưng Yên","t":"CN","u":"VN0010361","un":"CN Hưng Yên","k":"CN","p":"Hưng Yên"},{"n":"PGD Điện Biên","t":"PGD","u":"VN0010361","un":"CN Hưng Yên","k":"CN","p":"Hưng Yên"},{"n":"PGD Văn Giang","t":"PGD","u":"VN0010361","un":"CN Hưng Yên","k":"CN","p":"Hưng Yên"},{"n":"PGD Như Quỳnh","t":"PGD","u":"VN0010361","un":"CN Hưng Yên","k":"CN","p":"Hưng Yên"},{"n":"CN Bắc Ninh","t":"CN","u":"VN0010222","un":"CN Bắc Ninh","k":"CN","p":"Bắc Ninh"},{"n":"PGD Từ Sơn","t":"PGD","u":"VN0010222","un":"CN Bắc Ninh","k":"CN","p":"Bắc Ninh"},{"n":"PGD Yên Phong","t":"PGD","u":"VN0010222","un":"CN Bắc Ninh","k":"CN","p":"Bắc Ninh"},{"n":"PGD Quế Võ","t":"PGD","u":"VN0010222","un":"CN Bắc Ninh","k":"CN","p":"Bắc Ninh"},{"n":"CN Hòa Bình","t":"CN","u":"VN0010220","un":"CN Hòa Bình","k":"CN","p":"Hòa Bình"},{"n":"PGD Sông Đà","t":"PGD","u":"VN0010220","un":"CN Hòa Bình","k":"CN","p":"Hòa Bình"},{"n":"PGD Lương Sơn","t":"PGD","u":"VN0010220","un":"CN Hòa Bình","k":"CN","p":"Hòa Bình"},{"n":"CN Phú Thọ","t":"CN","u":"VN0010191","un":"CN Phú Thọ","k":"CN","p":"Phú Thọ"},{"n":"PGD Hùng Vương","t":"PGD","u":"VN0010191","un":"CN Phú Thọ","k":"CN","p":"Phú Thọ"},{"n":"CN Thái Nguyên","t":"CN","u":"VN0010225","un":"CN Thái Nguyên","k":"CN","p":"Thái Nguyên"},{"n":"PGD Bắc Thái","t":"PGD","u":"VN0010225","un":"CN Thái Nguyên","k":"CN","p":"Thái Nguyên"},{"n":"PGD Phổ Yên","t":"PGD","u":"VN0010225","un":"CN Thái Nguyên","k":"CN","p":"Thái Nguyên"},{"n":"PGD Sông Công","t":"PGD","u":"VN0010225","un":"CN Thái Nguyên","k":"CN","p":"Thái Nguyên"},{"n":"CN Vĩnh Phúc","t":"CN","u":"VN0010131","un":"CN Vĩnh Phúc","k":"CN","p":"Vĩnh Phúc"},{"n":"PGD Phúc Yên","t":"PGD","u":"VN0010131","un":"CN Vĩnh Phúc","k":"CN","p":"Vĩnh Phúc"},{"n":"PGD Vĩnh Yên","t":"PGD","u":"VN0010131","un":"CN Vĩnh Phúc","k":"CN","p":"Vĩnh Phúc"},{"n":"PGD Yên Lạc","t":"PGD","u":"VN0010131","un":"CN Vĩnh Phúc","k":"CN","p":"Vĩnh Phúc"},{"n":"CN Lào Cai","t":"CN","u":"VN0010365","un":"CN Lào Cai","k":"CN","p":"Lào Cai"},{"n":"PGD Kim Tân","t":"PGD","u":"VN0010365","un":"CN Lào Cai","k":"CN","p":"Lào Cai"},{"n":"CN Sơn La","t":"CN","u":"VN0010444","un":"CN Sơn La","k":"CN","p":"Sơn La"},{"n":"CN Ninh Bình","t":"CN","u":"VN0010158","un":"CN Ninh Bình","k":"CN","p":"Ninh Bình"},{"n":"PGD Hoa Lư","t":"PGD","u":"VN0010158","un":"CN Ninh Bình","k":"CN","p":"Ninh Bình"},{"n":"PGD Yên Khánh","t":"PGD","u":"VN0010158","un":"CN Ninh Bình","k":"CN","p":"Ninh Bình"},{"n":"CN Nam Định","t":"CN","u":"VN0010158","un":"CN Nam Định","k":"CN","p":"Nam Định"},{"n":"PGD Lạc Quần","t":"PGD","u":"VN0010158","un":"CN Nam Định","k":"CN","p":"Nam Định"},{"n":"PGD Đò Quan","t":"PGD","u":"VN0010158","un":"CN Nam Định","k":"CN","p":"Nam Định"},{"n":"PGD Ý Yên","t":"PGD","u":"VN0010158","un":"CN Nam Định","k":"CN","p":"Nam Định"},{"n":"PGD Thành Nam","t":"PGD","u":"VN0010158","un":"CN Nam Định","k":"CN","p":"Nam Định"},{"n":"CN Thanh Hóa","t":"CN","u":"VN0010154","un":"CN Thanh Hóa","k":"CN","p":"Thanh Hóa"},{"n":"PGD Bỉm Sơn","t":"PGD","u":"VN0010154","un":"CN Thanh Hóa","k":"CN","p":"Thanh Hóa"},{"n":"PGD Nguyễn Trãi","t":"PGD","u":"VN0010154","un":"CN Thanh Hóa","k":"CN","p":"Thanh Hóa"},{"n":"PGD Sầm Sơn","t":"PGD","u":"VN0010154","un":"CN Thanh Hóa","k":"CN","p":"Thanh Hóa"},{"n":"PGD Đông Hương","t":"PGD","u":"VN0010154","un":"CN Thanh Hóa","k":"CN","p":"Thanh Hóa"},{"n":"PGD Lam Sơn","t":"PGD","u":"VN0010154","un":"CN Thanh Hóa","k":"CN","p":"Thanh Hóa"},{"n":"CN Nghệ An","t":"CN","u":"VN0010153","un":"CN Nghệ An","k":"CN","p":"Nghệ An"},{"n":"PGD Chợ Vinh","t":"PGD","u":"VN0010153","un":"CN Nghệ An","k":"CN","p":"Nghệ An"},{"n":"PGD Diễn Châu","t":"PGD","u":"VN0010153","un":"CN Nghệ An","k":"CN","p":"Nghệ An"},{"n":"PGD Sông Lam","t":"PGD","u":"VN0010153","un":"CN Nghệ An","k":"CN","p":"Nghệ An"},{"n":"PGD Bến Thủy","t":"PGD","u":"VN0010153","un":"CN Nghệ An","k":"CN","p":"Nghệ An"},{"n":"PGD Đội Cung","t":"PGD","u":"VN0010153","un":"CN Nghệ An","k":"CN","p":"Nghệ An"},{"n":"CN Hà Tĩnh","t":"CN","u":"VN0010223","un":"CN Hà Tĩnh","k":"CN","p":"Hà Tĩnh"},{"n":"PGD Thành Sen","t":"PGD","u":"VN0010223","un":"CN Hà Tĩnh","k":"CN","p":"Hà Tĩnh"},{"n":"PGD Hồng Lĩnh","t":"PGD","u":"VN0010223","un":"CN Hà Tĩnh","k":"CN","p":"Hà Tĩnh"},{"n":"PGD Nguyễn Du","t":"PGD","u":"VN0010223","un":"CN Hà Tĩnh","k":"CN","p":"Hà Tĩnh"},{"n":"CN Đà Nẵng","t":"CN","u":"VN0010104","un":"CN Đà Nẵng","k":"CN","p":"Đà Nẵng"},{"n":"PGD Hòa Xuân","t":"PGD","u":"VN0010104","un":"CN Đà Nẵng","k":"CN","p":"Đà Nẵng"},{"n":"PGD Đống Đa","t":"PGD","u":"VN0010104","un":"CN Đà Nẵng","k":"CN","p":"Đà Nẵng"},{"n":"PGD Nguyễn Tri Phương","t":"PGD","u":"VN0010104","un":"CN Đà Nẵng","k":"CN","p":"Đà Nẵng"},{"n":"PGD Núi Thành","t":"PGD","u":"VN0010104","un":"CN Đà Nẵng","k":"CN","p":"Đà Nẵng"},{"n":"PGD Sơn Trà","t":"PGD","u":"VN0010104","un":"CN Đà Nẵng","k":"CN","p":"Đà Nẵng"},{"n":"PGD Hàm Nghi","t":"PGD","u":"VN0010104","un":"CN Đà Nẵng","k":"CN","p":"Đà Nẵng"},{"n":"CN Hải Vân","t":"CN","u":"VN0010127","un":"CN Hải Vân","k":"CN","p":"Đà Nẵng"},{"n":"CN Huế","t":"CN","u":"VN0010105","un":"CN Huế","k":"CN","p":"Huế"},{"n":"PGD Vỹ Dạ","t":"PGD","u":"VN0010105","un":"CN Huế","k":"CN","p":"Huế"},{"n":"PGD Đông Ba","t":"PGD","u":"VN0010105","un":"CN Huế","k":"CN","p":"Huế"},{"n":"PGD Mai Thúc Loan","t":"PGD","u":"VN0010105","un":"CN Huế","k":"CN","p":"Huế"},{"n":"PGD Phú Hội","t":"PGD","u":"VN0010105","un":"CN Huế","k":"CN","p":"Huế"},{"n":"PGD Bến Ngự","t":"PGD","u":"VN0010105","un":"CN Huế","k":"CN","p":"Huế"},{"n":"CN Quảng Bình","t":"CN","u":"VN0010177","un":"CN Quảng Bình","k":"CN","p":"Quảng Bình"},{"n":"PGD Ba Đồn","t":"PGD","u":"VN0010177","un":"CN Quảng Bình","k":"CN","p":"Quảng Bình"},{"n":"PGD Bố Trạch","t":"PGD","u":"VN0010177","un":"CN Quảng Bình","k":"CN","p":"Quảng Bình"},{"n":"PGD Đồng Hới","t":"PGD","u":"VN0010177","un":"CN Quảng Bình","k":"CN","p":"Quảng Bình"},{"n":"CN Quảng Trị","t":"CN","u":"VN0010224","un":"CN Quảng Trị","k":"CN","p":"Quảng Trị"},{"n":"PGD Đông Hà","t":"PGD","u":"VN0010224","un":"CN Quảng Trị","k":"CN","p":"Quảng Trị"},{"n":"CN Quảng Nam","t":"CN","u":"VN0010296","un":"CN Quảng Nam","k":"CN","p":"Quảng Nam"},{"n":"PGD Hội An","t":"PGD","u":"VN0010296","un":"CN Quảng Nam","k":"CN","p":"Quảng Nam"},{"n":"CN Quảng Ngãi","t":"CN","u":"VN0010397","un":"CN Quảng Ngãi","k":"CN","p":"Quảng Ngãi"},{"n":"CN Đắk Lắk","t":"CN","u":"VN0010356","un":"CN Đắk Lắk","k":"CN","p":"Đắk Lắk"},{"n":"CN Gia Lai","t":"CN","u":"VN0010301","un":"CN Gia Lai","k":"CN","p":"Gia Lai"},{"n":"CN Đắk Nông","t":"CN","u":"VN0010451","un":"CN Đắk Nông","k":"CN","p":"Đắk Nông"},{"n":"CN TP. Hồ Chí Minh","t":"CN","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Khánh Hội","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Thủ Đức","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Nam Sài Gòn","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Phú Mỹ Hưng","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Nguyễn Duy Trinh","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Phú Xuân","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Lê Văn Việt","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Quận 3","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Hàng Xanh","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Đông Sài Gòn","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Lê Văn Sỹ","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Văn Thánh","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bà Chiểu","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bến Thành","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Hưng Vượng","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Nơ Trang Long","t":"PGD","u":"VN0010102","un":"CN TP. Hồ Chí Minh","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Trần Não","t":"CN","u":"VN0010341","un":"CN Trần Não","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Trung Chánh","t":"PGD","u":"VN0010341","un":"CN Trần Não","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bình Chánh","t":"PGD","u":"VN0010341","un":"CN Trần Não","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bình Hưng","t":"PGD","u":"VN0010341","un":"CN Trần Não","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Nhà Bè","t":"CN","u":"VN0010371","un":"CN Nhà Bè","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Gia Định","t":"CN","u":"VN0010269","un":"CN Gia Định","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Phước Kiển","t":"PGD","u":"VN0010269","un":"CN Gia Định","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Sở Giao Dịch 2","t":"CN","u":"VN0010435","un":"CN Sở Giao Dịch 2","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Thảo Điền","t":"CN","u":"VN0010406","un":"CN Thảo Điền","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Trung Sơn","t":"CN","u":"VN0010352","un":"CN Trung Sơn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Cần Giờ","t":"PGD","u":"VN0010352","un":"CN Trung Sơn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Tân Túc","t":"PGD","u":"VN0010352","un":"CN Trung Sơn","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Long Bình","t":"CN","u":"VN0010468","un":"CN Long Bình","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Hoàng Diệu","t":"CN","u":"VN0010463","un":"CN Hoàng Diệu","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Sài Gòn","t":"CN","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bùi Hữu Nghĩa","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Kỳ Hòa","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Chánh Hưng","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Chợ Lớn","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Tây Sài Gòn","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Phú Lâm","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bình Phú","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Tô Hiến Thành","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Cao Thắng","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Nguyễn Thiện Thuật","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Hòa Hưng","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Phạm Văn Hai","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Lý Thường Kiệt","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Tân Bình","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Tân Phú","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bàu Cát","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD An Sương","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bạch Đằng","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Hoàng Hoa Thám","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Phan Huy Ích","t":"PGD","u":"VN0010106","un":"CN Sài Gòn","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Cộng Hòa","t":"CN","u":"VN0010197","un":"CN Cộng Hòa","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Gò Vấp","t":"CN","u":"VN0010139","un":"CN Gò Vấp","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Phan Văn Trị","t":"CN","u":"VN0010387","un":"CN Phan Văn Trị","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Quận 11","t":"CN","u":"VN0010355","un":"CN Quận 11","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Hóc Môn","t":"CN","u":"VN0010368","un":"CN Hóc Môn","k":"CN","p":"Hồ Chí Minh"},{"n":"PGD Bà Điểm","t":"PGD","u":"VN0010368","un":"CN Hóc Môn","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Củ Chi","t":"CN","u":"VN0010368","un":"CN Củ Chi","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Lê Đại Hành","t":"CN","u":"VN0010465","un":"CN Lê Đại Hành","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Phú Nhuận","t":"CN","u":"VN0010472","un":"CN Phú Nhuận","k":"CN","p":"Hồ Chí Minh"},{"n":"CN Bắc Sài Gòn","t":"CN","u":"VN0010477","un":"CN Bắc Sài Gòn","k":"CN","p":"TP. Hồ Chí Minh"},{"n":"CN Đồng Nai","t":"CN","u":"VN0010155","un":"CN Đồng Nai","k":"CN","p":"Đồng Nai"},{"n":"PGD Hố Nai","t":"PGD","u":"VN0010155","un":"CN Đồng Nai","k":"CN","p":"Đồng Nai"},{"n":"PGD Long Thành","t":"PGD","u":"VN0010155","un":"CN Đồng Nai","k":"CN","p":"Đồng Nai"},{"n":"PGD Long Khánh","t":"PGD","u":"VN0010155","un":"CN Đồng Nai","k":"CN","p":"Đồng Nai"},{"n":"CN Bình Dương","t":"CN","u":"VN0010261","un":"CN Bình Dương","k":"CN","p":"Bình Dương"},{"n":"PGD Thuận An","t":"PGD","u":"VN0010261","un":"CN Bình Dương","k":"CN","p":"Bình Dương"},{"n":"PGD Dĩ An","t":"PGD","u":"VN0010261","un":"CN Bình Dương","k":"CN","p":"Bình Dương"},{"n":"PGD Tân Uyên","t":"PGD","u":"VN0010261","un":"CN Bình Dương","k":"CN","p":"Bình Dương"},{"n":"CN Bình Định","t":"CN","u":"VN0010206","un":"CN Bình Định","k":"CN","p":"Bình Định"},{"n":"PGD An Nhơn","t":"PGD","u":"VN0010206","un":"CN Bình Định","k":"CN","p":"Bình Định"},{"n":"PGD Nguyễn Thái Học","t":"PGD","u":"VN0010206","un":"CN Bình Định","k":"CN","p":"Bình Định"},{"n":"CN Nha Trang","t":"CN","u":"VN0010147","un":"CN Nha Trang","k":"CN","p":"Khánh Hòa"},{"n":"PGD Phước Hải","t":"PGD","u":"VN0010147","un":"CN Nha Trang","k":"CN","p":"Khánh Hòa"},{"n":"CN Bình Thuận","t":"CN","u":"VN0010229","un":"CN Bình Thuận","k":"CN","p":"Bình Thuận"},{"n":"PGD Lagi","t":"PGD","u":"VN0010229","un":"CN Bình Thuận","k":"CN","p":"Bình Thuận"},{"n":"PGD Tuy Phong","t":"PGD","u":"VN0010229","un":"CN Bình Thuận","k":"CN","p":"Bình Thuận"},{"n":"CN Vũng Tàu","t":"CN","u":"VN0010262","un":"CN Vũng Tàu","k":"CN","p":"Bà Rịa Vũng Tàu"},{"n":"PGD Bà Rịa","t":"PGD","u":"VN0010262","un":"CN Vũng Tàu","k":"CN","p":"Bà Rịa Vũng Tàu"},{"n":"PGD Rạch Dừa","t":"PGD","u":"VN0010262","un":"CN Vũng Tàu","k":"CN","p":"Bà Rịa Vũng Tàu"},{"n":"PGD Long Hải","t":"PGD","u":"VN0010262","un":"CN Vũng Tàu","k":"CN","p":"Bà Rịa Vũng Tàu"},{"n":"CN Long An","t":"CN","u":"VN0010157","un":"CN Long An","k":"CN","p":"Long An"},{"n":"PGD Bến Lức","t":"PGD","u":"VN0010157","un":"CN Long An","k":"CN","p":"Long An"},{"n":"PGD Đức Hòa","t":"PGD","u":"VN0010157","un":"CN Long An","k":"CN","p":"Long An"},{"n":"CN Đồng Tháp","t":"CN","u":"VN0010226","un":"CN Đồng Tháp","k":"CN","p":"Đồng Tháp"},{"n":"PGD Sa Đéc","t":"PGD","u":"VN0010226","un":"CN Đồng Tháp","k":"CN","p":"Đồng Tháp"},{"n":"CN An Giang","t":"CN","u":"VN0010156","un":"CN An Giang","k":"CN","p":"An Giang"},{"n":"PGD Châu Đốc","t":"PGD","u":"VN0010156","un":"CN An Giang","k":"CN","p":"An Giang"},{"n":"CN Cần Thơ","t":"CN","u":"VN0010107","un":"CN Cần Thơ","k":"CN","p":"Cần Thơ"},{"n":"PGD Lý Tự Trọng","t":"PGD","u":"VN0010107","un":"CN Cần Thơ","k":"CN","p":"Cần Thơ"},{"n":"PGD Ninh Kiều","t":"PGD","u":"VN0010107","un":"CN Cần Thơ","k":"CN","p":"Cần Thơ"},{"n":"CN Vĩnh Long","t":"CN","u":"VN0010228","un":"CN Vĩnh Long","k":"CN","p":"Vĩnh Long"},{"n":"CN Kiên Giang","t":"CN","u":"VN0010170","un":"CN Kiên Giang","k":"CN","p":"Kiên Giang"},{"n":"PGD Phú Quốc","t":"PGD","u":"VN0010170","un":"CN Kiên Giang","k":"CN","p":"Kiên Giang"},{"n":"CN Đà Lạt","t":"CN","u":"VN0010350","un":"CN Đà Lạt","k":"CN","p":"Lâm Đồng"},{"n":"PGD Đức Trọng","t":"PGD","u":"VN0010350","un":"CN Đà Lạt","k":"CN","p":"Lâm Đồng"},{"n":"PGD Bảo Lộc","t":"PGD","u":"VN0010350","un":"CN Đà Lạt","k":"CN","p":"Lâm Đồng"},{"n":"CN Tiền Giang","t":"CN","u":"VN0010353","un":"CN Tiền Giang","k":"CN","p":"Tiền Giang"},{"n":"PGD Cai Lậy","t":"PGD","u":"VN0010353","un":"CN Tiền Giang","k":"CN","p":"Tiền Giang"},{"n":"CN Cà Mau","t":"CN","u":"VN0010359","un":"CN Cà Mau","k":"CN","p":"Cà Mau"},{"n":"CN Tây Ninh","t":"CN","u":"VN0010364","un":"CN Tây Ninh","k":"CN","p":"Tây Ninh"},{"n":"PGD Hoà Thành","t":"PGD","u":"VN0010364","un":"CN Tây Ninh","k":"CN","p":"Tây Ninh"},{"n":"CN Bình Phước","t":"CN","u":"VN0010366","un":"CN Bình Phước","k":"CN","p":"Bình Phước"},{"n":"CN Phú Yên","t":"CN","u":"VN0010386","un":"CN Phú Yên","k":"CN","p":"Phú Yên"},{"n":"PGD Sông Cầu","t":"PGD","u":"VN0010386","un":"CN Phú Yên","k":"CN","p":"Phú Yên"},{"n":"CN Bến Tre","t":"CN","u":"VN0010385","un":"CN Bến Tre","k":"CN","p":"Bến Tre"},{"n":"CN Sóc Trăng","t":"CN","u":"VN0010398","un":"CN Sóc Trăng","k":"CN","p":"Sóc Trăng"},{"n":"CN Ninh Thuận","t":"CN","u":"VN0010400","un":"CN Ninh Thuận","k":"CN","p":"Ninh Thuận"},{"n":"CN Bạc Liêu","t":"CN","u":"VN0010401","un":"CN Bạc Liêu","k":"CN","p":"Bạc Liêu"},{"n":"CN Trà Vinh","t":"CN","u":"VN0010455","un":"CN Trà Vinh","k":"CN","p":"Trà Vinh"},{"n":"TTKD OTO MIEN BAC","t":"TTKD","u":"VN0010478","un":"TTKD OTO MIEN BAC","k":"HUB","p":"Hà Nội"},{"n":"TTKD OTO MIEN NAM","t":"TTKD OTO MIEN NAM","u":"VN0010479","un":"TTKD OTO MIEN NAM","k":"HUB","p":"Hồ Chí Minh"},{"n":"TTTC Vùng 1","t":"TTTC","u":"VN0010374","un":"TTTC Vùng 1","k":"TTTC","p":"Hà Nội"},{"n":"TTTC R1B","t":"TTTC","u":"VN0010417","un":"TTTC R1B","k":"TTTC","p":"Hà Nội"},{"n":"TTTC Vùng 3","t":"TTTC","u":"VN0010376","un":"TTTC Vùng 3","k":"TTTC","p":"Hà Nội"},{"n":"TTTC Vùng 2","t":"TTTC","u":"VN0010379","un":"TTTC Vùng 2","k":"TTTC","p":"Hà Nội"},{"n":"TTTC Vùng 8","t":"TTTC","u":"VN0010377","un":"TTTC Vùng 8","k":"TTTC","p":"Hồ Chí Minh"},{"n":"TTTC Thảo Điền","t":"TTTC","u":"VN0010407","un":"TTTC Thảo Điền","k":"TTTC","p":"Hồ Chí Minh"},{"n":"TTTC Vùng 9","t":"TTTC","u":"VN0010378","un":"TTTC Vùng 9","k":"TTTC","p":"Hồ Chí Minh"},{"n":"TTTC R9.2","t":"TTTC","u":"VN0010445","un":"TTTC R9.2","k":"TTTC","p":"Hồ Chí Minh"},{"n":"TTTC Vùng 11","t":"TTTC","u":"VN0010421","un":"TTTC Vùng 11","k":"TTTC","p":"Đồng Nai"},{"n":"TTTC Vùng 5","t":"TTTC","u":"VN0010418","un":"TTTC Vùng 5","k":"TTTC","p":"Ninh Bình"},{"n":"TTTC Vùng 10","t":"TTTC","u":"VN0010420","un":"TTTC Vùng 10","k":"TTTC","p":"Cần Thơ"}],"daily":[{"date":"2026-09-21","policies":3,"premium":17013000},{"date":"2026-09-22","policies":13,"premium":81354900},{"date":"2026-09-23","policies":15,"premium":90528900},{"date":"2026-09-24","policies":31,"premium":192763900},{"date":"2026-09-25","policies":44,"premium":291074900},{"date":"2026-09-26","policies":51,"premium":350279991},{"date":"2026-09-27","policies":53,"premium":361731991},{"date":"2026-09-28","policies":74,"premium":506927951},{"date":"2026-09-29","policies":89,"premium":601028901}],"regions":[{"name":"Miền Bắc","premium":254905710,"policies":37},{"name":"Miền Nam","premium":176906191,"policies":27},{"name":"Miền Trung","premium":169217000,"policies":25}],"pvi_units":[{"name":"BH PVI Tây Nguyên","premium":95418000,"policies":14},{"name":"BH PVI Sài Gòn","premium":88303350,"policies":14},{"name":"BH PVI Duyên Hải","premium":68191000,"policies":11},{"name":"BH PVI Ninh Bình","premium":63251000,"policies":9},{"name":"BH PVI Đà Nẵng","premium":56646000,"policies":9},{"name":"BH PVI Link","premium":54317960,"policies":8},{"name":"BH PVI TP. Hồ Chí Minh","premium":47763341,"policies":6},{"name":"BH PVI An Giang","premium":35167500,"policies":6},{"name":"BH PVI Đông Đô","premium":31653750,"policies":4},{"name":"BH PVI Bắc Trung Bộ","premium":24461000,"policies":3},{"name":"BH PVI Quảng Trị","premium":17153000,"policies":2},{"name":"BH PVI Vĩnh Phú","premium":13031000,"policies":2},{"name":"BH PVI Đồng Tháp","premium":5672000,"policies":1}]};
+</script>
+<script>
+(function(){
+"use strict";
+const D = window.RACE_DATA;
+if(!D){document.getElementById('main').innerHTML='<div class="err">Chưa có dữ liệu (data.js). Vui lòng chạy update.</div>';return;}
+const C = D.config, M = D.meta;
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const vi = n=>Math.round(n).toLocaleString('vi-VN');
+function money(n,forceTr){ // gọn: 95,4 tr | 1,25 tỷ
+  n=+n||0;
+  if(!forceTr && Math.abs(n)>=1e9) return (n/1e9).toLocaleString('vi-VN',{maximumFractionDigits:3})+' tỷ';
+  if(Math.abs(n)>=1e6) return (n/1e6).toLocaleString('vi-VN',{maximumFractionDigits:1})+' tr';
+  return vi(n)+'đ';
+}
+const trPrize = n=>(n/1e6).toLocaleString('vi-VN')+' triệu';
+const dmy = iso=>{const [y,m,d]=iso.split('-');return `${d}/${m}/${y}`;};
+const CAR = (w=40,h=18)=>`<svg width="${w}" height="${h}" viewBox="0 0 40 18" aria-hidden="true"><path fill="currentColor" d="M2 12.5c0-2 1-3.2 3-3.6l5-1.2 5.4-4.3c1-.8 2.2-1.2 3.5-1.2h7.3c1.4 0 2.7.6 3.6 1.6l3.2 3.6 3.1.6c1.6.3 2.9 1.7 2.9 3.4V14c0 .8-.6 1.4-1.4 1.4H3.4C2.6 15.4 2 14.8 2 14z"/><path fill="#061230" opacity=".55" d="M16.4 4.4c.7-.6 1.6-.9 2.5-.9H22v4.2h-9.2zm7.2-.9h2.5c1 0 1.9.4 2.5 1.1l2.6 3.1h-7.6z"/><circle cx="10" cy="15" r="3.2" fill="#0b0f1a"/><circle cx="10" cy="15" r="1.4" fill="#cfd8e3"/><circle cx="30.5" cy="15" r="3.2" fill="#0b0f1a"/><circle cx="30.5" cy="15" r="1.4" fill="#cfd8e3"/><rect x="36" y="9.2" width="3" height="1.6" rx=".8" fill="#fff6c2"/></svg>`;
+
+/* ---------- animation on view ---------- */
+const fmts={0:vi,1:n=>money(n),2:vi,3:n=>money(n),m:n=>money(n)};
+function countUp(el){const to=+el.dataset.count, f=fmts[el.dataset.fmt]||vi, t0=performance.now(), dur=1400;
+  (function st(t){const k=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-k,3); el.textContent=f(to*e); if(k<1) requestAnimationFrame(st);})(t0);}
+function fire(root){
+  root.querySelectorAll('[data-l]').forEach(el=>el.style.left=`max(${el.dataset.l}%, ${el.offsetWidth+4}px)`);
+  root.querySelectorAll('[data-c]').forEach(el=>el.style.left=el.dataset.c+'%');
+  root.querySelectorAll('[data-w]').forEach(el=>el.style.width=el.dataset.w+'%');
+  root.querySelectorAll('[data-count]').forEach(el=>{if(!el._c){el._c=1;countUp(el);}});
+}
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){fire(e.target);io.unobserve(e.target);}}),{threshold:.15}) : null;
+function observe(root){ if(io){ root.querySelectorAll('.lane,.hub,.podium,.e-track,.tl-road,.hbar,.bar').forEach(el=>io.observe(el)); } else fire(root); }
+/* ---------- speed lines ---------- */
+(function(){const s=$('#speed');let h='';for(let i=0;i<18;i++){const top=Math.random()*100,w=60+Math.random()*180,dur=1.2+Math.random()*2.4,del=-Math.random()*3;h+=`<i class="${i%4==0?'o':''}" style="top:${top}%;width:${w}px;animation-duration:${dur}s;animation-delay:${del}s"></i>`;}s.innerHTML=h;})();
+
+/* ---------- hero ---------- */
+$('#upd').textContent = `${M.report_time} · ${dmy(M.report_date)}`;
+const start = new Date(C.program.start+'T00:00:00+07:00'), end = new Date(C.program.end+'T23:59:59+07:00');
+const totalDays = Math.round((end-start)/864e5);
+const rDay = Math.min(totalDays, Math.round((new Date(M.report_date+'T12:00:00+07:00')-start)/864e5)+1);
+$('#tlDay').textContent = `NGÀY ${rDay}/${totalDays}`;
+$('#tlCar').innerHTML = CAR(44,20);
+function tickCD(){
+  let ms = Math.max(0,end-new Date());
+  const d=Math.floor(ms/864e5); ms-=d*864e5; const h=Math.floor(ms/36e5); ms-=h*36e5; const m=Math.floor(ms/6e4); const s=Math.floor((ms-m*6e4)/1e3);
+  const p=n=>String(n).padStart(2,'0');
+  $('#cd').innerHTML = (end-new Date()>0)
+    ? `<div class="cd"><div class="num">${d}</div><small>ngày</small></div><div class="cd"><div class="num">${p(h)}</div><small>giờ</small></div><div class="cd"><div class="num">${p(m)}</div><small>phút</small></div><div class="cd"><div class="num">${p(s)}</div><small>giây</small></div><div class="cd-lbl">còn lại đến vạch đích 31/10/2026</div>`
+    : `<div class="cd"><div class="num">🏁</div><small>đã về đích</small></div><div class="cd-lbl">Chương trình đã kết thúc — chờ kết quả chính thức</div>`;
+}
+tickCD(); setInterval(tickCD,1000);
+
+const kpis = [
+  {l:'Tổng HĐBH', v:M.total_policies, f:vi, d:M.today_policies?`+${M.today_policies} hôm nay`:'', c:'#2f7bff'},
+  {l:'Doanh thu (chưa VAT)', v:M.total_premium, f:n=>money(n), d:M.today_premium?`+${money(M.today_premium)} hôm nay`:'', c:'#ff7a1a'},
+  {l:'CN / TTTC đã ghi điểm', v:M.active_units, f:vi, d:'', c:'#e8263f'},
+  {l:'Phí bình quân / HĐBH', v:M.total_policies?M.total_premium/M.total_policies:0, f:n=>money(n), d:'', c:'#14b8a6'},
+];
+$('#kpis').innerHTML = kpis.map((k,i)=>`<div class="kpi" style="--c:${k.c}"><div class="l">${k.l}</div><div class="v num" data-count="${k.v}" data-fmt="${i}">0</div><div class="d">${k.d||'&nbsp;'}</div></div>`).join('');
+
+/* ---------- ticker ---------- */
+const B = D.branches, H = D.hubs;
+const early = C.early.tiers; const cnt = M.total_policies;
+const curTier = early.find(t=>cnt<t.to);
+const msgs = [];
+if(M.today_policies) msgs.push(`⚡ Hôm nay <b>+${M.today_policies} HĐBH</b> · <b>+${money(M.today_premium)}</b>`);
+if(curTier) msgs.push(`🎁 Còn <b>${curTier.to-cnt} suất</b> thưởng ${vi(curTier.reward)}đ/HĐBH`);
+if(B[0]) msgs.push(`🏆 <b>${esc(B[0].name)}</b> đang dẫn đầu với ${money(B[0].premium)}`);
+B.filter(b=>b.crossed_today).forEach(b=>msgs.push(`🏁 <b>${esc(b.name)}</b> vừa vượt ngưỡng ${money(C.branch.threshold)}!`));
+B.filter(b=>b.today_policies>0).sort((a,b)=>b.today_policies-a.today_policies).slice(0,6).forEach(b=>{
+  const mv = b.prev_rank==null?' · <b>lần đầu lên bảng</b>':(b.prev_rank>b.rank?` · ▲${b.prev_rank-b.rank} bậc`:'');
+  msgs.push(`🚗 ${esc(b.name)} <b>+${b.today_policies} HĐBH</b>${mv}`);});
+H.forEach(h=>msgs.push(`🚙 ${esc(hubName(h))}: <b>${money(h.premium)}</b> (${Math.round(h.premium/C.hub.threshold*100)}% ngưỡng)`));
+msgs.push('📣 Ghi điểm ngay từ hợp đồng đầu tiên!');
+const tk = msgs.map(m=>`<span>${m}</span>`).join('');
+$('#ticker').innerHTML = tk+tk;
+$('#ticker').style.animationDuration = Math.max(25,msgs.length*6)+'s';
+
+function hubName(h){const n=h.name.toUpperCase();return n.includes('BAC')||n.includes('BẮC')?'Hub xe Miền Bắc':n.includes('NAM')?'Hub xe Miền Nam':h.name;}
+
+/* ---------- 1. early ---------- */
+const maxE = early[early.length-1].to;
+const tierColors=['#ff7a1a','#2f7bff','#14b8a6'];
+$('#eTrack').innerHTML = early.map((t,i)=>{const w=(t.to-t.from+1)/maxE*100;return `<div class="e-seg" style="width:${w}%"><div class="fill" data-w="${Math.max(0,Math.min(1,(cnt-t.from+1)/(t.to-t.from+1)))*100}" style="background:linear-gradient(90deg,${tierColors[i]}66,${tierColors[i]})"></div><div class="lab">${vi(t.reward/1000)}K</div></div>`}).join('') +
+  `<div class="e-car" id="eCar" data-c="${Math.min(cnt,maxE)/maxE*100}"><span class="bub">Đơn thứ ${vi(cnt)}</span>${CAR(40,18).replace('<svg','<svg style="color:#fff"')}</div>`;
+$('#tiers').innerHTML = early.map((t,i)=>{
+  const size=t.to-t.from+1, used=Math.max(0,Math.min(size,cnt-t.from+1)), left=size-used;
+  const st = left===0?'<span class="dim">Đã hết suất</span>':used>0?`<span style="color:${tierColors[i]}">Còn ${left} suất</span>`:`<span class="dim">Mở từ đơn ${t.from}</span>`;
+  return `<div class="tier ${used>0&&left>0?'on':''} ${left===0?'done':''}" style="--tc:${tierColors[i]}"><div class="t">${esc(t.label)}</div><div class="amt num" style="color:${tierColors[i]}">${vi(t.reward)}đ</div><div class="st">${st}</div></div>`;}).join('');
+const IP = C.individual;
+$('#indiv').innerHTML = `<div class="blur">${IP.prizes.map((p,i)=>`<div class="prz ${['g','s','b'][i]}"><small>Top ${i+1}</small><div class="num">${trPrize(p)}</div></div>`).join('')}</div>
+  <div class="lock-ov"><div style="font-size:22px">🔒</div><div class="num">TOP 3 CÁ NHÂN DOANH THU CAO NHẤT</div><div class="muted">${esc(IP.note)} · Điều kiện: doanh thu ≥ ${money(IP.threshold)} (chưa VAT)</div></div>`;
+
+/* ---------- 2. branches ---------- */
+const BT = C.branch.threshold;
+$('#bPrizes').innerHTML = C.branch.prizes.map((p,i)=>`<div class="prz ${['g','s','b'][i]}"><small>Hạng ${i+1}</small><div class="num">${trPrize(p)}</div></div>`).join('') +
+  `<div class="prz"><small>Ngưỡng điều kiện</small><div class="num">${money(BT)}</div></div>`;
+const podCols=['var(--gold)','var(--silver)','var(--bronze)'];
+const order=[1,0,2];
+$('#podium').innerHTML = order.map(i=>{const b=B[i]; if(!b) return '<div></div>';
+  return `<div class="pod p${i+1}" style="--pc:${podCols[i]}"><div class="nm">${esc(b.name)}</div><div class="pv num" data-count="${b.premium}" data-fmt="m">0</div>
+  <div class="blk"><div class="p">${i+1}</div><div class="pz">${trPrize(C.branch.prizes[i])}</div></div>
+  <div class="st ${b.qualified?'ok':'no'}">${b.qualified?'✔ Đạt ngưỡng':'Còn '+money(BT-b.premium)}</div></div>`;}).join('');
+
+const bScaleMax = Math.max(BT, B[0]?B[0].premium:0)*1.12;
+const pct = (v,max)=>Math.max(0,Math.min(100,v/max*100));
+$('#bScale').innerHTML = `<span>0</span><span>Vạch ${money(BT)} 🏁</span><span>${money(bScaleMax)}</span>`;
+function mvHtml(b){ if(b.prev_rank==null) return '<span class="mv new">MỚI</span>'; const d=b.prev_rank-b.rank; return d>0?`<span class="mv up">▲${d}</span>`:d<0?`<span class="mv dn">▼${-d}</span>`:'<span class="mv eq">–</span>'; }
+function laneColor(b){return b.rank===1?'#ffc93c':b.rank===2?'#d6dee9':b.rank===3?'#e98b5b':b.kind==='TTTC'?'#ff6b81':'#5b9dff';}
+function laneHtml(b){
+  const cls=b.rank===1?'g':b.rank===2?'s':b.rank===3?'b':'';
+  const gap = b.qualified?'<span class="q ok">✔ Đã đạt ngưỡng</span>':`<span class="q">Còn ${money(BT-b.premium)} tới ngưỡng</span>`;
+  return `<div class="lane" id="L-${esc(b.id)}" style="--lc:${laneColor(b)}">
+    <div class="top"><div class="rk ${cls}">${b.rank}</div>
+      <div class="ln"><div class="n">${esc(b.name)}</div><div class="m"><span class="kind ${b.kind==='TTTC'?'tttc':''}">${b.kind}</span>${esc(b.region||'')}${b.pvi?' · '+esc(b.pvi):''}</div></div>
+      <div class="rv"><div class="v num">${money(b.premium)}</div>${mvHtml(b)}</div></div>
+    <div class="road"><div class="thr" style="left:${pct(BT,bScaleMax)}%"></div><div class="trail" data-w="${pct(b.premium,bScaleMax)}"></div><div class="car" data-l="${pct(b.premium,bScaleMax)}">${CAR()}</div></div>
+    <div class="foot"><span>${b.policies} HĐBH${b.today_policies>0?` · <b class="ok">+${b.today_policies} hôm nay</b>`:''}</span>${gap}</div></div>`;
+}
+let showAll=false; const TOPN=10;
+function renderLanes(){
+  const list = showAll?B:B.slice(0,TOPN);
+  $('#lanes').innerHTML = list.length?list.map(laneHtml).join(''):'<div class="dim">Chưa có dữ liệu.</div>';
+  $('#more').style.display = B.length>TOPN?'block':'none';
+  $('#more').textContent = showAll?'Thu gọn':`Xem toàn bộ ${B.length} đơn vị đã ghi điểm`;
+  observe($('#lanes'));
+}
+$('#more').onclick=()=>{showAll=!showAll;renderLanes();};
+renderLanes();
+const qualifiedCnt = B.filter(b=>b.qualified).length;
+$('#bNote').innerHTML = `<b>Điều kiện:</b> doanh thu phí bảo hiểm thuộc phần OPES + BH PVI (chưa gồm VAT) tối thiểu <b>${money(BT)}</b>, ghi nhận cho Chi nhánh/TTTC trong thời gian chương trình. Doanh thu của PGD được cộng về Chi nhánh quản lý. Hiện có <b>${qualifiedCnt}</b> đơn vị đạt ngưỡng.`;
+
+/* search */
+const L = D.lookup.map(x=>({...x,s:fold(x.n+' '+x.un+' '+(x.p||''))}));
+function fold(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();}
+const q=$('#q'), sg=$('#sugg'); let act=-1, cur=[];
+q.addEventListener('input',()=>{
+  const v=fold(q.value.trim()); act=-1;
+  if(v.length<2){sg.style.display='none';return;}
+  const toks=v.split(/\s+/);
+  cur=L.filter(x=>toks.every(t=>x.s.includes(t))).map(x=>({x,sc:(fold(x.n).includes(v)?0:2)+(x.t==='PGD'?1:0)})).sort((a,b)=>a.sc-b.sc).map(o=>o.x).slice(0,12);
+  sg.innerHTML=cur.length?cur.map((x,i)=>`<button data-i="${i}"><span>${esc(x.n)}</span><small>${x.k==='CN'&&x.n!==x.un?'→ '+esc(x.un):esc(x.t)}</small></button>`).join(''):'<button disabled><span class="dim">Không tìm thấy đơn vị</span></button>';
+  sg.style.display='block';
+});
+q.addEventListener('keydown',e=>{
+  const bs=[...sg.querySelectorAll('button[data-i]')]; if(!bs.length) return;
+  if(e.key==='ArrowDown'){act=Math.min(bs.length-1,act+1);} else if(e.key==='ArrowUp'){act=Math.max(0,act-1);} else if(e.key==='Enter'){pick(cur[Math.max(0,act)]);e.preventDefault();return;} else return;
+  bs.forEach((b,i)=>b.classList.toggle('act',i===act)); e.preventDefault();
+});
+sg.addEventListener('click',e=>{const b=e.target.closest('button[data-i]'); if(b) pick(cur[+b.dataset.i]);});
+document.addEventListener('click',e=>{if(!e.target.closest('.search')) sg.style.display='none';});
+function pick(x){
+  if(!x) return; sg.style.display='none'; q.value=x.n;
+  const f=$('#found');
+  if(x.k==='HUB'){ f.style.display='block'; f.innerHTML=`<div class="h">${esc(x.n)} thuộc hạng mục Hub xe</div><div class="row">Xem đường đua Hub ở mục 3 bên dưới ↓</div>`; setTimeout(()=>$('#s3').scrollIntoView({behavior:'smooth'}),300); return; }
+  const b=B.find(u=>u.id===x.u);
+  const via = x.n!==x.un?`${esc(x.n)} → ghi nhận cho <b>${esc(x.un)}</b>`:`<b>${esc(x.un)}</b>`;
+  if(!b){ f.style.display='block'; f.innerHTML=`<div class="h">${via}</div><div class="row"><span>Chưa có HĐBH trong chương trình.</span><span class="ok"><b>Ghi điểm ngay từ hợp đồng đầu tiên!</b></span></div>`; return; }
+  const third=B[2];
+  const toTop3 = b.rank<=3?'<span class="ok"><b>Đang trong Top 3</b></span>':third?`<span>Cách Top 3: <b>${money(third.premium-b.premium+1)}</b></span>`:'';
+  f.style.display='block';
+  f.innerHTML=`<div class="h">${via}</div><div class="row"><span>Hạng <b>#${b.rank}</b>/${B.length}</span><span>Doanh thu <b>${money(b.premium)}</b></span><span>${b.policies} HĐBH</span>${b.qualified?'<span class="ok"><b>✔ Đạt ngưỡng</b></span>':`<span>Còn <b>${money(BT-b.premium)}</b> tới ngưỡng</span>`}${toTop3}</div>`;
+  if(b.rank>TOPN && !showAll){showAll=true;renderLanes();}
+  setTimeout(()=>{const el=document.getElementById('L-'+b.id); if(el){el.scrollIntoView({behavior:'smooth',block:'center'}); document.querySelectorAll('.lane.hl').forEach(l=>l.classList.remove('hl')); el.classList.add('hl');}},200);
+}
+
+/* ---------- 3. hubs ---------- */
+const HC=C.hub, hubMax=HC.milestones[HC.milestones.length-1].value*1.1;
+$('#hPrizes').innerHTML = HC.prizes.map((p,i)=>`<div class="prz ${['g','s'][i]}"><small>GĐ Hub hạng ${i+1}</small><div class="num">${trPrize(p)}</div></div>`).join('') +
+  `<div class="prz"><small>Thưởng thêm theo mốc</small><div class="num" style="font-size:17px">+5tr / +10tr</div></div>`;
+$('#hubs').innerHTML = H.map((h,i)=>{
+  const col = i===0?'#ffc93c':'#d6dee9';
+  const next = HC.milestones.find(m=>h.premium<m.value);
+  return (i===1?'<div class="vs">VS</div>':'')+`<div class="hub" style="--lc:${col}">
+    <div class="top" style="display:flex;align-items:center;gap:10px"><div class="rk ${i===0?'g':'s'}">${h.rank}</div>
+      <div class="ln" style="flex:1"><div class="n" style="font-weight:800;font-size:16px">${esc(hubName(h))}</div><div class="m dim" style="font-size:11.5px">${esc(h.name)} · ${h.policies} HĐBH${h.today_policies>0?` · <span class="ok">+${h.today_policies} hôm nay</span>`:''}</div></div>
+      <div class="rv"><div class="v num" style="font-size:22px">${money(h.premium)}</div>${mvHtml(h)}</div></div>
+    <div class="road">${HC.milestones.map((m,j)=>`<div class="${j===0?'thr':'ms'}" style="left:${pct(m.value,hubMax)}%"></div>`).join('')}<div class="trail" data-w="${pct(h.premium,hubMax)}"></div><div class="car" data-l="${pct(h.premium,hubMax)}">${CAR(58,26)}</div></div>
+    <div class="hub-ms">${HC.milestones.map(m=>`<span style="left:${pct(m.value,hubMax)}%"><b>${money(m.value)}</b>${esc(m.label)}</span>`).join('')}</div>
+    <div class="bar"><i data-w="${pct(h.premium,HC.threshold)}"></i></div>
+    <div class="foot" style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-top:5px"><span>${Math.round(h.premium/HC.threshold*100)}% ngưỡng điều kiện</span><span>${next?`Còn <b>${money(next.value-h.premium)}</b> tới mốc ${money(next.value)}`:'<b class="ok">Đã vượt mọi mốc!</b>'}</span></div>
+  </div>`;}).join('');
+$('#hNote').innerHTML = `<b>Điều kiện GĐ Hub:</b> doanh thu phí OPES + BH PVI tối thiểu <b>${money(HC.threshold)}</b> (chưa VAT). Thưởng thêm theo mốc: đạt <b>${money(HC.milestones[1].value)}</b> cộng 5.000.000đ, đạt <b>${money(HC.milestones[2].value)}</b> cộng 10.000.000đ.`;
+const HM=HC.manager;
+$('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(4,1fr)">${HM.prizes.map((p,i)=>`<div class="prz"><small>TP Hub #${i+1}</small><div class="num">${trPrize(p)}</div></div>`).join('')}</div>
+  <div class="lock-ov"><div style="font-size:22px">🔒</div><div class="num">TRƯỞNG PHÒNG HUB XE — TOP 4</div><div class="muted">${esc(HM.note)} · Điều kiện ≥ ${money(HM.threshold)}/phòng-nhóm</div></div>`;
+
+/* ---------- 4. overview ---------- */
+function chart(){
+  const d=D.daily; if(!d.length){$('#chart').innerHTML='<div class="dim">Chưa có dữ liệu.</div>';return;}
+  const W=Math.max(320,$('#chart').clientWidth||900),Hh=W<560?230:280,pl=46,pr=46,pt=16,pb=30, n=d.length;
+  const rawMax=Math.max(...d.map(x=>x.premium),1); const mag=Math.pow(10,Math.floor(Math.log10(rawMax/4))); const stepP=[1,2,2.5,5,10].map(k=>k*mag).find(v=>v*4>=rawMax*1.05); const maxP=stepP*4;
+  const newPol=d.map((x,i)=>x.policies-(i?d[i-1].policies:0)); const maxN=Math.max(...newPol,1)*1.25;
+  const x=i=>pl+(n===1?(W-pl-pr)/2:i*(W-pl-pr)/(n-1)); const y=v=>pt+(Hh-pt-pb)*(1-v/maxP); const yn=v=>pt+(Hh-pt-pb)*(1-v/maxN);
+  const bw=Math.min(26,(W-pl-pr)/n*.5);
+  let s=`<svg class="chart" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Doanh thu luỹ kế theo ngày"><defs><linearGradient id="ga" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff7a1a" stop-opacity=".45"/><stop offset="1" stop-color="#ff7a1a" stop-opacity="0"/></linearGradient></defs>`;
+  for(let k=0;k<=4;k++){const v=maxP*k/4;s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="#ffffff14"/><text x="${pl-6}" y="${y(v)+4}" fill="#7f90bd" font-size="11" text-anchor="end">${vi(v/1e6)}</text>`;}
+  s+=`<text x="${pl-6}" y="${pt-4}" fill="#7f90bd" font-size="10.5" text-anchor="end">triệu đ</text><text x="${W-pr+6}" y="${pt-4}" fill="#7f90bd" font-size="10.5">HĐ/ngày</text>`;
+  newPol.forEach((v,i)=>{s+=`<rect x="${x(i)-bw/2}" y="${yn(v)}" width="${bw}" height="${Hh-pb-yn(v)}" rx="3" fill="#2f7bff" opacity=".55"><title>${dmy(d[i].date)}: +${v} HĐBH</title></rect>`; if(v) s+=`<text x="${x(i)}" y="${yn(v)-4}" fill="#9fc1ff" font-size="11" text-anchor="middle">${v}</text>`;});
+  const pts=d.map((p,i)=>`${x(i)},${y(p.premium)}`).join(' ');
+  s+=`<polygon points="${x(0)},${Hh-pb} ${pts} ${x(n-1)},${Hh-pb}" fill="url(#ga)"/><polyline points="${pts}" fill="none" stroke="#ff7a1a" stroke-width="3" stroke-linejoin="round"/>`;
+  d.forEach((p,i)=>{s+=`<circle cx="${x(i)}" cy="${y(p.premium)}" r="${i===n-1?5:3}" fill="${i===n-1?'#fff':'#ff7a1a'}"><title>${dmy(p.date)}: ${money(p.premium)} · ${p.policies} HĐBH</title></circle>`;
+    const step=Math.ceil(n/Math.max(2,Math.floor((W-pl-pr)/52))); if(i%step===0||i===n-1) s+=`<text x="${x(i)}" y="${Hh-10}" fill="#7f90bd" font-size="11" text-anchor="middle">${dmy(p.date).slice(0,5)}</text>`;});
+  const last=d[n-1]; s+=`<text x="${x(n-1)-8}" y="${y(last.premium)-10}" fill="#fff" font-size="13" font-weight="700" text-anchor="end">${money(last.premium)}</text>`;
+  s+='</svg>'; $('#chart').innerHTML=s+`<div class="dim" style="font-size:12px;margin-top:4px"><span style="color:#ff7a1a">━</span> Doanh thu luỹ kế (chưa VAT) &nbsp; <span style="color:#2f7bff">■</span> HĐBH mới trong ngày</div>`;
+}
+chart(); let rw=innerWidth; addEventListener('resize',()=>{if(Math.abs(innerWidth-rw)>40){rw=innerWidth;chart();}});
+function hbars(el,arr,color){const mx=Math.max(...arr.map(a=>a.premium),1);el.innerHTML=arr.map(a=>`<div class="hbar" style="--hc:${color}"><div class="nm" title="${esc(a.name)}">${esc(a.name)}</div><div class="tr"><i data-w="${a.premium/mx*100}"></i></div><div class="vv">${money(a.premium)}</div></div>`).join('');}
+hbars($('#regions'),D.regions,'linear-gradient(90deg,#1f55d6,#5b9dff)');
+hbars($('#pvi'),D.pvi_units,'linear-gradient(90deg,#e2560b,#ffb03a)');
+
+/* footer */
+$('#rules').innerHTML = [
+  `Doanh thu thi đua = 100% phí bảo hiểm OPES + BH PVI, <b>chưa gồm VAT</b>, theo ngày cấp HĐBH từ ${dmy(C.program.start)} đến ${dmy(C.program.end)}.`,
+  'Doanh thu của Phòng giao dịch được ghi nhận cho Chi nhánh quản lý; Trung tâm thế chấp và Hub xe được xếp hạng riêng.',
+  'Bảng xếp hạng cập nhật 1 lần/ngày theo báo cáo 17h. Mũi tên ▲▼ so với xếp hạng trước ngày cập nhật.'
+].map(x=>`<li>${x}</li>`).join('');
+$('#src').textContent = `Nguồn: ${M.source} · tạo lúc ${M.generated_at}` + (M.unmapped&&M.unmapped.premium?` · ${M.unmapped.policies} HĐBH chưa xác định đơn vị (${money(M.unmapped.premium)})`:'');
+
+['#kpis','.timeline'].forEach(s=>setTimeout(()=>fire($(s).parentElement),150));
+$('#tlCar').dataset.l = rDay/totalDays*100; $('#tlFill').dataset.w = rDay/totalDays*100;
+setTimeout(()=>{$('#tlCar').style.left=$('#tlCar').dataset.l+'%';$('#tlFill').style.width=$('#tlFill').dataset.w+'%';},200);
+observe(document);
+
+/* ---------- confetti khi có đơn vị vừa vượt ngưỡng ---------- */
+if(B.some(b=>b.crossed_today) && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const cv=$('#confetti'),cx=cv.getContext('2d');cv.width=innerWidth;cv.height=innerHeight;
+  const P=Array.from({length:140},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height*.5,r:4+Math.random()*5,c:['#ff7a1a','#ffc93c','#2f7bff','#e8263f','#14b8a6','#fff'][Math.random()*6|0],vy:2+Math.random()*3,vx:-1+Math.random()*2,a:Math.random()*6}));
+  let t=0;(function f(){cx.clearRect(0,0,cv.width,cv.height);P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.a+=.1;cx.fillStyle=p.c;cx.save();cx.translate(p.x,p.y);cx.rotate(p.a);cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*.6);cx.restore();});if(++t<260)requestAnimationFrame(f);else cx.clearRect(0,0,cv.width,cv.height);})();
+}
+})();
+</script>
+</body>
+</html>
