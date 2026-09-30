@@ -1,0 +1,8 @@
+# KHÔNG BAO GIỜ đẩy dữ liệu gốc lên GitHub
+input/
+mapping/
+*.xlsx
+*.xls
+*.xlsm
+~$*
+__pycache__/
