@@ -204,6 +204,42 @@ section.card{margin:22px 0;border-radius:var(--r);background:linear-gradient(180
 .hbar.head{margin:0 0 2px;font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
 .hbar.head div{font:inherit;color:inherit;min-width:0}
 
+/* PVI unit corner */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+@media(max-width:640px){.chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;margin:0 -16px;padding-left:16px;padding-right:16px;scroll-snap-type:x proximity}}
+.chip{flex:none;scroll-snap-align:start;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#ffffff0a;font-size:13.5px;font-weight:600;white-space:nowrap;transition:background .2s,border-color .2s}
+.chip b{font-family:var(--f-head);font-size:14px;background:#ffffff14;border-radius:999px;padding:0 7px;min-width:22px;text-align:center}
+.chip.zero{color:var(--ink3)}
+.chip:hover{background:#ffffff16}
+.chip.on{background:linear-gradient(90deg,#7c3aed,#a855f7);border-color:#c4b5fd;color:#fff}
+.chip.on b{background:#ffffff33}
+.pv-empty{margin-top:14px;padding:18px;border-radius:14px;border:1px dashed var(--line);text-align:center;color:var(--ink2);font-size:14px}
+.pv-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:16px 0 10px}
+.pv-head .t{font-family:var(--f-head);font-weight:800;font-size:clamp(22px,5vw,28px);line-height:1.05}
+.pv-head .rk2{font-size:12.5px;color:var(--ink2)}
+.btn-s{padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:#ffffff0d;font-size:12.5px;font-weight:700}
+.btn-s:hover{background:#ffffff1a}
+.pv-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(min-width:760px){.pv-kpis{grid-template-columns:repeat(4,1fr)}}
+.pv-kpis .kpi .v{font-size:clamp(24px,6vw,32px)}
+.cov{height:6px;border-radius:4px;background:#ffffff14;margin-top:6px;overflow:hidden}
+.cov i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#7c3aed,#c084fc);width:0;transition:width 1.4s}
+.pt{display:grid;grid-template-columns:1fr auto auto;gap:4px 12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.pt.hd{font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;padding:4px 0}
+.pt .nm2{min-width:0}
+.pt .nm2 .a{font-weight:700;overflow-wrap:anywhere}
+.pt .nm2 .b{font-size:11.5px;color:var(--ink3)}
+.pt .n1{font-family:var(--f-head);font-weight:700;font-size:16px;color:#9fc1ff;text-align:right;min-width:40px}
+.pt .n2{font-family:var(--f-head);font-weight:800;font-size:16px;text-align:right;min-width:70px}
+.pt .n2 small{display:block;font-family:var(--f-body);font-weight:700;font-size:11px;color:var(--green)}
+.cst{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.cst .rk{width:30px;height:30px;font-size:17px}
+.cst .gp{font-size:12px;color:var(--ink2);text-align:right}
+details.zero{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:#ffffff05}
+details.zero summary{cursor:pointer;font-weight:700;font-size:14px}
+.zl{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.zl span{font-size:12.5px;padding:4px 9px;border-radius:8px;background:#ffffff0d;color:var(--ink2)}
+.kind.pgd{background:#35d07f26;color:#8ff0b8}.kind.ttkd{background:#14b8a633;color:#7ff0e0}
 footer{padding:26px 0 46px;color:var(--ink3);font-size:12px;border-top:1px solid var(--line);margin-top:10px}
 footer .slogan{font-family:var(--f-head);font-style:italic;font-weight:800;font-size:clamp(26px,6vw,40px);color:#fff;line-height:1;text-transform:uppercase}
 footer .slogan span{color:var(--orange)}
@@ -283,6 +319,15 @@ footer li{margin:3px 0}
       <div id="hubs"></div>
       <div class="note" id="hNote"></div>
       <div class="locked" id="hubMgr" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- PVI unit corner -->
+  <section class="card" style="--sc:#6d28d9" id="s5">
+    <div class="sec-h"><div class="sec-n">⌂</div><div><div class="sec-t">Góc đơn vị BH PVI</div><div class="sec-s">Chọn đơn vị để xem các CN / PGD / TTTC phụ trách · số HĐBH · doanh thu</div></div></div>
+    <div class="sec-b">
+      <div class="chips" id="pvChips" role="tablist" aria-label="Chọn đơn vị BH PVI"></div>
+      <div id="pvPanel"></div>
     </div>
   </section>
 
@@ -465,7 +510,7 @@ function pick(x){
   const f=$('#found');
   if(x.k==='HUB'){ f.style.display='block'; f.innerHTML=`<div class="h">${esc(x.n)} thuộc hạng mục Hub xe</div><div class="row">Xem đường đua Hub ở mục 3 bên dưới ↓</div>`; setTimeout(()=>$('#s3').scrollIntoView({behavior:'smooth'}),300); return; }
   const b=B.find(u=>u.id===x.u);
-  const via = x.n!==x.un?`${esc(x.n)} → ghi nhận cho <b>${esc(x.un)}</b>`:`<b>${esc(x.un)}</b>`;
+  const via = x.n!==x.un?`${esc(x.n)} → ghi nhận cho <b>${esc(x.un)}</b>`:`<b>${esc(x.un)}</b>`+(x.v?` <span class="dim" style="font-weight:500;font-size:12.5px">· ${esc(x.v)} phụ trách</span>`:'');
   if(!b){ f.style.display='block'; f.innerHTML=`<div class="h">${via}</div><div class="row"><span>Chưa có HĐBH trong chương trình.</span><span class="ok"><b>Ghi điểm ngay từ hợp đồng đầu tiên!</b></span></div>`; return; }
   const third=B[2];
   const toTop3 = b.rank<=3?'<span class="ok"><b>Đang trong Top 3</b></span>':third?`<span>Cách Top 3: <b>${money(third.premium-b.premium+1)}</b></span>`:'';
@@ -496,6 +541,61 @@ const HM=HC.manager;
 $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(4,1fr)">${HM.prizes.map((p,i)=>`<div class="prz"><small>TP Hub #${i+1}</small><div class="num">${trPrize(p)}</div></div>`).join('')}</div>
   <div class="lock-ov"><div style="font-size:22px">🔒</div><div class="num">TRƯỞNG PHÒNG HUB XE — TOP 4</div><div class="muted">${esc(HM.note)} · Điều kiện ≥ ${money(HM.threshold)}/phòng-nhóm</div></div>`;
 
+/* ---------- Góc đơn vị BH PVI ---------- */
+(function(){
+  const PU = D.pvi_units||[], POS = D.pos||[];
+  if(!PU.length){ $('#s5').style.display='none'; return; }
+  const short = n=>n.replace(/^BH PVI\s*/i,'');
+  const slug = n=>fold(short(n)).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const byName = Object.fromEntries(PU.map(g=>[g.name,g]));
+  const order = [...PU].sort((a,b)=>a.rank-b.rank);
+  $('#pvChips').innerHTML = order.map(g=>`<button class="chip ${g.policies?'':'zero'}" role="tab" data-v="${esc(g.name)}">${esc(short(g.name))}<b>${g.policies}</b></button>`).join('');
+  const kindTag = t=>{const T=String(t).toUpperCase();const c=T.includes('PGD')?'pgd':T.includes('TTTC')?'tttc':T.includes('TTKD')||T.includes('OTO')?'ttkd':'';return `<span class="kind ${c}">${esc(T.includes('TTKD')||T.includes('OTO')?'HUB':T)}</span>`;};
+  function render(v){
+    const g = byName[v]; if(!g) return;
+    document.querySelectorAll('#pvChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.v===v));
+    const pts = POS.filter(z=>z.v===v);
+    const active = new Set(pts.map(z=>z.c));
+    const zeros = D.lookup.filter(x=>x.v===v && !active.has(x.c)).sort((a,b)=>String(a.t).localeCompare(String(b.t))||a.n.localeCompare(b.n,'vi'));
+    // CN/TTTC thi đua liên quan (từ tất cả điểm bán thuộc đơn vị, kể cả chưa có đơn)
+    const unitIds = new Set(D.lookup.filter(x=>x.v===v && x.k!=='HUB').map(x=>x.u));
+    const cont = B.filter(b=>unitIds.has(b.id));
+    const hubIds = new Set(D.lookup.filter(x=>x.v===v && x.k==='HUB').map(x=>x.u));
+    const hubs = H.filter(h=>hubIds.has(h.id));
+    const third = B[2];
+    const cov = g.points_total? g.points_active/g.points_total*100:0;
+    $('#pvPanel').innerHTML = `
+      <div class="pv-head"><div><div class="t">${esc(g.name)}</div><div class="rk2">Hạng <b>#${g.rank}</b>/${PU.length} đơn vị BH PVI theo doanh thu</div></div>
+        <button class="btn-s" id="pvCopy">🔗 Sao chép link đơn vị</button></div>
+      <div class="pv-kpis">
+        <div class="kpi" style="--c:#2f7bff"><div class="l">HĐBH</div><div class="v num">${vi(g.policies)}</div><div class="d">${g.today_policies?`+${g.today_policies} hôm nay`:'&nbsp;'}</div></div>
+        <div class="kpi" style="--c:#ff7a1a"><div class="l">Doanh thu (chưa VAT)</div><div class="v num">${money(g.premium)}</div><div class="d">${g.today_premium?`+${money(g.today_premium)} hôm nay`:'&nbsp;'}</div></div>
+        <div class="kpi" style="--c:#a855f7"><div class="l">Độ phủ điểm bán</div><div class="v num">${g.points_active}/${g.points_total}</div><div class="cov"><i data-w="${cov}"></i></div></div>
+        <div class="kpi" style="--c:#14b8a6"><div class="l">Phí BQ / HĐBH</div><div class="v num">${g.policies?money(g.premium/g.policies):'—'}</div><div class="d">&nbsp;</div></div>
+      </div>
+      <div class="sub-h" style="margin-top:18px">Điểm bán đã có đơn (${pts.length})</div>
+      ${pts.length?`<div class="pt hd"><div>Điểm bán</div><div style="text-align:right">HĐBH</div><div style="text-align:right">Doanh thu</div></div>`+pts.map(z=>`<div class="pt"><div class="nm2"><div class="a">${kindTag(z.t)}${esc(z.n)}</div><div class="b">${z.k==='HUB'?'Hạng mục Hub xe':z.un!==z.n?'Thuộc '+esc(z.un):esc(z.region||'')}</div></div><div class="n1">${z.policies}</div><div class="n2">${money(z.premium)}${z.today_policies?`<small>+${z.today_policies} hôm nay</small>`:''}</div></div>`).join(''):'<div class="dim">Chưa có điểm bán nào phát sinh HĐBH — ghi điểm ngay từ hợp đồng đầu tiên!</div>'}
+      ${cont.length||hubs.length?`<div class="sub-h" style="margin-top:18px">Thi đua Chi nhánh / TTTC / Hub liên quan</div>
+      <div class="dim" style="font-size:12px;margin:-4px 0 6px">Doanh thu thi đua tính cho cả Chi nhánh (gồm các PGD trực thuộc) theo Thể lệ.</div>`+
+        cont.map(b=>`<div class="cst"><div class="rk ${b.rank===1?'g':b.rank===2?'s':b.rank===3?'b':''}">${b.rank}</div><div><b>${esc(b.name)}</b><div class="dim" style="font-size:11.5px">${b.policies} HĐBH · ${money(b.premium)}</div></div><div class="gp">${b.qualified?'<span class="ok"><b>✔ Đạt ngưỡng</b></span>':`Còn <b>${money(BT-b.premium)}</b> tới ${money(BT)}`}<br>${b.rank<=3?'<span class="ok">Trong Top 3</span>':third?`Cách Top 3: <b>${money(third.premium-b.premium+1)}</b>`:''}</div></div>`).join('')+
+        hubs.map(h=>`<div class="cst"><div class="rk">${h.rank}</div><div><b>${esc(hubName(h))}</b><div class="dim" style="font-size:11.5px">${h.policies} HĐBH · ${money(h.premium)}</div></div><div class="gp">Còn <b>${money(Math.max(0,C.hub.threshold-h.premium))}</b> tới ${money(C.hub.threshold)}</div></div>`).join(''):''}
+      ${zeros.length?`<details class="zero"><summary>Điểm bán chưa phát sinh đơn (${zeros.length}) — danh sách cần đôn đốc</summary><div class="dim" style="font-size:12px;margin-top:4px">Tính theo đơn cấp trực tiếp tại chính điểm đó (CN và PGD hạch toán độc lập).</div><div class="zl">${zeros.map(x=>`<span>${esc(x.n)}</span>`).join('')}</div></details>`:''}
+    `;
+    fire($('#pvPanel'));
+    try{ localStorage.setItem('ocar_pvi', v); }catch(e){}
+    try{ const u=new URL(location.href); u.searchParams.set('dv', slug(v)); history.replaceState(null,'',u); }catch(e){}
+    $('#pvCopy').onclick=()=>{const link=location.href; const ok=()=>{$('#pvCopy').textContent='✔ Đã sao chép';setTimeout(()=>{const b=$('#pvCopy'); if(b) b.textContent='🔗 Sao chép link đơn vị';},1800);};
+      if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(ok,()=>prompt('Sao chép link:',link)); else prompt('Sao chép link:',link);};
+  }
+  $('#pvChips').addEventListener('click',e=>{const c=e.target.closest('.chip'); if(c){ render(c.dataset.v); c.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'}); }});
+  // khởi tạo: ?dv=... > lựa chọn lần trước > gợi ý chọn
+  let init=null;
+  try{ const q=new URLSearchParams(location.search).get('dv'); if(q) init=(PU.find(g=>slug(g.name)===q)||{}).name; }catch(e){}
+  if(!init){ try{ const l=localStorage.getItem('ocar_pvi'); if(l&&byName[l]) init=l; }catch(e){} }
+  if(init){ render(init); if(new URLSearchParams(location.search).get('dv')) setTimeout(()=>$('#s5').scrollIntoView({behavior:'smooth'}),400); }
+  else $('#pvPanel').innerHTML='<div class="pv-empty">👆 Chọn một đơn vị BH PVI để xem các điểm bán phụ trách, số HĐBH và doanh thu</div>';
+})();
+
 /* ---------- 4. overview ---------- */
 function chart(){
   const d=D.daily; if(!d.length){$('#chart').innerHTML='<div class="dim">Chưa có dữ liệu.</div>';return;}
@@ -518,7 +618,7 @@ function chart(){
 chart(); let rw=innerWidth; addEventListener('resize',()=>{if(Math.abs(innerWidth-rw)>40){rw=innerWidth;chart();}});
 function hbars(el,arr,color){const mx=Math.max(...arr.map(a=>a.premium),1);el.innerHTML=`<div class="hbar head"><div>Đơn vị</div><div></div><div style="text-align:right">HĐBH</div><div style="text-align:right;min-width:64px">Doanh thu</div></div>`+arr.map(a=>`<div class="hbar" style="--hc:${color}"><div class="nm" title="${esc(a.name)}">${esc(a.name)}</div><div class="tr"><i data-w="${a.premium/mx*100}"></i></div><div class="hd">${vi(a.policies)}</div><div class="vv">${money(a.premium)}</div></div>`).join('');}
 hbars($('#regions'),D.regions,'linear-gradient(90deg,#1f55d6,#5b9dff)');
-hbars($('#pvi'),D.pvi_units,'linear-gradient(90deg,#e2560b,#ffb03a)');
+hbars($('#pvi'),D.pvi_units.filter(g=>g.premium>0||g.policies>0),'linear-gradient(90deg,#e2560b,#ffb03a)');
 
 /* footer */
 $('#rules').innerHTML = [
