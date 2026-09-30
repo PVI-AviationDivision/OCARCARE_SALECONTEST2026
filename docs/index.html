@@ -195,11 +195,14 @@ section.card{margin:22px 0;border-radius:var(--r);background:linear-gradient(180
 
 /* overview */
 .chart{width:100%;height:auto;display:block}
-.hbar{display:grid;grid-template-columns:minmax(90px,38%) 1fr auto;gap:8px;align-items:center;font-size:13px;margin:7px 0}
-.hbar .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink2)}
+.hbar{display:grid;grid-template-columns:minmax(90px,36%) 1fr auto auto;gap:8px;align-items:center;font-size:13px;margin:7px 0}
+.hbar .nm{color:var(--ink2);line-height:1.25;overflow-wrap:anywhere}
 .hbar .tr{height:10px;border-radius:6px;background:#ffffff0d;overflow:hidden}
 .hbar .tr i{display:block;height:100%;width:0;border-radius:6px;background:var(--hc,#2f7bff);transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
 .hbar .vv{font-family:var(--f-head);font-weight:700;font-size:15px;min-width:64px;text-align:right}
+.hbar .hd{font-family:var(--f-head);font-weight:700;font-size:15px;min-width:44px;text-align:right;color:#9fc1ff}
+.hbar.head{margin:0 0 2px;font-size:11px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
+.hbar.head div{font:inherit;color:inherit;min-width:0}
 
 footer{padding:26px 0 46px;color:var(--ink3);font-size:12px;border-top:1px solid var(--line);margin-top:10px}
 footer .slogan{font-family:var(--f-head);font-style:italic;font-weight:800;font-size:clamp(26px,6vw,40px);color:#fff;line-height:1;text-transform:uppercase}
@@ -337,7 +340,7 @@ function fire(root){
   root.querySelectorAll('[data-count]').forEach(el=>{if(!el._c){el._c=1;countUp(el);}});
 }
 const io = 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){fire(e.target);io.unobserve(e.target);}}),{threshold:.15}) : null;
-function observe(root){ if(io){ root.querySelectorAll('.lane,.hub,.podium,.e-track,.tl-road,.hbar,.bar').forEach(el=>io.observe(el)); } else fire(root); }
+function observe(root){ if(io){ root.querySelectorAll('.lane,.hub,.podium,.e-track,.tl-road,.hbar:not(.head),.bar').forEach(el=>io.observe(el)); } else fire(root); }
 /* ---------- speed lines ---------- */
 (function(){const s=$('#speed');let h='';for(let i=0;i<18;i++){const top=Math.random()*100,w=60+Math.random()*180,dur=1.2+Math.random()*2.4,del=-Math.random()*3;h+=`<i class="${i%4==0?'o':''}" style="top:${top}%;width:${w}px;animation-duration:${dur}s;animation-delay:${del}s"></i>`;}s.innerHTML=h;})();
 
@@ -513,7 +516,7 @@ function chart(){
   s+='</svg>'; $('#chart').innerHTML=s+`<div class="dim" style="font-size:12px;margin-top:4px"><span style="color:#ff7a1a">━</span> Doanh thu luỹ kế (chưa VAT) &nbsp; <span style="color:#2f7bff">■</span> HĐBH mới trong ngày</div>`;
 }
 chart(); let rw=innerWidth; addEventListener('resize',()=>{if(Math.abs(innerWidth-rw)>40){rw=innerWidth;chart();}});
-function hbars(el,arr,color){const mx=Math.max(...arr.map(a=>a.premium),1);el.innerHTML=arr.map(a=>`<div class="hbar" style="--hc:${color}"><div class="nm" title="${esc(a.name)}">${esc(a.name)}</div><div class="tr"><i data-w="${a.premium/mx*100}"></i></div><div class="vv">${money(a.premium)}</div></div>`).join('');}
+function hbars(el,arr,color){const mx=Math.max(...arr.map(a=>a.premium),1);el.innerHTML=`<div class="hbar head"><div>Đơn vị</div><div></div><div style="text-align:right">HĐBH</div><div style="text-align:right;min-width:64px">Doanh thu</div></div>`+arr.map(a=>`<div class="hbar" style="--hc:${color}"><div class="nm" title="${esc(a.name)}">${esc(a.name)}</div><div class="tr"><i data-w="${a.premium/mx*100}"></i></div><div class="hd">${vi(a.policies)}</div><div class="vv">${money(a.premium)}</div></div>`).join('');}
 hbars($('#regions'),D.regions,'linear-gradient(90deg,#1f55d6,#5b9dff)');
 hbars($('#pvi'),D.pvi_units,'linear-gradient(90deg,#e2560b,#ffb03a)');
 
