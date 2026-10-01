@@ -593,8 +593,7 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
     `;
     fire($('#pvPanel'));
     try{ localStorage.setItem('ocar_pvi', v); }catch(e){}
-    try{ const u=new URL(location.href); u.searchParams.set('dv', slug(v)); history.replaceState(null,'',u); }catch(e){}
-    $('#pvCopy').onclick=()=>{ocTrack('sao-chep-link/'+slug(v),'Sao chép link: '+v);const link=location.href; const ok=()=>{$('#pvCopy').textContent='✔ Đã sao chép';setTimeout(()=>{const b=$('#pvCopy'); if(b) b.textContent='🔗 Sao chép link đơn vị';},1800);};
+    $('#pvCopy').onclick=()=>{ocTrack('sao-chep-link/'+slug(v),'Sao chép link: '+v);const link=location.origin+location.pathname+'?dv='+slug(v); const ok=()=>{$('#pvCopy').textContent='✔ Đã sao chép';setTimeout(()=>{const b=$('#pvCopy'); if(b) b.textContent='🔗 Sao chép link đơn vị';},1800);};
       if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(ok,()=>prompt('Sao chép link:',link)); else prompt('Sao chép link:',link);};
   }
   $('#pvChips').addEventListener('click',e=>{const c=e.target.closest('.chip'); if(c){ render(c.dataset.v); ocTrack('chon-don-vi/'+slug(c.dataset.v),'Chọn đơn vị: '+c.dataset.v); c.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'}); }});
