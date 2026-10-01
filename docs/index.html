@@ -354,6 +354,15 @@ footer li{margin:3px 0}
   </div>
 </footer>
 
+<script>
+/* GoatCounter: ghi nhận đúng đường dẫn người xem mở (trước khi trang tự đổi ?dv=) */
+window.__OC_PATH = location.pathname + location.search;
+window.goatcounter = { path: function(){ return window.__OC_PATH; } };
+window.ocTrack = function(path, title){
+  try{ if(window.goatcounter && window.goatcounter.count) window.goatcounter.count({path: path, title: title||path, event: true}); }catch(e){}
+};
+</script>
+<script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script src="data.js"></script>
 <script>
 (function(){
@@ -481,7 +490,7 @@ function renderLanes(){
   $('#more').textContent = showAll?'Thu gọn':`Xem toàn bộ ${B.length} đơn vị đã ghi điểm`;
   observe($('#lanes'));
 }
-$('#more').onclick=()=>{showAll=!showAll;renderLanes();};
+$('#more').onclick=()=>{showAll=!showAll;renderLanes();if(showAll)ocTrack('xem-toan-bo-chi-nhanh','Xem toàn bộ đường đua CN/TTTC');};
 renderLanes();
 const qualifiedCnt = B.filter(b=>b.qualified).length;
 $('#bNote').innerHTML = `<b>Điều kiện:</b> doanh thu phí bảo hiểm thuộc phần OPES + BH PVI (chưa gồm VAT) tối thiểu <b>${money(BT)}</b>, ghi nhận cho Chi nhánh/TTTC trong thời gian chương trình. Doanh thu của PGD được cộng về Chi nhánh quản lý. Hiện có <b>${qualifiedCnt}</b> đơn vị đạt ngưỡng.`;
@@ -506,6 +515,7 @@ q.addEventListener('keydown',e=>{
 sg.addEventListener('click',e=>{const b=e.target.closest('button[data-i]'); if(b) pick(cur[+b.dataset.i]);});
 document.addEventListener('click',e=>{if(!e.target.closest('.search')) sg.style.display='none';});
 function pick(x){
+  if(x) ocTrack('tim-kiem/'+fold(x.n).replace(/[^a-z0-9]+/g,'-'),'Tìm: '+x.n);
   if(!x) return; sg.style.display='none'; q.value=x.n;
   const f=$('#found');
   if(x.k==='HUB'){ f.style.display='block'; f.innerHTML=`<div class="h">${esc(x.n)} thuộc hạng mục Hub xe</div><div class="row">Xem đường đua Hub ở mục 3 bên dưới ↓</div>`; setTimeout(()=>$('#s3').scrollIntoView({behavior:'smooth'}),300); return; }
@@ -584,10 +594,10 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
     fire($('#pvPanel'));
     try{ localStorage.setItem('ocar_pvi', v); }catch(e){}
     try{ const u=new URL(location.href); u.searchParams.set('dv', slug(v)); history.replaceState(null,'',u); }catch(e){}
-    $('#pvCopy').onclick=()=>{const link=location.href; const ok=()=>{$('#pvCopy').textContent='✔ Đã sao chép';setTimeout(()=>{const b=$('#pvCopy'); if(b) b.textContent='🔗 Sao chép link đơn vị';},1800);};
+    $('#pvCopy').onclick=()=>{ocTrack('sao-chep-link/'+slug(v),'Sao chép link: '+v);const link=location.href; const ok=()=>{$('#pvCopy').textContent='✔ Đã sao chép';setTimeout(()=>{const b=$('#pvCopy'); if(b) b.textContent='🔗 Sao chép link đơn vị';},1800);};
       if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(ok,()=>prompt('Sao chép link:',link)); else prompt('Sao chép link:',link);};
   }
-  $('#pvChips').addEventListener('click',e=>{const c=e.target.closest('.chip'); if(c){ render(c.dataset.v); c.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'}); }});
+  $('#pvChips').addEventListener('click',e=>{const c=e.target.closest('.chip'); if(c){ render(c.dataset.v); ocTrack('chon-don-vi/'+slug(c.dataset.v),'Chọn đơn vị: '+c.dataset.v); c.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'}); }});
   // khởi tạo: ?dv=... > lựa chọn lần trước > gợi ý chọn
   let init=null;
   try{ const q=new URLSearchParams(location.search).get('dv'); if(q) init=(PU.find(g=>slug(g.name)===q)||{}).name; }catch(e){}
