@@ -1,16 +1,16 @@
 {
  "report_date": "2026-10-01",
  "report_time": "17:00",
- "generated_at": "2026-10-01 11:10",
+ "generated_at": "2026-10-01 11:13",
  "source": "Báo cáo 9h ngày 01102026 VPBank.xlsx",
  "total_policies": 114,
  "total_premium": 766703201,
  "today_policies": 4,
  "today_premium": 25319850,
- "active_units": 29,
+ "active_units": 30,
  "unmapped": {
-  "premium": 7936000,
-  "policies": 1
+  "premium": 0,
+  "policies": 0
  },
  "branches": [
   {
@@ -168,53 +168,60 @@
    "rank": 22
   },
   {
+   "id": "VN0010107",
+   "name": "CN Cần Thơ",
+   "premium": 7936000,
+   "policies": 1,
+   "rank": 23
+  },
+  {
    "id": "VN0010229",
    "name": "CN Bình Thuận",
    "premium": 7876450,
    "policies": 1,
-   "rank": 23
+   "rank": 24
   },
   {
    "id": "VN0010225",
    "name": "CN Thái Nguyên",
    "premium": 7266000,
    "policies": 1,
-   "rank": 24
+   "rank": 25
   },
   {
    "id": "VN0010364",
    "name": "CN Tây Ninh",
    "premium": 6413000,
    "policies": 1,
-   "rank": 25
+   "rank": 26
   },
   {
    "id": "VN0010101",
    "name": "CN Hà Nội",
    "premium": 5835000,
    "policies": 1,
-   "rank": 26
+   "rank": 27
   },
   {
    "id": "VN0010226",
    "name": "CN Đồng Tháp",
    "premium": 5672000,
    "policies": 1,
-   "rank": 27
+   "rank": 28
   },
   {
    "id": "VN0010127",
    "name": "CN Hải Vân",
    "premium": 5586000,
    "policies": 1,
-   "rank": 28
+   "rank": 29
   },
   {
    "id": "VN0010220",
    "name": "CN Hòa Bình",
    "premium": 3977000,
    "policies": 1,
-   "rank": 29
+   "rank": 30
   }
  ],
  "hubs": [
