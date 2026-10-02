@@ -1,13 +1,13 @@
 {
  "report_date": "2026-10-02",
  "report_time": "11:30",
- "generated_at": "2026-10-02 13:35",
- "source": "Báo cáo 11h30 ngày 02102026 VPBank.xlsx",
- "total_policies": 126,
- "total_premium": 877115651,
- "today_policies": 0,
- "today_premium": 0,
- "active_units": 33,
+ "generated_at": "2026-10-02 13:44",
+ "source": "Báo_cáo_11h30_ngày_02102026_VPBank_bổ_sung_13_đơn.xlsx",
+ "total_policies": 139,
+ "total_premium": 984221971,
+ "today_policies": 1,
+ "today_premium": 7847000,
+ "active_units": 37,
  "unmapped": {
   "premium": 0,
   "policies": 0
@@ -16,22 +16,22 @@
   {
    "id": "VN0010356",
    "name": "CN Đắk Lắk",
-   "premium": 120925000,
-   "policies": 18,
+   "premium": 133535000,
+   "policies": 20,
    "rank": 1
   },
   {
    "id": "VN0010103",
    "name": "CN Hải Phòng",
-   "premium": 62575000,
-   "policies": 10,
+   "premium": 69563000,
+   "policies": 11,
    "rank": 2
   },
   {
    "id": "VN0010158",
    "name": "CN Ninh Bình",
-   "premium": 59344000,
-   "policies": 8,
+   "premium": 67047000,
+   "policies": 9,
    "rank": 3
   },
   {
@@ -49,38 +49,38 @@
    "rank": 5
   },
   {
+   "id": "VN0010155",
+   "name": "CN Đồng Nai",
+   "premium": 41289400,
+   "policies": 5,
+   "rank": 6
+  },
+  {
    "id": "VN0010106",
    "name": "CN Sài Gòn",
    "premium": 40485350,
    "policies": 7,
-   "rank": 6
+   "rank": 7
+  },
+  {
+   "id": "VN0010262",
+   "name": "CN Vũng Tàu",
+   "premium": 38407000,
+   "policies": 6,
+   "rank": 8
   },
   {
    "id": "VN0010401",
    "name": "CN Bạc Liêu",
    "premium": 36714550,
    "policies": 6,
-   "rank": 7
+   "rank": 9
   },
   {
    "id": "VN0010177",
    "name": "CN Quảng Bình",
    "premium": 32022400,
    "policies": 5,
-   "rank": 8
-  },
-  {
-   "id": "VN0010262",
-   "name": "CN Vũng Tàu",
-   "premium": 31109000,
-   "policies": 5,
-   "rank": 9
-  },
-  {
-   "id": "VN0010155",
-   "name": "CN Đồng Nai",
-   "premium": 30488400,
-   "policies": 4,
    "rank": 10
   },
   {
@@ -98,159 +98,187 @@
    "rank": 12
   },
   {
+   "id": "VN0010261",
+   "name": "CN Bình Dương",
+   "premium": 21309250,
+   "policies": 3,
+   "rank": 13
+  },
+  {
+   "id": "VN0010225",
+   "name": "CN Thái Nguyên",
+   "premium": 20422000,
+   "policies": 2,
+   "rank": 14
+  },
+  {
    "id": "VN0010191",
    "name": "CN Phú Thọ",
    "premium": 19674000,
    "policies": 3,
-   "rank": 13
+   "rank": 15
   },
   {
    "id": "VN0010435",
    "name": "CN Sở Giao Dịch 2",
    "premium": 16605541,
    "policies": 1,
-   "rank": 14
+   "rank": 16
   },
   {
    "id": "VN0010418",
    "name": "TTTC Vùng 5",
    "premium": 14503000,
    "policies": 3,
-   "rank": 15
+   "rank": 17
   },
   {
    "id": "VN0010190",
    "name": "CN Ngô Quyền",
    "premium": 14162000,
    "policies": 1,
-   "rank": 16
+   "rank": 18
   },
   {
    "id": "VN0010108",
    "name": "CN Quảng Ninh",
    "premium": 14000000,
    "policies": 2,
-   "rank": 17
-  },
-  {
-   "id": "VN0010261",
-   "name": "CN Bình Dương",
-   "premium": 13524000,
-   "policies": 2,
-   "rank": 18
+   "rank": 19
   },
   {
    "id": "VN0010170",
    "name": "CN Kiên Giang",
    "premium": 13165000,
    "policies": 2,
-   "rank": 19
+   "rank": 20
+  },
+  {
+   "id": "VN0010147",
+   "name": "CN Nha Trang",
+   "premium": 12173070,
+   "policies": 1,
+   "rank": 21
   },
   {
    "id": "VN0010119",
    "name": "CN Thăng Long",
    "premium": 11656750,
    "policies": 2,
-   "rank": 20
+   "rank": 22
   },
   {
    "id": "VN0010419",
    "name": "TTTC Vùng 7",
    "premium": 9080000,
    "policies": 1,
-   "rank": 21
+   "rank": 23
   },
   {
    "id": "VN0010341",
    "name": "CN Trần Não",
    "premium": 8379000,
    "policies": 1,
-   "rank": 22
+   "rank": 24
+  },
+  {
+   "id": "VN0010279",
+   "name": "CN Móng Cái",
+   "premium": 8267000,
+   "policies": 1,
+   "rank": 25
   },
   {
    "id": "VN0010105",
    "name": "CN Huế",
    "premium": 8125000,
    "policies": 1,
-   "rank": 23
+   "rank": 26
   },
   {
    "id": "VN0010353",
    "name": "CN Tiền Giang",
    "premium": 8098000,
    "policies": 1,
-   "rank": 24
+   "rank": 27
   },
   {
    "id": "VN0010107",
    "name": "CN Cần Thơ",
    "premium": 7936000,
    "policies": 1,
-   "rank": 25
+   "rank": 28
   },
   {
    "id": "VN0010229",
    "name": "CN Bình Thuận",
    "premium": 7876450,
    "policies": 1,
-   "rank": 26
+   "rank": 29
+  },
+  {
+   "id": "VN0010157",
+   "name": "CN Long An",
+   "premium": 7847000,
+   "policies": 1,
+   "rank": 30
   },
   {
    "id": "VN0010445",
    "name": "TTTC R9.2",
    "premium": 7342000,
    "policies": 1,
-   "rank": 27
-  },
-  {
-   "id": "VN0010225",
-   "name": "CN Thái Nguyên",
-   "premium": 7266000,
-   "policies": 1,
-   "rank": 28
+   "rank": 31
   },
   {
    "id": "VN0010364",
    "name": "CN Tây Ninh",
    "premium": 6413000,
    "policies": 1,
-   "rank": 29
+   "rank": 32
+  },
+  {
+   "id": "VN0010228",
+   "name": "CN Vĩnh Long",
+   "premium": 6323000,
+   "policies": 1,
+   "rank": 33
   },
   {
    "id": "VN0010101",
    "name": "CN Hà Nội",
    "premium": 5835000,
    "policies": 1,
-   "rank": 30
+   "rank": 34
   },
   {
    "id": "VN0010226",
    "name": "CN Đồng Tháp",
    "premium": 5672000,
    "policies": 1,
-   "rank": 31
+   "rank": 35
   },
   {
    "id": "VN0010127",
    "name": "CN Hải Vân",
    "premium": 5586000,
    "policies": 1,
-   "rank": 32
+   "rank": 36
   },
   {
    "id": "VN0010220",
    "name": "CN Hòa Bình",
    "premium": 3977000,
    "policies": 1,
-   "rank": 33
+   "rank": 37
   }
  ],
  "hubs": [
   {
    "id": "VN0010478",
    "name": "TTKD OTO MIEN BAC",
-   "premium": 77732960,
-   "policies": 11,
+   "premium": 83887960,
+   "policies": 12,
    "rank": 1
   },
   {
