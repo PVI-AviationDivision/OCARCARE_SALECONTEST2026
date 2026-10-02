@@ -3,8 +3,8 @@
  "report_time": "08:30",
  "generated_at": "2026-10-02 09:10",
  "source": "báo cáo 8h30 ngày 02102026 VPBank.xlsx",
- "total_policies": 136,
- "total_premium": 967208971,
+ "total_policies": 138,
+ "total_premium": 977969971,
  "today_policies": 0,
  "today_premium": 0,
  "active_units": 37,
@@ -56,31 +56,31 @@
    "rank": 6
   },
   {
+   "id": "VN0010106",
+   "name": "CN Sài Gòn",
+   "premium": 40485350,
+   "policies": 7,
+   "rank": 7
+  },
+  {
    "id": "VN0010262",
    "name": "CN Vũng Tàu",
    "premium": 38407000,
    "policies": 6,
-   "rank": 7
+   "rank": 8
   },
   {
    "id": "VN0010401",
    "name": "CN Bạc Liêu",
    "premium": 36714550,
    "policies": 6,
-   "rank": 8
-  },
-  {
-   "id": "VN0010106",
-   "name": "CN Sài Gòn",
-   "premium": 34837350,
-   "policies": 6,
    "rank": 9
   },
   {
    "id": "VN0010177",
    "name": "CN Quảng Bình",
-   "premium": 26909400,
-   "policies": 4,
+   "premium": 32022400,
+   "policies": 5,
    "rank": 10
   },
   {
