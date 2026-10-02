@@ -1,10 +1,10 @@
 {
  "report_date": "2026-10-02",
  "report_time": "08:30",
- "generated_at": "2026-10-02 09:10",
+ "generated_at": "2026-10-02 09:11",
  "source": "báo cáo 8h30 ngày 02102026 VPBank.xlsx",
- "total_policies": 138,
- "total_premium": 977969971,
+ "total_policies": 139,
+ "total_premium": 984221971,
  "today_policies": 0,
  "today_premium": 0,
  "active_units": 37,
@@ -16,8 +16,8 @@
   {
    "id": "VN0010356",
    "name": "CN Đắk Lắk",
-   "premium": 127283000,
-   "policies": 19,
+   "premium": 133535000,
+   "policies": 20,
    "rank": 1
   },
   {
