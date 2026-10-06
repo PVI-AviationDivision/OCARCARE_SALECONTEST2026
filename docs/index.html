@@ -255,6 +255,8 @@ details.zero summary{cursor:pointer;font-weight:700;font-size:14px}
 .road .pj{position:absolute;top:3px;bottom:3px;width:0;border-left:2px solid #ffb03a;opacity:.85}
 .road .pj:after{content:"";position:absolute;left:-5px;top:-3px;border:4px solid transparent;border-top:6px solid #ffb03a}
 .road .pj.over{border-left-style:dotted}
+.mix{margin-top:5px;font-size:11.5px;color:var(--ink3);line-height:1.45}
+.mix b{color:var(--ink2);font-weight:600}
 .pl{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);font-size:12px;color:var(--ink2)}
 .st-b{display:inline-block;font-size:11px;font-weight:800;padding:2px 7px;border-radius:6px;margin-right:6px}
 .st-b.ok2{background:#35d07f26;color:#8ff0b8}.st-b.go{background:#2f7bff26;color:#9fc1ff}.st-b.warn{background:#ff7a1a26;color:#ffb36b}
@@ -400,7 +402,7 @@ window.ocTrack = function(path, title){
 };
 </script>
 <script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="data.js?v=20261006084702"></script>
+<script src="data.js?v=20261006104134"></script>
 <script>
 (function(){
 "use strict";
@@ -581,6 +583,15 @@ const pct = (v,max)=>Math.max(0,Math.min(100,v/max*100));
 $('#bScale').innerHTML = `<span>0</span><span>Vạch ${money(BT)} 🏁 · <span style="color:#ffb03a">▼ dự kiến 31/10</span></span><span>${money(bScaleMax)}</span>`;
 function mvHtml(b){ if(b.prev_rank==null) return '<span class="mv new">MỚI</span>'; const d=b.prev_rank-b.rank; return d>0?`<span class="mv up">▲${d}</span>`:d<0?`<span class="mv dn">▼${-d}</span>`:'<span class="mv eq">–</span>'; }
 function laneColor(b){return b.rank===1?'#ffc93c':b.rank===2?'#d6dee9':b.rank===3?'#e98b5b':b.kind==='TTTC'?'#ff6b81':'#5b9dff';}
+const POSU = {}; (D.pos||[]).forEach(z=>{(POSU[z.u]=POSU[z.u]||[]).push(z);});
+function mixHtml(b){
+  if(b.kind!=='CN') return '';
+  const pts=(POSU[b.id]||[]).slice().sort((a,c)=>c.premium-a.premium); if(!pts.length) return '';
+  if(pts.length===1 && pts[0].n===b.name) return '<div class="mix">Gồm: 100% tại <b>'+esc(b.name)+'</b> · chưa có PGD phát sinh đơn</div>';
+  const show=pts.slice(0,4).map(z=>`<b>${esc(z.n)}</b> ${money(z.premium)}`);
+  const more=pts.length>4?` · +${pts.length-4} điểm khác (${money(pts.slice(4).reduce((s,z)=>s+z.premium,0))})`:'';
+  return '<div class="mix">Gồm: '+show.join(' · ')+more+'</div>';
+}
 function laneHtml(b){
   const cls=b.rank===1?'g':b.rank===2?'s':b.rank===3?'b':'';
   const gap = b.qualified?'<span class="q ok">✔ Đã đạt ngưỡng</span>':`<span class="q">Còn ${money(BT-b.premium)} tới ngưỡng</span>`;
@@ -589,7 +600,7 @@ function laneHtml(b){
       <div class="ln"><div class="n">${esc(b.name)}</div><div class="m"><span class="kind ${b.kind==='TTTC'?'tttc':''}">${b.kind}</span>${esc(b.region||'')}${b.pvi?' · '+esc(b.pvi):''}</div></div>
       <div class="rv"><div class="v num">${money(b.premium)}</div>${mvHtml(b)}</div></div>
     <div class="road"><div class="thr" style="left:${pct(BT,bScaleMax)}%"></div><div class="trail" data-w="${pct(b.premium,bScaleMax)}"></div><div class="pj ${proj(b.premium)>bScaleMax?'over':''}" style="left:${pct(proj(b.premium),bScaleMax)}%" title="Dự kiến 31/10: ${money(proj(b.premium))}"></div><div class="car" data-l="${pct(b.premium,bScaleMax)}">${CAR()}</div></div>
-    <div class="foot"><span>${b.policies} HĐBH${b.today_policies>0?` · <b class="ok">+${b.today_policies} hôm nay</b>`:''}</span>${gap}</div>
+    <div class="foot"><span>${b.policies} HĐBH${b.today_policies>0?` · <b class="ok">+${b.today_policies} hôm nay</b>`:''}</span>${gap}</div>${mixHtml(b)}
     <div class="pl">${projHtml(b.premium,BT)}<button class="shr" data-share="b:${esc(b.id)}">📤 Ảnh thành tích</button></div></div>`;
 }
 let showAll=false; const TOPN=10;
