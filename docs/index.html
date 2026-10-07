@@ -10,8 +10,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://pvi-aviationdivision.github.io/OCARCARE_SALECONTEST2026/">
 <meta property="og:title" content="Bảng đua Sales Contest · Chào sân OCARCARE">
-<meta property="og:description" content="Xếp hạng Chi nhánh/TTTC, Hub xe và 600 HĐBH đầu tiên — cập nhật hằng ngày. Bảo hiểm PVI × OPES × VPBank.">
-<meta property="og:image" content="https://pvi-aviationdivision.github.io/OCARCARE_SALECONTEST2026/og.jpg">
+<meta property="og:description" content="Xếp hạng CN/PGD/TTTC, Hub xe và 600 HĐBH đầu tiên — cập nhật hằng ngày. Bảo hiểm PVI × OPES × VPBank.">
+<meta property="og:image" content="https://pvi-aviationdivision.github.io/OCARCARE_SALECONTEST2026/og-race.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="vi_VN">
@@ -167,6 +167,8 @@ section.card{margin:22px 0;border-radius:var(--r);background:linear-gradient(180
 .ln .m{font-size:11.5px;color:var(--ink3)}
 .kind{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.5px;padding:1px 6px;border-radius:5px;background:#2f7bff33;color:#9fc1ff;margin-right:4px;vertical-align:1px}
 .kind.tttc{background:#e8263f33;color:#ff9aa8}
+.kind.hhb{background:#a855f733;color:#d8b4fe}
+.kind.pgd{background:#35d07f26;color:#8ff0b8}
 .rv{text-align:right}
 .rv .v{font-size:20px;line-height:1}
 .mv{font-size:11.5px;font-weight:800}
@@ -325,7 +327,7 @@ footer li{margin:3px 0}
 
   <!-- 2 -->
   <section class="card" style="--sc:#c81e36" id="s2">
-    <div class="sec-h"><div class="sec-n">2</div><div><div class="sec-t">Chi nhánh &amp; Trung tâm thế chấp</div><div class="sec-s">Dẫn dắt tăng trưởng · Xếp hạng dành cho Giám đốc CN / TTTC</div></div></div>
+    <div class="sec-h"><div class="sec-n">2</div><div><div class="sec-t">Chi nhánh · PGD · TTTC</div><div class="sec-s">Dẫn dắt tăng trưởng · CN, PGD, TTTC, House Hold xếp hạng đồng cấp</div></div></div>
     <div class="sec-b">
       <div class="prizes" id="bPrizes"></div>
       <div class="search">
@@ -346,7 +348,7 @@ footer li{margin:3px 0}
 
   <!-- weekly -->
   <section class="card" style="--sc:#b45309" id="s6">
-    <div class="sec-h"><div class="sec-n">⚡</div><div><div class="sec-t">Bứt phá 7 ngày qua</div><div class="sec-s" id="wkRange">Chi nhánh / TTTC tăng tốc mạnh nhất tuần</div></div></div>
+    <div class="sec-h"><div class="sec-n">⚡</div><div><div class="sec-t">Bứt phá 7 ngày qua</div><div class="sec-s" id="wkRange">Điểm bán tăng tốc mạnh nhất tuần</div></div></div>
     <div class="sec-b"><div class="wk" id="wk"></div></div>
   </section>
 
@@ -402,7 +404,7 @@ window.ocTrack = function(path, title){
 };
 </script>
 <script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="data.js?v=20261007082854"></script>
+<script src="data.js?v=20261007102041"></script>
 <script>
 (function(){
 "use strict";
@@ -457,7 +459,7 @@ tickCD(); setInterval(tickCD,1000);
 const kpis = [
   {l:'Tổng HĐBH', v:M.total_policies, f:vi, d:M.today_policies?`+${M.today_policies} hôm nay`:'', c:'#2f7bff'},
   {l:'Doanh thu (chưa VAT)', v:M.total_premium, f:n=>money(n), d:M.today_premium?`+${money(M.today_premium)} hôm nay`:'', c:'#ff7a1a'},
-  {l:'CN / TTTC đã ghi điểm', v:M.active_units, f:vi, d:'', c:'#e8263f'},
+  {l:'Điểm bán đã ghi điểm', v:M.active_units, f:vi, d:'', c:'#e8263f'},
   {l:'Phí bình quân / HĐBH', v:M.total_policies?M.total_premium/M.total_policies:0, f:n=>money(n), d:'', c:'#14b8a6'},
 ];
 $('#kpis').innerHTML = kpis.map((k,i)=>`<div class="kpi" style="--c:${k.c}"><div class="l">${k.l}</div><div class="v num" data-count="${k.v}" data-fmt="${i}">0</div><div class="d">${k.d||'&nbsp;'}</div></div>`).join('');
@@ -536,7 +538,7 @@ async function shareCard(o){
 }
 function cardFromBranch(b){
   const mv = b.rank7&&b.rank7>b.rank?`▲${b.rank7-b.rank} bậc trong tuần`:(b.prev_rank&&b.prev_rank>b.rank?`▲${b.prev_rank-b.rank} bậc hôm nay`:'');
-  return {cat:'CHI NHÁNH / TRUNG TÂM THẾ CHẤP',name:b.name,rank:b.rank,total:B.length,unitLabel:'đơn vị',move:mv,premium:b.premium,policies:b.policies,thr:BT,
+  return {cat:({CN:'CHI NHÁNH',PGD:'PHÒNG GIAO DỊCH',TTTC:'TRUNG TÂM THẾ CHẤP',HHB:'HOUSE HOLD'}[b.kind]||'ĐIỂM BÁN')+' · VPBANK',name:b.name,rank:b.rank,total:B.length,unitLabel:'điểm bán',move:mv,premium:b.premium,policies:b.policies,thr:BT,
     status:b.premium>=BT?'✔ ĐÃ ĐẠT NGƯỠNG '+money(BT).toUpperCase():`Còn ${money(BT-b.premium)} tới ngưỡng ${money(BT)} · cần ~${money(perDay(BT,b.premium))}/ngày`};
 }
 function cardFromHub(h){
@@ -582,7 +584,7 @@ const bScaleMax = Math.max(BT, B[0]?B[0].premium:0)*1.12;
 const pct = (v,max)=>Math.max(0,Math.min(100,v/max*100));
 $('#bScale').innerHTML = `<span>0</span><span>Vạch ${money(BT)} 🏁 · <span style="color:#ffb03a">▼ dự kiến 31/10</span></span><span>${money(bScaleMax)}</span>`;
 function mvHtml(b){ if(b.prev_rank==null) return '<span class="mv new">MỚI</span>'; const d=b.prev_rank-b.rank; return d>0?`<span class="mv up">▲${d}</span>`:d<0?`<span class="mv dn">▼${-d}</span>`:'<span class="mv eq">–</span>'; }
-function laneColor(b){return b.rank===1?'#ffc93c':b.rank===2?'#d6dee9':b.rank===3?'#e98b5b':b.kind==='TTTC'?'#ff6b81':'#5b9dff';}
+function laneColor(b){return b.rank===1?'#ffc93c':b.rank===2?'#d6dee9':b.rank===3?'#e98b5b':b.kind==='TTTC'?'#ff6b81':b.kind==='PGD'?'#4ade80':b.kind==='HHB'?'#c084fc':'#5b9dff';}
 const POSU = {}; (D.pos||[]).forEach(z=>{(POSU[z.u]=POSU[z.u]||[]).push(z);});
 function mixHtml(b){
   if(b.kind!=='CN') return '';
@@ -597,10 +599,10 @@ function laneHtml(b){
   const gap = b.qualified?'<span class="q ok">✔ Đã đạt ngưỡng</span>':`<span class="q">Còn ${money(BT-b.premium)} tới ngưỡng</span>`;
   return `<div class="lane" id="L-${esc(b.id)}" style="--lc:${laneColor(b)}">
     <div class="top"><div class="rk ${cls}">${b.rank}</div>
-      <div class="ln"><div class="n">${esc(b.name)}</div><div class="m"><span class="kind ${b.kind==='TTTC'?'tttc':''}">${b.kind}</span>${esc(b.region||'')}${b.pvi?' · '+esc(b.pvi):''}</div></div>
+      <div class="ln"><div class="n">${esc(b.name)}</div><div class="m"><span class="kind ${b.kind==='CN'?'':String(b.kind).toLowerCase()}">${b.kind}</span>${esc(b.region||'')}${b.pvi?' · '+esc(b.pvi):''}</div></div>
       <div class="rv"><div class="v num">${money(b.premium)}</div>${mvHtml(b)}</div></div>
     <div class="road"><div class="thr" style="left:${pct(BT,bScaleMax)}%"></div><div class="trail" data-w="${pct(b.premium,bScaleMax)}"></div><div class="pj ${proj(b.premium)>bScaleMax?'over':''}" style="left:${pct(proj(b.premium),bScaleMax)}%" title="Dự kiến 31/10: ${money(proj(b.premium))}"></div><div class="car" data-l="${pct(b.premium,bScaleMax)}">${CAR()}</div></div>
-    <div class="foot"><span>${b.policies} HĐBH${b.today_policies>0?` · <b class="ok">+${b.today_policies} hôm nay</b>`:''}</span>${gap}</div>${mixHtml(b)}
+    <div class="foot"><span>${b.policies} HĐBH${b.today_policies>0?` · <b class="ok">+${b.today_policies} hôm nay</b>`:''}</span>${gap}</div>
     <div class="pl">${projHtml(b.premium,BT)}<button class="shr" data-share="b:${esc(b.id)}">📤 Ảnh thành tích</button></div></div>`;
 }
 let showAll=false; const TOPN=10;
@@ -614,7 +616,7 @@ function renderLanes(){
 $('#more').onclick=()=>{showAll=!showAll;renderLanes();if(showAll)ocTrack('xem-toan-bo-chi-nhanh','Xem toàn bộ đường đua CN/TTTC');};
 renderLanes();
 const qualifiedCnt = B.filter(b=>b.qualified).length;
-$('#bNote').innerHTML = `<b>Điều kiện:</b> doanh thu phí bảo hiểm thuộc phần OPES + BH PVI (chưa gồm VAT) tối thiểu <b>${money(BT)}</b>, ghi nhận cho Chi nhánh/TTTC trong thời gian chương trình. Doanh thu của PGD được cộng về Chi nhánh quản lý. Hiện có <b>${qualifiedCnt}</b> đơn vị đạt ngưỡng.`;
+$('#bNote').innerHTML = `<b>Điều kiện:</b> doanh thu phí bảo hiểm thuộc phần OPES + BH PVI (chưa gồm VAT) tối thiểu <b>${money(BT)}</b> cho <b>từng điểm bán</b> trong thời gian chương trình. Chi nhánh, PGD, TTTC và House Hold xếp hạng đồng cấp, mỗi điểm tính riêng doanh thu của mình. Hiện có <b>${qualifiedCnt}</b> điểm đạt ngưỡng.`;
 
 /* search */
 const L = D.lookup.map(x=>({...x,s:fold(x.n+' '+x.un+' '+(x.p||''))}));
@@ -654,7 +656,7 @@ function pick(x){
 /* ---------- bứt phá 7 ngày ---------- */
 (function(){
   const ws=addDays(M.report_date,-6), we=addDays(M.report_date,0);
-  $('#wkRange').textContent=`Chi nhánh / TTTC tăng tốc mạnh nhất · ${ddmm(ws)} – ${ddmm(we)}`;
+  $('#wkRange').textContent=`Điểm bán tăng tốc mạnh nhất · ${ddmm(ws)} – ${ddmm(we)}`;
   const row=(tg,b,vv)=>`<div class="wkr"><div class="tg">${tg}</div><div class="nm"><b>${esc(b.name)}</b> <span class="dim" style="font-size:12px">#${b.rank}</span></div><div class="vv">${vv}</div></div>`;
   const box=(t,ic,rows,empty)=>`<div class="wkb"><h4>${ic} ${t}</h4>${rows.length?rows.join(''):`<div class="dim" style="font-size:13px">${empty}</div>`}</div>`;
   const climb=B.filter(b=>b.rank7&&b.rank7>b.rank).sort((a,b)=>(b.rank7-b.rank)-(a.rank7-a.rank)||b.week_premium-a.week_premium).slice(0,5)
@@ -729,8 +731,8 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
       </div>
       <div class="sub-h" style="margin-top:18px">Điểm bán đã có đơn (${pts.length})</div>
       ${pts.length?`<div class="pt hd"><div>Điểm bán</div><div style="text-align:right">HĐBH</div><div style="text-align:right">Doanh thu</div></div>`+pts.map(z=>`<div class="pt"><div class="nm2"><div class="a">${kindTag(z.t)}${esc(z.n)}</div><div class="b">${z.k==='HUB'?'Hạng mục Hub xe':z.un!==z.n?'Thuộc '+esc(z.un):esc(z.region||'')}</div></div><div class="n1">${z.policies}</div><div class="n2">${money(z.premium)}${z.today_policies?`<small>+${z.today_policies} hôm nay</small>`:''}</div></div>`).join(''):'<div class="dim">Chưa có điểm bán nào phát sinh HĐBH — ghi điểm ngay từ hợp đồng đầu tiên!</div>'}
-      ${cont.length||hubs.length?`<div class="sub-h" style="margin-top:18px">Thi đua Chi nhánh / TTTC / Hub liên quan</div>
-      <div class="dim" style="font-size:12px;margin:-4px 0 6px">Doanh thu thi đua tính cho cả Chi nhánh (gồm các PGD trực thuộc) theo Thể lệ.</div>`+
+      ${cont.length||hubs.length?`<div class="sub-h" style="margin-top:18px">Thứ hạng thi đua các điểm bán của đơn vị</div>
+      <div class="dim" style="font-size:12px;margin:-4px 0 6px">Mỗi CN/PGD/TTTC/House Hold xếp hạng độc lập · ngưỡng ${money(BT)} áp dụng cho từng điểm.</div>`+
         cont.map(b=>`<div class="cst"><div class="rk ${b.rank===1?'g':b.rank===2?'s':b.rank===3?'b':''}">${b.rank}</div><div><b>${esc(b.name)}</b><div class="dim" style="font-size:11.5px">${b.policies} HĐBH · ${money(b.premium)}</div></div><div class="gp">${b.qualified?'<span class="ok"><b>✔ Đạt ngưỡng</b></span>':`Còn <b>${money(BT-b.premium)}</b> tới ${money(BT)}`}<br>${b.rank<=3?'<span class="ok">Trong Top 3</span>':third?`Cách Top 3: <b>${money(third.premium-b.premium+1)}</b>`:''}</div></div>`).join('')+
         hubs.map(h=>`<div class="cst"><div class="rk">${h.rank}</div><div><b>${esc(hubName(h))}</b><div class="dim" style="font-size:11.5px">${h.policies} HĐBH · ${money(h.premium)}</div></div><div class="gp">Còn <b>${money(Math.max(0,C.hub.threshold-h.premium))}</b> tới ${money(C.hub.threshold)}</div></div>`).join(''):''}
       ${zeros.length?`<details class="zero"><summary>Điểm bán chưa phát sinh đơn (${zeros.length}) — danh sách cần đôn đốc</summary><div class="dim" style="font-size:12px;margin-top:4px">Tính theo đơn cấp trực tiếp tại chính điểm đó (CN và PGD hạch toán độc lập).</div><div class="zl">${zeros.map(x=>`<span>${esc(x.n)}</span>`).join('')}</div></details>`:''}
@@ -776,7 +778,7 @@ hbars($('#pvi'),D.pvi_units.filter(g=>g.premium>0||g.policies>0),'linear-gradien
 /* footer */
 $('#rules').innerHTML = [
   `Doanh thu thi đua = 100% phí bảo hiểm OPES + BH PVI, <b>chưa gồm VAT</b>, theo ngày cấp HĐBH từ ${dmy(C.program.start)} đến ${dmy(C.program.end)}.`,
-  'Doanh thu của Phòng giao dịch được ghi nhận cho Chi nhánh quản lý; Trung tâm thế chấp và Hub xe được xếp hạng riêng.',
+  'Chi nhánh, Phòng giao dịch, Trung tâm thế chấp và House Hold được xếp hạng đồng cấp — mỗi điểm bán tính riêng doanh thu của mình (theo Mã chi nhánh Bank). Hub xe xếp hạng ở hạng mục 3.',
   'Bảng xếp hạng cập nhật 1 lần/ngày theo báo cáo 17h. Mũi tên ▲▼ so với xếp hạng trước ngày cập nhật.'
 ].map(x=>`<li>${x}</li>`).join('');
 $('#src').textContent = `Nguồn: ${M.source} · tạo lúc ${M.generated_at}` + (M.unmapped&&M.unmapped.premium?` · ${M.unmapped.policies} HĐBH chưa xác định đơn vị (${money(M.unmapped.premium)})`:'');
