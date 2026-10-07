@@ -9,6 +9,11 @@ echo ==============================================
 set PY=python
 where python >nul 2>nul || set PY=py
 
+echo Dong bo du lieu moi nhat tu GitHub...
+git pull --rebase --autostash -q origin main
+if errorlevel 1 echo [CANH BAO] Chua dong bo duoc voi GitHub - kiem tra mang, van tiep tuc cap nhat
+echo.
+
 %PY% tools\build_data.py
 if errorlevel 1 (
   echo.
@@ -17,7 +22,13 @@ if errorlevel 1 (
   exit /b 1
 )
 
-git add docs
+if exist tin_nhan_zalo.txt (
+  powershell -NoProfile -Command "Get-Content -Raw -Encoding UTF8 'tin_nhan_zalo.txt' | Set-Clipboard"
+  echo.
+  echo [OK] Tin nhan Zalo da duoc chep san - mo Zalo va nhan Ctrl+V de dan
+)
+
+git add docs tools update.bat xem_thu.bat
 git diff --cached --quiet
 if not errorlevel 1 (
   echo Khong co thay doi so voi lan cap nhat truoc.
