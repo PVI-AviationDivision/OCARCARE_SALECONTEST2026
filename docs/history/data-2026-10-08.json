@@ -1,0 +1,587 @@
+{
+ "report_date": "2026-10-08",
+ "report_time": "08:15",
+ "model": "diem-ban",
+ "generated_at": "2026-10-08 09:49",
+ "source": "Báo cáo 8h15 ngày 08102026 VPBank.xlsx",
+ "total_policies": 326,
+ "total_premium": 2262819621,
+ "today_policies": 1,
+ "today_premium": 7540000,
+ "active_units": 79,
+ "unmapped": {
+  "premium": 0,
+  "policies": 0
+ },
+ "branches": [
+  {
+   "id": "VN0010356",
+   "name": "CN Đắk Lắk",
+   "premium": 195029000,
+   "policies": 28,
+   "rank": 1
+  },
+  {
+   "id": "VN0010155",
+   "name": "CN Đồng Nai",
+   "premium": 87427400,
+   "policies": 12,
+   "rank": 2
+  },
+  {
+   "id": "VN0010362",
+   "name": "CN Ninh Bình",
+   "premium": 75705000,
+   "policies": 11,
+   "rank": 3
+  },
+  {
+   "id": "VN0010401",
+   "name": "CN Bạc Liêu",
+   "premium": 66115300,
+   "policies": 10,
+   "rank": 4
+  },
+  {
+   "id": "VN0010104",
+   "name": "CN Đà Nẵng",
+   "premium": 62860000,
+   "policies": 8,
+   "rank": 5
+  },
+  {
+   "id": "VN0010170",
+   "name": "CN Kiên Giang",
+   "premium": 62755750,
+   "policies": 9,
+   "rank": 6
+  },
+  {
+   "id": "VN0010191",
+   "name": "CN Phú Thọ",
+   "premium": 58828000,
+   "policies": 9,
+   "rank": 7
+  },
+  {
+   "id": "VN0010308",
+   "name": "PGD Thành Nam",
+   "premium": 51082000,
+   "policies": 7,
+   "rank": 8
+  },
+  {
+   "id": "VN0010129",
+   "name": "PGD Lê Hồng Phong",
+   "premium": 50843000,
+   "policies": 8,
+   "rank": 9
+  },
+  {
+   "id": "VN0010425",
+   "name": "PGD Long Hải",
+   "premium": 50540000,
+   "policies": 7,
+   "rank": 10
+  },
+  {
+   "id": "VN0010296",
+   "name": "CN Quảng Nam",
+   "premium": 47363000,
+   "policies": 8,
+   "rank": 11
+  },
+  {
+   "id": "VN0010261",
+   "name": "CN Bình Dương",
+   "premium": 45962700,
+   "policies": 7,
+   "rank": 12
+  },
+  {
+   "id": "VN0010130",
+   "name": "PGD Lê Chân",
+   "premium": 44595000,
+   "policies": 7,
+   "rank": 13
+  },
+  {
+   "id": "VN0010252",
+   "name": "PGD Linh Đàm",
+   "premium": 38353000,
+   "policies": 4,
+   "rank": 14
+  },
+  {
+   "id": "VN0010177",
+   "name": "CN Quảng Bình",
+   "premium": 38239400,
+   "policies": 6,
+   "rank": 15
+  },
+  {
+   "id": "VN0010153",
+   "name": "CN Nghệ An",
+   "premium": 37699000,
+   "policies": 7,
+   "rank": 16
+  },
+  {
+   "id": "VN0010229",
+   "name": "CN Bình Thuận",
+   "premium": 34953450,
+   "policies": 5,
+   "rank": 17
+  },
+  {
+   "id": "VN0010201",
+   "name": "PGD Hàng Xanh",
+   "premium": 32473000,
+   "policies": 1,
+   "rank": 18
+  },
+  {
+   "id": "VN0010418",
+   "name": "TTTC Vùng 5",
+   "premium": 32141000,
+   "policies": 6,
+   "rank": 19
+  },
+  {
+   "id": "VN0010226",
+   "name": "CN Đồng Tháp",
+   "premium": 30985000,
+   "policies": 4,
+   "rank": 20
+  },
+  {
+   "id": "VN0010206",
+   "name": "CN Bình Định",
+   "premium": 30318000,
+   "policies": 5,
+   "rank": 21
+  },
+  {
+   "id": "VN0010419",
+   "name": "TTTC Vùng 7",
+   "premium": 29246000,
+   "policies": 3,
+   "rank": 22
+  },
+  {
+   "id": "VN0010351",
+   "name": "PGD Bến Thành",
+   "premium": 28769900,
+   "policies": 4,
+   "rank": 23
+  },
+  {
+   "id": "VN0010137",
+   "name": "PGD Đống Đa",
+   "premium": 28337000,
+   "policies": 5,
+   "rank": 24
+  },
+  {
+   "id": "VN0010263",
+   "name": "PGD Thái Hà",
+   "premium": 27184000,
+   "policies": 3,
+   "rank": 25
+  },
+  {
+   "id": "VN0010279",
+   "name": "CN Móng Cái",
+   "premium": 24045000,
+   "policies": 4,
+   "rank": 26
+  },
+  {
+   "id": "VN0010225",
+   "name": "CN Thái Nguyên",
+   "premium": 23947000,
+   "policies": 3,
+   "rank": 27
+  },
+  {
+   "id": "VN0010118",
+   "name": "PGD Cầu Giấy",
+   "premium": 23627750,
+   "policies": 4,
+   "rank": 28
+  },
+  {
+   "id": "VN0010445",
+   "name": "TTTC R9.2",
+   "premium": 21938000,
+   "policies": 4,
+   "rank": 29
+  },
+  {
+   "id": "VN0010253",
+   "name": "PGD Nguyễn Thái Học",
+   "premium": 21805000,
+   "policies": 3,
+   "rank": 30
+  },
+  {
+   "id": "VN0010182",
+   "name": "PGD Phú Lâm",
+   "premium": 19758600,
+   "policies": 3,
+   "rank": 31
+  },
+  {
+   "id": "VN0010447",
+   "name": "PGD Bãi Cháy",
+   "premium": 17025000,
+   "policies": 2,
+   "rank": 32
+  },
+  {
+   "id": "VN0010435",
+   "name": "CN Sở Giao Dịch 2",
+   "premium": 16605541,
+   "policies": 1,
+   "rank": 33
+  },
+  {
+   "id": "VN0010262",
+   "name": "CN Vũng Tàu",
+   "premium": 16347000,
+   "policies": 3,
+   "rank": 34
+  },
+  {
+   "id": "VN0010121",
+   "name": "PGD Bà Chiểu",
+   "premium": 16296450,
+   "policies": 3,
+   "rank": 35
+  },
+  {
+   "id": "VN0010138",
+   "name": "PGD Cẩm Phả",
+   "premium": 15615000,
+   "policies": 3,
+   "rank": 36
+  },
+  {
+   "id": "VN0010222",
+   "name": "CN Bắc Ninh",
+   "premium": 14426000,
+   "policies": 2,
+   "rank": 37
+  },
+  {
+   "id": "VN0010127",
+   "name": "CN Hải Vân",
+   "premium": 13811000,
+   "policies": 2,
+   "rank": 38
+  },
+  {
+   "id": "VN0010105",
+   "name": "CN Huế",
+   "premium": 13554000,
+   "policies": 2,
+   "rank": 39
+  },
+  {
+   "id": "VN0010379",
+   "name": "TTTC Vùng 2",
+   "premium": 12533300,
+   "policies": 3,
+   "rank": 40
+  },
+  {
+   "id": "VN0010292",
+   "name": "PGD Thành Sen",
+   "premium": 12386000,
+   "policies": 1,
+   "rank": 41
+  },
+  {
+   "id": "VN0010228",
+   "name": "CN Vĩnh Long",
+   "premium": 12243000,
+   "policies": 2,
+   "rank": 42
+  },
+  {
+   "id": "VN0010211",
+   "name": "PGD Phước Hải",
+   "premium": 12173070,
+   "policies": 1,
+   "rank": 43
+  },
+  {
+   "id": "VN0010384",
+   "name": "PGD Sa Đéc",
+   "premium": 12125000,
+   "policies": 2,
+   "rank": 44
+  },
+  {
+   "id": "VN0010223",
+   "name": "CN Hà Tĩnh",
+   "premium": 12075000,
+   "policies": 2,
+   "rank": 45
+  },
+  {
+   "id": "VN0010239",
+   "name": "PGD Núi Thành",
+   "premium": 11395000,
+   "policies": 1,
+   "rank": 46
+  },
+  {
+   "id": "VN0010265",
+   "name": "PGD Cao Thắng",
+   "premium": 11017000,
+   "policies": 2,
+   "rank": 47
+  },
+  {
+   "id": "VN0010434",
+   "name": "PGD Yên Khánh",
+   "premium": 10812000,
+   "policies": 2,
+   "rank": 48
+  },
+  {
+   "id": "VN0010391",
+   "name": "PGD Hoa Lư",
+   "premium": 10495000,
+   "policies": 2,
+   "rank": 49
+  },
+  {
+   "id": "VN0010392",
+   "name": "PGD Điện Biên",
+   "premium": 9957000,
+   "policies": 1,
+   "rank": 50
+  },
+  {
+   "id": "VN0010322",
+   "name": "PGD Long Thành",
+   "premium": 9185000,
+   "policies": 1,
+   "rank": 51
+  },
+  {
+   "id": "VN0010367",
+   "name": "PGD Dĩ An",
+   "premium": 9055000,
+   "policies": 1,
+   "rank": 52
+  },
+  {
+   "id": "VN0010234",
+   "name": "PGD Diễn Châu",
+   "premium": 8716000,
+   "policies": 1,
+   "rank": 53
+  },
+  {
+   "id": "VN0010402",
+   "name": "PGD Hồng Hà",
+   "premium": 8384000,
+   "policies": 1,
+   "rank": 54
+  },
+  {
+   "id": "VN0010341",
+   "name": "CN Trần Não",
+   "premium": 8379000,
+   "policies": 1,
+   "rank": 55
+  },
+  {
+   "id": "VN0010147",
+   "name": "CN Nha Trang",
+   "premium": 8183000,
+   "policies": 1,
+   "rank": 56
+  },
+  {
+   "id": "VN0010355",
+   "name": "CN Quận 11",
+   "premium": 8103000,
+   "policies": 1,
+   "rank": 57
+  },
+  {
+   "id": "VN0010353",
+   "name": "CN Tiền Giang",
+   "premium": 8098000,
+   "policies": 1,
+   "rank": 58
+  },
+  {
+   "id": "VN0010122",
+   "name": "PGD Chợ Lớn",
+   "premium": 8026000,
+   "policies": 1,
+   "rank": 59
+  },
+  {
+   "id": "HH0602001",
+   "name": "HH - CAN THO 1",
+   "premium": 7936000,
+   "policies": 1,
+   "rank": 60
+  },
+  {
+   "id": "VN0010185",
+   "name": "PGD Phú Mỹ Hưng",
+   "premium": 7931000,
+   "policies": 1,
+   "rank": 61
+  },
+  {
+   "id": "VN0010157",
+   "name": "CN Long An",
+   "premium": 7847000,
+   "policies": 1,
+   "rank": 62
+  },
+  {
+   "id": "HH0130001",
+   "name": "HH - Binh Tan 1",
+   "premium": 7270000,
+   "policies": 1,
+   "rank": 63
+  },
+  {
+   "id": "VN0010284",
+   "name": "PGD Bắc Thái",
+   "premium": 7266000,
+   "policies": 1,
+   "rank": 64
+  },
+  {
+   "id": "VN0010131",
+   "name": "CN Vĩnh Phúc",
+   "premium": 7240000,
+   "policies": 1,
+   "rank": 65
+  },
+  {
+   "id": "VN0010257",
+   "name": "PGD Nguyễn Duy Trinh",
+   "premium": 6703200,
+   "policies": 1,
+   "rank": 66
+  },
+  {
+   "id": "VN0010124",
+   "name": "PGD Tân Phú",
+   "premium": 6522000,
+   "policies": 1,
+   "rank": 67
+  },
+  {
+   "id": "VN0010364",
+   "name": "CN Tây Ninh",
+   "premium": 6413000,
+   "policies": 1,
+   "rank": 68
+  },
+  {
+   "id": "VN0010415",
+   "name": "PGD Đức Trọng",
+   "premium": 6315000,
+   "policies": 1,
+   "rank": 69
+  },
+  {
+   "id": "VN0010193",
+   "name": "PGD Trung Kính",
+   "premium": 6142950,
+   "policies": 1,
+   "rank": 70
+  },
+  {
+   "id": "VN0010174",
+   "name": "PGD Mai Thúc Loan",
+   "premium": 5902000,
+   "policies": 1,
+   "rank": 71
+  },
+  {
+   "id": "VN0010287",
+   "name": "PGD Sông Đà",
+   "premium": 5803000,
+   "policies": 1,
+   "rank": 72
+  },
+  {
+   "id": "VN0010413",
+   "name": "PGD Sóc Sơn",
+   "premium": 5093000,
+   "policies": 1,
+   "rank": 73
+  },
+  {
+   "id": "VN0010407",
+   "name": "TTTC Thảo Điền",
+   "premium": 5039000,
+   "policies": 1,
+   "rank": 74
+  },
+  {
+   "id": "VN0010360",
+   "name": "CN Lạng Sơn",
+   "premium": 4750000,
+   "policies": 1,
+   "rank": 75
+  },
+  {
+   "id": "VN0010400",
+   "name": "CN Ninh Thuận",
+   "premium": 4578000,
+   "policies": 1,
+   "rank": 76
+  },
+  {
+   "id": "VN0010220",
+   "name": "CN Hòa Bình",
+   "premium": 3977000,
+   "policies": 1,
+   "rank": 77
+  },
+  {
+   "id": "VN0010453",
+   "name": "PGD Cai Lậy",
+   "premium": 3206000,
+   "policies": 1,
+   "rank": 78
+  },
+  {
+   "id": "VN0010305",
+   "name": "PGD Lý Thường Kiệt",
+   "premium": 3111750,
+   "policies": 1,
+   "rank": 79
+  }
+ ],
+ "hubs": [
+  {
+   "id": "VN0010478",
+   "name": "TTKD OTO MIEN BAC",
+   "premium": 291182960,
+   "policies": 39,
+   "rank": 1
+  },
+  {
+   "id": "VN0010479",
+   "name": "TTKD OTO MIEN NAM",
+   "premium": 102644150,
+   "policies": 16,
+   "rank": 2
+  }
+ ]
+}
