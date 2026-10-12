@@ -212,7 +212,7 @@ def load_report(path):
 # ---------------------------------------------------------------- file OPES (mã DAO cán bộ bán)
 def load_opes(path):
     """Đọc báo cáo OPES: Số hợp đồng bảo hiểm (PL-...) → Mã DAO, Mã chi nhánh, giờ phát hành, số khung.
-    Chỉ giữ các trường cần ghép — KHÔNG đọc tên KH, SĐT, email, tên cán bộ."""
+    Chỉ giữ các trường cần ghép + Tên CBB — KHÔNG đọc tên KH, SĐT, email."""
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
     ws = wb.worksheets[0]
     rows = list(ws.iter_rows(values_only=True))
@@ -228,7 +228,7 @@ def load_opes(path):
     c = dict(dao=find_col(H, "mã dao"), pol=find_col(H, "số hợp đồng bảo hiểm"),
              bank=find_col(H, "mã chi nhánh"), issued=find_col(H, "ngày phát hành hợp đồng"),
              chassis=find_col(H, "số khung"), fee=find_col(H, "số phí bảo hiểm"),
-             status=find_col(H, "trạng thái hiệu lực"))
+             status=find_col(H, "trạng thái hiệu lực"), name=find_col(H, "tên cbb"))
     out = {}
     g = lambda r, k: (r[c[k]] if c[k] is not None and c[k] < len(r) else None)
     for r in rows[hi + 1:]:
@@ -239,7 +239,7 @@ def load_opes(path):
         if dao.endswith(".0"):
             dao = dao[:-2]
         iss = g(r, "issued")
-        out[pol] = dict(dao=dao, bank=str(g(r, "bank") or "").strip().upper(),
+        out[pol] = dict(dao=dao, name=re.sub(r"\s+", " ", str(g(r, "name") or "")).strip(), bank=str(g(r, "bank") or "").strip().upper(),
                         issued=iss if isinstance(iss, dt.datetime) else None,
                         chassis=str(g(r, "chassis") or "").strip().upper(),
                         fee=to_num(g(r, "fee")), status=str(g(r, "status") or ""))
@@ -510,6 +510,10 @@ def main():
         tiers = CONFIG["early"]["tiers"]
         order = sorted(first.values())
         P = defaultdict(lambda: dict(premium=0.0, policies=0, week_premium=0.0, bonus=0, early=[0] * len(tiers), banks=set()))
+        dao_name = {}
+        for o in om.values():
+            if o["name"]:
+                dao_name.setdefault(o["dao"], o["name"])
         pol_dao = {}
         for i, (t, pol, k) in enumerate(order, 1):
             dao = om[k]["dao"] if k else None
@@ -542,7 +546,7 @@ def main():
             bank = sorted(e["banks"])[0] if e["banks"] else ""
             rec = mapping.get(bank)
             kind, _, uname = unit_of(rec, mapping) if rec else ("", bank, bank or "Chưa xác định")
-            people.append(dict(id=dao, b=bank, u=uname, k=kind, v=(rec or {}).get("pvi", ""),
+            people.append(dict(id=dao, nm=dao_name.get(dao, ""), b=bank, u=uname, k=kind, v=(rec or {}).get("pvi", ""),
                                premium=round(e["premium"]), policies=e["policies"],
                                week_premium=round(e["week_premium"]), bonus=e["bonus"], early=e["early"],
                                qualified=e["premium"] >= thr))
@@ -655,9 +659,10 @@ def main():
     if news:
         L.append("🆕 Mới lên bảng: " + ", ".join(b["name"] for b in news))
     if indiv and indiv["people"]:
-        L += ["", f"👤 Top cá nhân (Mã DAO, chốt {dt.date.fromisoformat(indiv['asof']):%d/%m}):" if indiv["asof"] else "👤 Top cá nhân (Mã DAO):"]
+        L += ["", "👤 Top cá nhân:"]
         for z in indiv["people"][:3]:
-            L.append(f"{z['rank']}. DAO {z['id']} – {z['u']} – {tr(z['premium'])}")
+            un = z["u"] if z["k"] != "HUB" else ("Hub xe Miền Bắc" if "BAC" in z["u"].upper() else "Hub xe Miền Nam")
+            L.append(f"{z['rank']}. {z['nm'] or 'DAO ' + z['id']} ({un}) – {tr(z['premium'])}")
     L += ["", "🚙 Hub xe: " + " – ".join(f"{('Miền Bắc' if 'BAC' in h['name'].upper() else 'Miền Nam')} {tr(h['premium'])}" for h in hubs),
           "", f"👉 Xem chi tiết & tìm CN/PGD của mình: {BASE}",
           "(Số liệu tạm tính, kết quả chính thức theo Thể lệ)"]
@@ -701,7 +706,7 @@ def main():
         print(f"• Cá nhân (Mã DAO, file OPES {indiv['asof']}): {indiv['people_count']} cán bộ | "
               f"đạt ngưỡng 125tr: {sum(1 for z in indiv['people'] if z['qualified'])} | "
               f"thưởng 600 đơn đầu đã gán: {indiv['early_assigned']}/{indiv['early_total']} HĐ")
-        print("  Top 3: " + "; ".join(f"DAO {z['id']} ({z['u']}) {z['premium']:,.0f}đ" for z in top))
+        print("  Top 3: " + "; ".join(f"{z['nm']} - DAO {z['id']} ({z['u']}) {z['premium']:,.0f}đ" for z in top))
         for w in opes_warns:
             print(f"  ⚠ {w}")
     print("✔ Đã ghi docs/data.js")
