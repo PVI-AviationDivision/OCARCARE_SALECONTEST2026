@@ -33,7 +33,7 @@ CONFIG = {
         {"from": 501, "to": 600, "reward": 100000, "label": "100 HĐBH cuối cùng"},
     ]},
     "individual": {"threshold": 125_000_000, "prizes": [5_000_000, 4_000_000, 3_000_000],
-                   "note": "Sẽ cập nhật sau 31/10/2026"},
+                   "note": "Tạm tính theo Mã DAO cán bộ bán (file OPES cập nhật hằng tuần) — kết quả chính thức công bố sau 31/10/2026"},
     "branch": {"threshold": 250_000_000, "prizes": [7_000_000, 5_000_000, 3_000_000]},
     "hub": {"threshold": 1_250_000_000, "prizes": [15_000_000, 10_000_000],
             "milestones": [
@@ -173,6 +173,8 @@ def load_report(path):
         channel=find_col([rows[hi]], "danh mục kênh bán hàng"),
         fee=find_col([rows[hi]], "tổng phí bh"),
         bank=find_col([rows[hi]], "mã chi nhánh bank"),
+        partner=find_col([rows[hi]], "số đơn bh từ đối tác"),
+        chassis=find_col([rows[hi]], "số khung"),
     )
     if c["fee"] is None or c["bank"] is None or c["pol"] is None or c["issued"] is None:
         sys.exit(f"Báo cáo thiếu cột bắt buộc: {c}")
@@ -190,13 +192,72 @@ def load_report(path):
             channel=str(r[c["channel"]] or "") if c["channel"] is not None else "",
             fee=to_num(r[c["fee"]]),
             bank=str(r[c["bank"]] or "").strip().upper(),
+            partner=str(r[c["partner"]] or "").strip().upper() if c["partner"] is not None and c["partner"] < len(r) else "",
+            chassis=str(r[c["chassis"]] or "").strip().upper() if c["chassis"] is not None and c["chassis"] < len(r) else "",
         ))
     # dòng SĐBS để trống Mã chi nhánh Bank → kế thừa từ đơn gốc
     origin = {x["pol"]: x["bank"] for x in out if x["bank"] and not x["sdbs"]}
+    porig = {x["pol"]: x["partner"] for x in out if x["partner"] and not x["sdbs"]}
+    corig = {x["pol"]: x["chassis"] for x in out if x["chassis"] and not x["sdbs"]}
     for x in out:
         if not x["bank"]:
             x["bank"] = origin.get(x["pol"], "")
+        if not x["partner"]:
+            x["partner"] = porig.get(x["pol"], "")
+        if not x["chassis"]:
+            x["chassis"] = corig.get(x["pol"], "")
     return out
+
+
+# ---------------------------------------------------------------- file OPES (mã DAO cán bộ bán)
+def load_opes(path):
+    """Đọc báo cáo OPES: Số hợp đồng bảo hiểm (PL-...) → Mã DAO, Mã chi nhánh, giờ phát hành, số khung.
+    Chỉ giữ các trường cần ghép — KHÔNG đọc tên KH, SĐT, email, tên cán bộ."""
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    ws = wb.worksheets[0]
+    rows = list(ws.iter_rows(values_only=True))
+    hi = None
+    for i, r in enumerate(rows[:20]):
+        ns = [norm(v) for v in r]
+        if "mã dao" in ns and any("số hợp đồng bảo hiểm" in n for n in ns):
+            hi = i
+            break
+    if hi is None:
+        sys.exit("File OPES thiếu cột 'Mã DAO' / 'Số hợp đồng bảo hiểm'.")
+    H = [rows[hi]]
+    c = dict(dao=find_col(H, "mã dao"), pol=find_col(H, "số hợp đồng bảo hiểm"),
+             bank=find_col(H, "mã chi nhánh"), issued=find_col(H, "ngày phát hành hợp đồng"),
+             chassis=find_col(H, "số khung"), fee=find_col(H, "số phí bảo hiểm"),
+             status=find_col(H, "trạng thái hiệu lực"))
+    out = {}
+    g = lambda r, k: (r[c[k]] if c[k] is not None and c[k] < len(r) else None)
+    for r in rows[hi + 1:]:
+        pol = str(g(r, "pol") or "").strip().upper()
+        dao = str(g(r, "dao") or "").strip()
+        if not pol or not dao:
+            continue
+        if dao.endswith(".0"):
+            dao = dao[:-2]
+        iss = g(r, "issued")
+        out[pol] = dict(dao=dao, bank=str(g(r, "bank") or "").strip().upper(),
+                        issued=iss if isinstance(iss, dt.datetime) else None,
+                        chassis=str(g(r, "chassis") or "").strip().upper(),
+                        fee=to_num(g(r, "fee")), status=str(g(r, "status") or ""))
+    return out
+
+
+def file_date(path):
+    name = os.path.basename(path)
+    for pat, order in [(r"(?<!\d)(\d{1,2})[._\- ](\d{1,2})[._\- ](20\d{2})(?!\d)", "dmy"),
+                       (r"(?<!\d)(20\d{2})[._\-](\d{1,2})[._\-](\d{1,2})(?!\d)", "ymd"),
+                       (r"(?<!\d)(\d{2})(\d{2})(20\d{2})(?!\d)", "dmy")]:
+        for mt in re.finditer(pat, name):
+            a1, a2, a3 = (int(x) for x in mt.groups())
+            try:
+                return dt.date(a3, a2, a1) if order == "dmy" else dt.date(a1, a2, a3)
+            except ValueError:
+                pass
+    return None
 
 # ---------------------------------------------------------------- tổng hợp
 def rank(items):
@@ -268,6 +329,7 @@ def main():
     ap.add_argument("--report")
     ap.add_argument("--mapping")
     ap.add_argument("--date", help="Ngày báo cáo YYYY-MM-DD (mặc định lấy từ tên file)")
+    ap.add_argument("--opes", help="File OPES có Mã DAO (mặc định: file mới nhất trong input_opes/)")
     ap.add_argument("--out", default=os.path.join(ROOT, "docs"))
     a = ap.parse_args()
 
@@ -421,6 +483,99 @@ def main():
     for i, g in enumerate(pvi_units, 1):
         g["rank"] = i
 
+    # ---- Hạng mục 1: cá nhân theo Mã DAO (ghép file OPES qua "Số đơn BH từ đối tác" / số khung)
+    indiv = None
+    ofile = a.opes or latest(os.path.join(ROOT, "input_opes", "*.xls*"))
+    opes_warns = []
+    if ofile:
+        print(f"• File OPES (Mã DAO): {os.path.basename(ofile)}")
+        om = load_opes(ofile)
+        by_ch = {}
+        for k, o in om.items():
+            if o["chassis"]:
+                by_ch.setdefault(o["chassis"], k)
+        def opes_of(x):
+            k = x.get("partner")
+            if k and k in om:
+                return k
+            return by_ch.get(x.get("chassis")) if x.get("chassis") else None
+        # thứ tự HĐBH cho thưởng 600 đơn đầu: theo giờ phát hành (file OPES), nếu thiếu → cuối ngày cấp
+        first = {}
+        for x in recs:
+            if x["sdbs"] or x["pol"] in first:
+                continue
+            k = opes_of(x)
+            t = om[k]["issued"] if k and om[k]["issued"] else dt.datetime.combine(x["issued"], dt.time(23, 59, 59))
+            first[x["pol"]] = (t, x["pol"], k)
+        tiers = CONFIG["early"]["tiers"]
+        order = sorted(first.values())
+        P = defaultdict(lambda: dict(premium=0.0, policies=0, week_premium=0.0, bonus=0, early=[0] * len(tiers), banks=set()))
+        pol_dao = {}
+        for i, (t, pol, k) in enumerate(order, 1):
+            dao = om[k]["dao"] if k else None
+            pol_dao[pol] = dao
+            if not dao:
+                continue
+            for j, tr_ in enumerate(tiers):
+                if tr_["from"] <= i <= tr_["to"]:
+                    P[dao]["early"][j] += 1
+                    P[dao]["bonus"] += tr_["reward"]
+        no_dao = dict(premium=0.0, policies=0)
+        for x in recs:
+            dao = pol_dao.get(x["pol"])
+            if dao is None and x["sdbs"]:
+                k = opes_of(x)
+                dao = om[k]["dao"] if k else None
+            if not dao:
+                no_dao["premium"] += x["fee"]
+                no_dao["policies"] += 0 if x["sdbs"] else 1
+                continue
+            e = P[dao]
+            e["premium"] += x["fee"]
+            e["policies"] += 0 if x["sdbs"] else 1
+            if x["issued"] >= wk_start:
+                e["week_premium"] += x["fee"]
+            e["banks"].add(x["bank"])
+        thr = CONFIG["individual"]["threshold"]
+        people = []
+        for dao, e in P.items():
+            bank = sorted(e["banks"])[0] if e["banks"] else ""
+            rec = mapping.get(bank)
+            kind, _, uname = unit_of(rec, mapping) if rec else ("", bank, bank or "Chưa xác định")
+            people.append(dict(id=dao, b=bank, u=uname, k=kind, v=(rec or {}).get("pvi", ""),
+                               premium=round(e["premium"]), policies=e["policies"],
+                               week_premium=round(e["week_premium"]), bonus=e["bonus"], early=e["early"],
+                               qualified=e["premium"] >= thr))
+        people.sort(key=lambda z: (-z["premium"], -z["policies"], z["id"]))
+        for i, z in enumerate(people, 1):
+            z["rank"] = i
+        odate = file_date(ofile)
+        if not odate:
+            odate = max((o["issued"] for o in om.values() if o["issued"]), default=None)
+            odate = odate.date() if odate else None
+        indiv = dict(asof=odate.isoformat() if odate else None, source=os.path.basename(ofile),
+                     people=people, people_count=len(people),
+                     no_dao=dict(premium=round(no_dao["premium"]), policies=no_dao["policies"]),
+                     early_assigned=sum(sum(z["early"]) for z in people),
+                     early_total=min(len(order), tiers[-1]["to"]),
+                     bonus_total=sum(z["bonus"] for z in people))
+        # đối soát
+        rep_keys = {x["partner"] for x in recs_all if x["partner"]}
+        miss = sorted((o["issued"], k) for k, o in om.items()
+                      if k not in rep_keys and o["issued"] and o["issued"].date() < rdate)
+        if miss:
+            opes_warns.append(f"{len(miss)} HĐ có trong file OPES (phát hành trước {rdate:%d/%m}) nhưng KHÔNG có trong báo cáo BH PVI: "
+                              + ", ".join(f"{k} ({t:%d/%m})" for t, k in miss[:10]))
+        diff_bank = sum(1 for x in recs if not x["sdbs"] and opes_of(x) and om[opes_of(x)]["bank"]
+                        and om[opes_of(x)]["bank"] != x["bank"])
+        if diff_bank:
+            opes_warns.append(f"{diff_bank} HĐ có Mã chi nhánh trên file OPES khác báo cáo BH PVI (dashboard dùng mã của BH PVI)")
+        if no_dao["policies"]:
+            opes_warns.append(f"{no_dao['policies']} HĐBH chưa có Mã DAO (phát sinh sau file OPES hoặc không ghép được) — "
+                              f"{no_dao['premium']:,.0f}đ, sẽ gán khi có file OPES mới")
+    else:
+        print("  ℹ Chưa có file OPES trong input_opes/ → bảng cá nhân giữ trạng thái khoá")
+
     total_prem = sum(x["fee"] for x in recs)
     today_recs = [x for x in recs if x["issued"] == rdate]
     data = dict(
@@ -436,7 +591,7 @@ def main():
         ),
         config=CONFIG,
         branches=branches, hubs=hubs, lookup=lookup, daily=daily,
-        regions=group("region"), pvi_units=pvi_units, pos=pos,
+        regions=group("region"), pvi_units=pvi_units, pos=pos, indiv=indiv,
     )
 
     # ---- kiểm tra dữ liệu
@@ -499,6 +654,10 @@ def main():
         L.append("🚀 Bứt phá tuần: " + "; ".join(f"{b['name']} ▲{b['rank7']-b['rank']} bậc" for b in ups))
     if news:
         L.append("🆕 Mới lên bảng: " + ", ".join(b["name"] for b in news))
+    if indiv and indiv["people"]:
+        L += ["", f"👤 Top cá nhân (Mã DAO, chốt {dt.date.fromisoformat(indiv['asof']):%d/%m}):" if indiv["asof"] else "👤 Top cá nhân (Mã DAO):"]
+        for z in indiv["people"][:3]:
+            L.append(f"{z['rank']}. DAO {z['id']} – {z['u']} – {tr(z['premium'])}")
     L += ["", "🚙 Hub xe: " + " – ".join(f"{('Miền Bắc' if 'BAC' in h['name'].upper() else 'Miền Nam')} {tr(h['premium'])}" for h in hubs),
           "", f"👉 Xem chi tiết & tìm CN/PGD của mình: {BASE}",
           "(Số liệu tạm tính, kết quả chính thức theo Thể lệ)"]
@@ -537,6 +696,14 @@ def main():
         print(f"  ⚠ {unmapped['policies']} HĐ có Mã chi nhánh Bank chưa có trong mapping: {sorted(unmapped['codes'])}")
     for w in warns:
         print(f"  ⚠ {w}")
+    if indiv:
+        top = indiv["people"][:3]
+        print(f"• Cá nhân (Mã DAO, file OPES {indiv['asof']}): {indiv['people_count']} cán bộ | "
+              f"đạt ngưỡng 125tr: {sum(1 for z in indiv['people'] if z['qualified'])} | "
+              f"thưởng 600 đơn đầu đã gán: {indiv['early_assigned']}/{indiv['early_total']} HĐ")
+        print("  Top 3: " + "; ".join(f"DAO {z['id']} ({z['u']}) {z['premium']:,.0f}đ" for z in top))
+        for w in opes_warns:
+            print(f"  ⚠ {w}")
     print("✔ Đã ghi docs/data.js")
     print("✔ Đã soạn tin nhắn Zalo: tin_nhan_zalo.txt")
 

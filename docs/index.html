@@ -175,6 +175,12 @@ section.card{margin:22px 0;border-radius:var(--r);background:linear-gradient(180
 .kind.tttc{background:#e8263f33;color:#ff9aa8}
 .kind.hhb{background:#a855f733;color:#d8b4fe}
 .kind.pgd{background:#35d07f26;color:#8ff0b8}
+.kind.khub{background:#ff7a1a33;color:#ffc08a}
+.iv-h{margin-top:22px}
+.iv-asof{font-size:12px;color:var(--ink3);margin:-4px 0 12px}
+.iv-early{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--ink2);margin-top:5px}
+.iv-early b{color:var(--orange2)}
+.iv-note{margin-top:12px;font-size:12.5px;color:var(--ink2);line-height:1.5}
 .rv{text-align:right}
 .rv .v{font-size:20px;line-height:1}
 .mv{font-size:11.5px;font-weight:800}
@@ -257,7 +263,13 @@ details.zero{margin-top:14px;border:1px solid var(--line);border-radius:12px;pad
 details.zero summary{cursor:pointer;font-weight:700;font-size:14px}
 .zl{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .zl span{font-size:12.5px;padding:4px 9px;border-radius:8px;background:#ffffff0d;color:var(--ink2)}
-.kind.pgd{background:#35d07f26;color:#8ff0b8}.kind.ttkd{background:#14b8a633;color:#7ff0e0}
+.kind.pgd{background:#35d07f26;color:#8ff0b8}
+.kind.khub{background:#ff7a1a33;color:#ffc08a}
+.iv-h{margin-top:22px}
+.iv-asof{font-size:12px;color:var(--ink3);margin:-4px 0 12px}
+.iv-early{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--ink2);margin-top:5px}
+.iv-early b{color:var(--orange2)}
+.iv-note{margin-top:12px;font-size:12.5px;color:var(--ink2);line-height:1.5}.kind.ttkd{background:#14b8a633;color:#7ff0e0}
 .pace{margin-top:12px;font-size:13px;color:var(--ink2);background:#2f7bff14;border:1px solid #2f7bff40;border-radius:10px;padding:8px 12px}
 .pace b{color:var(--ink)}
 .road .pj{position:absolute;top:3px;bottom:3px;width:0;border-left:2px solid #ffb03a;opacity:.85}
@@ -327,7 +339,7 @@ footer li{margin:3px 0}
       <div class="e-scale" style="position:relative;height:16px"><span style="position:absolute;left:0">Đơn 1</span><span style="position:absolute;left:50%;transform:translateX(-50%)">300</span><span style="position:absolute;left:83.33%;transform:translateX(-50%)">500</span><span style="position:absolute;right:0">600</span></div>
       <div class="tiers" id="tiers"></div>
       <div class="pace" id="ePace"></div>
-      <div class="locked" id="indiv"></div>
+      <div id="indiv"></div>
     </div>
   </section>
 
@@ -410,7 +422,7 @@ window.ocTrack = function(path, title){
 };
 </script>
 <script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="data.js?v=20261012104206"></script>
+<script src="data.js?v=20261012114532"></script>
 <script>
 (function(){
 "use strict";
@@ -572,8 +584,68 @@ $('#tiers').innerHTML = early.map((t,i)=>{
   el.innerHTML = `⏱ Tốc độ trung bình <b>~${pace.toLocaleString('vi-VN',{maximumFractionDigits:1})} HĐBH/ngày</b>`+(parts.length?' → '+parts.join(' · '):' · đã đủ 600 HĐBH được thưởng');
 })();
 const IP = C.individual;
-$('#indiv').innerHTML = `<div class="blur">${IP.prizes.map((p,i)=>`<div class="prz ${['g','s','b'][i]}"><small>Top ${i+1}</small><div class="num">${trPrize(p)}</div></div>`).join('')}</div>
-  <div class="lock-ov"><div style="font-size:22px">🔒</div><div class="num">TOP 3 CÁ NHÂN DOANH THU CAO NHẤT</div><div class="muted">${esc(IP.note)} · Điều kiện: doanh thu ≥ ${money(IP.threshold)} (chưa VAT)</div></div>`;
+(function(){
+  const box=$('#indiv'), X=D.indiv;
+  if(!X||!X.people||!X.people.length){
+    box.className='locked';
+    box.innerHTML = `<div class="blur">${IP.prizes.map((p,i)=>`<div class="prz ${['g','s','b'][i]}"><small>Top ${i+1}</small><div class="num">${trPrize(p)}</div></div>`).join('')}</div>
+    <div class="lock-ov"><div style="font-size:22px">🔒</div><div class="num">TOP 3 CÁ NHÂN DOANH THU CAO NHẤT</div><div class="muted">Sẽ cập nhật khi có dữ liệu Mã DAO · Điều kiện: doanh thu ≥ ${money(IP.threshold)} (chưa VAT)</div></div>`;
+    return;
+  }
+  const IT=IP.threshold, PP=X.people, TOPI=10, pct=(v,max)=>Math.max(0,Math.min(100,v/max*100));
+  const top1=PP[0]?PP[0].premium:0, iMax=Math.max(IT,top1)*1.12;
+  const early=C.early.tiers;
+  const kindTag=k=>k?`<span class="kind ${k==='CN'?'':k==='HUB'?'khub':String(k).toLowerCase()}">${k}</span>`:'';
+  const uName=z=>z.k==='HUB'?hubName({name:z.u}):z.u;
+  const earlyTxt=z=>{ if(!z.bonus) return '<span class="dim">Chưa có đơn trong 600 HĐBH đầu</span>';
+    const parts=early.map((t,i)=>z.early[i]?`${z.early[i]}×${vi(t.reward/1000)}K`:'').filter(Boolean).join(' + ');
+    return `🎁 Thưởng sớm: <b>${money(z.bonus)}</b> <span class="dim">(${parts})</span>`; };
+  const lane=z=>{
+    const cls=z.rank===1?'g':z.rank===2?'s':z.rank===3?'b':'';
+    const lc=z.rank===1?'#ffc93c':z.rank===2?'#d6dee9':z.rank===3?'#e98b5b':'#5b9dff';
+    const gap=z.qualified?'<span class="q ok">✔ Đã đạt ngưỡng</span>':`<span class="q">Còn ${money(IT-z.premium)} tới ngưỡng</span>`;
+    return `<div class="lane" id="IL-${esc(z.id)}" style="--lc:${lc}">
+      <div class="top"><div class="rk ${cls}">${z.rank}</div>
+        <div class="ln"><div class="n">DAO ${esc(z.id)}</div><div class="m">${kindTag(z.k)}${esc(uName(z))}${z.v?' · '+esc(z.v):''}</div></div>
+        <div class="rv"><div class="v num">${money(z.premium)}</div>${z.week_premium>0?`<div class="mv up">+${money(z.week_premium)} / 7 ngày</div>`:''}</div></div>
+      <div class="road"><div class="thr" style="left:${pct(IT,iMax)}%"></div><div class="trail" data-w="${pct(z.premium,iMax)}"></div><div class="car" data-l="${pct(z.premium,iMax)}">${CAR()}</div></div>
+      <div class="foot"><span>${z.policies} HĐBH</span>${gap}</div>
+      <div class="iv-early">${earlyTxt(z)}</div></div>`;
+  };
+  const asof = X.asof?ddmm(addDays(X.asof,0)):'—';
+  box.innerHTML = `<div class="sub-h iv-h">Top 3 cá nhân doanh thu cao nhất</div>
+    <div class="iv-asof">Mã DAO theo file OPES chốt ngày <b>${asof}</b> (cập nhật hằng tuần) · doanh thu theo báo cáo ${esc(M.report_time)} ${ddmm(addDays(M.report_date,0))}</div>
+    <div class="prizes">${IP.prizes.map((p,i)=>`<div class="prz ${['g','s','b'][i]}"><small>Top ${i+1}</small><div class="num">${trPrize(p)}</div></div>`).join('')}<div class="prz"><small>Ngưỡng điều kiện</small><div class="num">${money(IT)}</div></div></div>
+    <div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="iq" inputmode="numeric" autocomplete="off" placeholder="Nhập Mã DAO của bạn để xem hạng & thưởng"></div>
+    <div class="found" id="ifound" style="display:none"></div>
+    <div class="scale-row"><span>0</span><span>Ngưỡng ${money(IT)} 🏁</span></div>
+    <div class="lanes" id="ilanes"></div>
+    <button class="more" id="imore"></button>
+    <div class="iv-note">Doanh thu cá nhân = phí BH (chưa VAT) của các HĐBH gắn Mã DAO, theo báo cáo BH PVI. Thưởng 600 HĐBH đầu tính theo thứ tự giờ phát hành. ${X.no_dao&&X.no_dao.policies?`<b>${X.no_dao.policies}</b> HĐBH phát sinh sau ngày chốt chưa có Mã DAO — sẽ được gán ở lần cập nhật tuần tới. `:''}Số liệu tạm tính, kết quả chính thức công bố sau 31/10/2026.</div>`;
+  let all=false;
+  const render=()=>{ const list=all?PP:PP.slice(0,TOPI);
+    $('#ilanes').innerHTML=list.map(lane).join('');
+    $('#imore').style.display=PP.length>TOPI?'block':'none';
+    $('#imore').textContent=all?'Thu gọn':`Xem toàn bộ ${PP.length} cán bộ đã ghi điểm`;
+    observe($('#ilanes')); };
+  $('#imore').onclick=()=>{all=!all;render();if(all)ocTrack('xem-toan-bo-ca-nhan','Xem toàn bộ cá nhân');};
+  render();
+  const iq=$('#iq'), f=$('#ifound');
+  iq.addEventListener('input',()=>{
+    const v=iq.value.replace(/\D/g,'').replace(/^0+/,'');
+    if(v.length<3){f.style.display='none';return;}
+    const z=PP.find(p=>p.id.replace(/^0+/,'')===v);
+    f.style.display='block';
+    if(!z){ f.innerHTML=`<div class="h">DAO ${esc(v)}</div><div class="row"><span>Chưa có HĐBH gắn mã này tính đến ngày chốt ${asof}.</span><span class="ok"><b>Ghi điểm ngay từ hợp đồng đầu tiên!</b></span></div>`; return; }
+    ocTrack('tim-dao','Tìm Mã DAO');
+    const third=PP[2];
+    const toTop3=z.rank<=3?'<span class="ok"><b>Đang trong Top 3</b></span>':third?`<span>Cách Top 3: <b>${money(third.premium-z.premium+1)}</b></span>`:'';
+    f.innerHTML=`<div class="h">DAO ${esc(z.id)} · ${esc(uName(z))}</div><div class="row"><span>Hạng <b>#${z.rank}</b>/${PP.length}</span><span>Doanh thu <b>${money(z.premium)}</b></span><span>${z.policies} HĐBH</span>${z.qualified?'<span class="ok"><b>✔ Đạt ngưỡng</b></span>':`<span>Còn <b>${money(IT-z.premium)}</b> tới ngưỡng</span>`}${toTop3}</div><div class="iv-early" style="font-size:13px">${earlyTxt(z)}</div>`;
+    if(z.rank>TOPI&&!all){all=true;render();}
+    setTimeout(()=>{const el=document.getElementById('IL-'+z.id); if(el){el.scrollIntoView({behavior:'smooth',block:'center'}); document.querySelectorAll('.lane.hl').forEach(l=>l.classList.remove('hl')); el.classList.add('hl');}},200);
+  });
+})();
 
 /* ---------- 2. branches ---------- */
 const BT = C.branch.threshold;
