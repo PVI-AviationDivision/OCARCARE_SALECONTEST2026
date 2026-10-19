@@ -485,11 +485,24 @@ def main():
 
     # ---- Hạng mục 1: cá nhân theo Mã DAO (ghép file OPES qua "Số đơn BH từ đối tác" / số khung)
     indiv = None
-    ofile = a.opes or latest(os.path.join(ROOT, "input_opes", "*.xls*"))
+    # OPES gửi file theo TUẦN (mỗi file chỉ chứa đơn phát sinh trong tuần) → đọc & gộp TẤT CẢ file,
+    # file mới hơn ghi đè file cũ nếu trùng số hợp đồng.
+    if a.opes:
+        ofiles = [a.opes]
+    else:
+        ofiles = [f for f in glob.glob(os.path.join(ROOT, "input_opes", "*.xls*"))
+                  if not os.path.basename(f).startswith("~$")]
+        ofiles.sort(key=lambda f: (file_date(f) or dt.date.min, os.path.getmtime(f)))
+    ofile = ofiles[-1] if ofiles else None
     opes_warns = []
     if ofile:
-        print(f"• File OPES (Mã DAO): {os.path.basename(ofile)}")
-        om = load_opes(ofile)
+        om = {}
+        for f in ofiles:
+            part = load_opes(f)
+            new = sum(1 for k in part if k not in om)
+            om.update(part)
+            print(f"• File OPES (Mã DAO): {os.path.basename(f)} — {len(part)} HĐ, mới {new}")
+        print(f"  → Tổng sau khi gộp: {len(om)} HĐ có Mã DAO")
         by_ch = {}
         for k, o in om.items():
             if o["chassis"]:
