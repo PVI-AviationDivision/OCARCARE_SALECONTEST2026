@@ -2,16 +2,16 @@
  "report_date": "2026-10-22",
  "report_time": "08:15",
  "model": "diem-ban",
- "generated_at": "2026-10-22 08:39",
+ "generated_at": "2026-10-22 09:02",
  "source": "BC 8h15 ngày 22.10.2026 VP Bank.xlsx",
  "total_policies": 843,
  "total_premium": 5958042505,
  "today_policies": 1,
  "today_premium": 4205000,
- "active_units": 117,
+ "active_units": 118,
  "unmapped": {
-  "premium": 7264000,
-  "policies": 1
+  "premium": 0,
+  "policies": 0
  },
  "branches": [
   {
@@ -736,102 +736,109 @@
    "rank": 103
   },
   {
+   "id": "VN0010338",
+   "name": "Hội sở chính (89 Láng Hạ)",
+   "premium": 7264000,
+   "policies": 1,
+   "rank": 104
+  },
+  {
    "id": "VN0010456",
    "name": "PGD Hoà Thành",
    "premium": 7045000,
    "policies": 1,
-   "rank": 104
+   "rank": 105
   },
   {
    "id": "VN0010111",
    "name": "PGD Cát Linh",
    "premium": 6909000,
    "policies": 1,
-   "rank": 105
+   "rank": 106
   },
   {
    "id": "VN0010257",
    "name": "PGD Nguyễn Duy Trinh",
    "premium": 6703200,
    "policies": 1,
-   "rank": 106
+   "rank": 107
   },
   {
    "id": "VN0010178",
    "name": "PGD Phan Huy Ích",
    "premium": 6681000,
    "policies": 1,
-   "rank": 107
+   "rank": 108
   },
   {
    "id": "VN0010124",
    "name": "PGD Tân Phú",
    "premium": 6522000,
    "policies": 1,
-   "rank": 108
+   "rank": 109
   },
   {
    "id": "VN0010108",
    "name": "CN Quảng Ninh",
    "premium": 6435000,
    "policies": 1,
-   "rank": 109
+   "rank": 110
   },
   {
    "id": "VN0010270",
    "name": "PGD Ba Đình",
    "premium": 6380000,
    "policies": 1,
-   "rank": 110
+   "rank": 111
   },
   {
    "id": "VN0010193",
    "name": "PGD Trung Kính",
    "premium": 6142950,
    "policies": 1,
-   "rank": 111
+   "rank": 112
   },
   {
    "id": "VN0010174",
    "name": "PGD Mai Thúc Loan",
    "premium": 5902000,
    "policies": 1,
-   "rank": 112
+   "rank": 113
   },
   {
    "id": "VN0010152",
    "name": "PGD Thụy Khuê",
    "premium": 4887000,
    "policies": 1,
-   "rank": 113
+   "rank": 114
   },
   {
    "id": "VN0010286",
    "name": "PGD Hàm Nghi",
    "premium": 4735000,
    "policies": 1,
-   "rank": 114
+   "rank": 115
   },
   {
    "id": "VN0010231",
    "name": "PGD Đông Anh",
    "premium": 4228000,
    "policies": 1,
-   "rank": 115
+   "rank": 116
   },
   {
    "id": "VN0010453",
    "name": "PGD Cai Lậy",
    "premium": 3206000,
    "policies": 1,
-   "rank": 116
+   "rank": 117
   },
   {
    "id": "VN0010305",
    "name": "PGD Lý Thường Kiệt",
    "premium": 3111750,
    "policies": 1,
-   "rank": 117
+   "rank": 118
   }
  ],
  "hubs": [
