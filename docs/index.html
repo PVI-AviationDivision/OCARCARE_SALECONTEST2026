@@ -260,6 +260,11 @@ section.card{margin:22px 0;border-radius:var(--r);background:linear-gradient(180
 .cst{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
 .cst .rk{width:30px;height:30px;font-size:17px}
 .cst .gp{font-size:12px;color:var(--ink2);text-align:right}
+.lst{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:5px;margin-left:4px;white-space:nowrap}
+.lst.g{background:#35d07f22;color:#8ff0b8}.lst.o{background:#ff7a1a26;color:#ffc08a}.lst.r{background:#e8263f2e;color:#ff9aa8}
+.pv-sort{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:-2px 0 8px;font-size:12px;color:var(--ink3)}
+.pv-sort button{padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:#ffffff08;color:var(--ink2);font-size:12px;font-weight:600}
+.pv-sort button.on{background:#a855f733;border-color:#a855f7;color:#fff}
 details.zero{margin-top:14px;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:#ffffff05}
 details.zero summary{cursor:pointer;font-weight:700;font-size:14px}
 .zl{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
@@ -423,7 +428,7 @@ window.ocTrack = function(path, title){
 };
 </script>
 <script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="data.js?v=20261022091131"></script>
+<script src="data.js?v=20261023083212"></script>
 <script>
 (function(){
 "use strict";
@@ -799,10 +804,19 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
   const order = [...PU].sort((a,b)=>a.rank-b.rank);
   $('#pvChips').innerHTML = order.map(g=>`<button class="chip ${g.policies?'':'zero'}" role="tab" data-v="${esc(g.name)}">${esc(short(g.name))}<b>${g.policies}</b></button>`).join('');
   const kindTag = t=>{const T=String(t).toUpperCase();const c=T.includes('PGD')?'pgd':T.includes('TTTC')?'tttc':T.includes('TTKD')||T.includes('OTO')?'ttkd':'';return `<span class="kind ${c}">${esc(T.includes('TTKD')||T.includes('OTO')?'HUB':T)}</span>`;};
+  let pvSort='dt';
+  const RD = addDays(M.report_date,0);
+  const ago = iso=>iso?Math.round((RD-addDays(iso,0))/864e5):null;
+  const lastTag = iso=>{ const d=ago(iso); if(d===null) return '';
+    const cls=d<=3?'g':d<=7?'o':'r'; const txt=d===0?'có đơn hôm nay':d===1?'hôm qua':`${d} ngày chưa có đơn`;
+    return `<span class="lst ${cls}" title="HĐBH gần nhất cấp ngày ${ddmm(addDays(iso,0))}">${d>7?'⚠ ':''}${ddmm(addDays(iso,0))} · ${txt}</span>`; };
   function render(v){
     const g = byName[v]; if(!g) return;
     document.querySelectorAll('#pvChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.v===v));
-    const pts = POS.filter(z=>z.v===v);
+    const pts = POS.filter(z=>z.v===v).slice();
+    if(pvSort==='last') pts.sort((a,b)=>String(a.last||'').localeCompare(String(b.last||''))||b.premium-a.premium);
+    const lastAll = pts.reduce((m,z)=>z.last&&(!m||z.last>m)?z.last:m,null);
+    const stale = pts.filter(z=>ago(z.last)>7).length;
     const active = new Set(pts.map(z=>z.c));
     const zeros = D.lookup.filter(x=>x.v===v && !active.has(x.c)).sort((a,b)=>String(a.t).localeCompare(String(b.t))||a.n.localeCompare(b.n,'vi'));
     // CN/TTTC thi đua liên quan (từ tất cả điểm bán thuộc đơn vị, kể cả chưa có đơn)
@@ -813,7 +827,7 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
     const third = B[2];
     const cov = g.points_total? g.points_active/g.points_total*100:0;
     $('#pvPanel').innerHTML = `
-      <div class="pv-head"><div><div class="t">${esc(g.name)}</div><div class="rk2">Hạng <b>#${g.rank}</b>/${PU.length} đơn vị BH PVI theo doanh thu</div></div>
+      <div class="pv-head"><div><div class="t">${esc(g.name)}</div><div class="rk2">Hạng <b>#${g.rank}</b>/${PU.length} đơn vị BH PVI theo doanh thu${lastAll?` · đơn gần nhất ${lastTag(lastAll)}`:''}</div></div>
         <button class="btn-s" id="pvCopy">🔗 Sao chép link đơn vị</button></div>
       <div class="pv-kpis">
         <div class="kpi" style="--c:#2f7bff"><div class="l">HĐBH</div><div class="v num">${vi(g.policies)}</div><div class="d">${g.today_policies?`+${g.today_policies} hôm nay`:'&nbsp;'}</div></div>
@@ -822,7 +836,8 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
         <div class="kpi" style="--c:#14b8a6"><div class="l">Phí BQ / HĐBH</div><div class="v num">${g.policies?money(g.premium/g.policies):'—'}</div><div class="d">&nbsp;</div></div>
       </div>
       <div class="sub-h" style="margin-top:18px">Điểm bán đã có đơn (${pts.length})</div>
-      ${pts.length?`<div class="pt hd"><div>Điểm bán</div><div style="text-align:right">HĐBH</div><div style="text-align:right">Doanh thu</div></div>`+pts.map(z=>`<div class="pt"><div class="nm2"><div class="a">${kindTag(z.t)}${esc(z.n)}</div><div class="b">${z.k==='HUB'?'Hạng mục Hub xe':z.un!==z.n?'Thuộc '+esc(z.un):esc(z.region||'')}</div></div><div class="n1">${z.policies}</div><div class="n2">${money(z.premium)}${z.today_policies?`<small>+${z.today_policies} hôm nay</small>`:''}</div></div>`).join(''):'<div class="dim">Chưa có điểm bán nào phát sinh HĐBH — ghi điểm ngay từ hợp đồng đầu tiên!</div>'}
+      ${pts.length?`<div class="pv-sort">Xếp theo: <button data-s="dt" class="${pvSort==='dt'?'on':''}">Doanh thu</button><button data-s="last" class="${pvSort==='last'?'on':''}">Lâu chưa ra đơn nhất</button>${stale?`<span>· <b style="color:#ff9aa8">${stale}</b> điểm đã quá 7 ngày chưa có đơn mới</span>`:''}</div>`:''}
+      ${pts.length?`<div class="pt hd"><div>Điểm bán</div><div style="text-align:right">HĐBH</div><div style="text-align:right">Doanh thu</div></div>`+pts.map(z=>`<div class="pt"><div class="nm2"><div class="a">${kindTag(z.t)}${esc(z.n)}</div><div class="b">${z.k==='HUB'?'Hạng mục Hub xe':z.un!==z.n?'Thuộc '+esc(z.un):esc(z.region||'')}${lastTag(z.last)}</div></div><div class="n1">${z.policies}</div><div class="n2">${money(z.premium)}${z.today_policies?`<small>+${z.today_policies} hôm nay</small>`:''}</div></div>`).join(''):'<div class="dim">Chưa có điểm bán nào phát sinh HĐBH — ghi điểm ngay từ hợp đồng đầu tiên!</div>'}
       ${cont.length||hubs.length?`<div class="sub-h" style="margin-top:18px">Thứ hạng thi đua các điểm bán của đơn vị</div>
       <div class="dim" style="font-size:12px;margin:-4px 0 6px">Mỗi CN/PGD/TTTC/House Hold xếp hạng độc lập · ngưỡng ${money(BT)} áp dụng cho từng điểm.</div>`+
         cont.map(b=>`<div class="cst"><div class="rk ${b.rank===1?'g':b.rank===2?'s':b.rank===3?'b':''}">${b.rank}</div><div><b>${esc(b.name)}</b><div class="dim" style="font-size:11.5px">${b.policies} HĐBH · ${money(b.premium)}</div></div><div class="gp">${b.qualified?'<span class="ok"><b>✔ Đạt ngưỡng</b></span>':`Còn <b>${money(BT-b.premium)}</b> tới ${money(BT)}`}<br>${b.rank<=3?'<span class="ok">Trong Top 3</span>':third?`Cách Top 3: <b>${money(third.premium-b.premium+1)}</b>`:''}</div></div>`).join('')+
@@ -830,6 +845,7 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
       ${zeros.length?`<details class="zero"><summary>Điểm bán chưa phát sinh đơn (${zeros.length}) — danh sách cần đôn đốc</summary><div class="dim" style="font-size:12px;margin-top:4px">Tính theo đơn cấp trực tiếp tại chính điểm đó (CN và PGD hạch toán độc lập).</div><div class="zl">${zeros.map(x=>`<span>${esc(x.n)}</span>`).join('')}</div></details>`:''}
     `;
     fire($('#pvPanel'));
+    $('#pvPanel').querySelectorAll('.pv-sort button').forEach(b=>b.onclick=()=>{pvSort=b.dataset.s;render(v);if(pvSort==='last')ocTrack('xep-lau-chua-ra-don','Xếp lâu chưa ra đơn');});
     try{ localStorage.setItem('ocar_pvi', v); }catch(e){}
     $('#pvCopy').onclick=()=>{ocTrack('sao-chep-link/'+slug(v),'Sao chép link: '+v);const link=location.origin+location.pathname+'?dv='+slug(v); const ok=()=>{$('#pvCopy').textContent='✔ Đã sao chép';setTimeout(()=>{const b=$('#pvCopy'); if(b) b.textContent='🔗 Sao chép link đơn vị';},1800);};
       if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(ok,()=>prompt('Sao chép link:',link)); else prompt('Sao chép link:',link);};

@@ -313,8 +313,10 @@ def aggregate_pos(recs, mapping, rdate):
             p = pos[rec["code"]] = dict(c=rec["code"], n=rec["name"], t=rec["type"] or kind, k=kind,
                                         u=uid, un=uname, v=rec["pvi"] or "Chưa xác định",
                                         region=rec["region"], premium=0.0, policies=0,
-                                        today_premium=0.0, today_policies=0)
+                                        today_premium=0.0, today_policies=0, last=None)
         p["premium"] += x["fee"]
+        if new_pol and x["issued"] and (not p["last"] or x["issued"].isoformat() > p["last"]):
+            p["last"] = x["issued"].isoformat()        # ngày cấp HĐBH gần nhất
         p["policies"] += 1 if new_pol else 0
         if x["issued"] == rdate:
             p["today_premium"] += x["fee"]
