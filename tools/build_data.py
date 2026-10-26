@@ -221,17 +221,21 @@ def load_opes(path):
     """Đọc báo cáo OPES: Số hợp đồng bảo hiểm (PL-...) → Mã DAO, Mã chi nhánh, giờ phát hành, số khung.
     Chỉ giữ các trường cần ghép + Tên CBB — KHÔNG đọc tên KH, SĐT, email."""
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
-    ws = wb.worksheets[0]
-    rows = list(ws.iter_rows(values_only=True))
-    hi = None
-    for i, r in enumerate(rows[:20]):
-        ns = [norm(v) for v in r]
-        if "mã dao" in ns and any("số hợp đồng bảo hiểm" in n for n in ns):
-            hi = i
+    rows, hi = None, None
+    for ws in wb.worksheets:          # file Mã DAO: sheet đầu; file "Báo cáo Nhà đồng": Sheet0
+        rr = list(ws.iter_rows(values_only=True))
+        for i, r in enumerate(rr[:20]):
+            ns = [norm(v) for v in r]
+            if "mã dao" in ns and any("số hợp đồng bảo hiểm" in n for n in ns):
+                rows, hi = rr, i
+                break
+        if rows:
             break
     if hi is None:
-        sys.exit("File OPES thiếu cột 'Mã DAO' / 'Số hợp đồng bảo hiểm'.")
+        print(f"  ℹ {os.path.basename(path)}: không có cột Mã DAO — bỏ qua")
+        return {}
     H = [rows[hi]]
+    c_ins = find_col(H, "nhà đồng")
     c = dict(dao=find_col(H, "mã dao"), pol=find_col(H, "số hợp đồng bảo hiểm"),
              bank=find_col(H, "mã chi nhánh"), issued=find_col(H, "ngày phát hành hợp đồng"),
              chassis=find_col(H, "số khung"), fee=find_col(H, "số phí bảo hiểm"),
@@ -239,6 +243,8 @@ def load_opes(path):
     out = {}
     g = lambda r, k: (r[c[k]] if c[k] is not None and c[k] < len(r) else None)
     for r in rows[hi + 1:]:
+        if c_ins is not None and c_ins < len(r) and "PVI" not in str(r[c_ins] or "").upper():
+            continue                  # file nhà đồng: chỉ lấy dòng của BH PVI
         pol = str(g(r, "pol") or "").strip().upper()
         dao = str(g(r, "dao") or "").strip()
         if not pol or not dao:
@@ -504,7 +510,7 @@ def main():
     if a.opes:
         ofiles = [a.opes]
     else:
-        ofiles = [f for f in glob.glob(os.path.join(DATA_ROOT, "input_opes", "*.xls*"))
+        ofiles = [f for f in glob.glob(os.path.join(DATA_ROOT, "input_opes", "*.xls*")) + glob.glob(os.path.join(DATA_ROOT, "input_nhadong", "*.xls*"))
                   if not os.path.basename(f).startswith("~$")]
         ofiles.sort(key=lambda f: (file_date(f) or dt.date.min, os.path.getmtime(f)))
     ofile = ofiles[-1] if ofiles else None
@@ -514,6 +520,12 @@ def main():
         for f in ofiles:
             part = load_opes(f)
             new = sum(1 for k in part if k not in om)
+            for k_, v_ in part.items():           # file sau ghi đè, nhưng giữ lại trường file sau thiếu (số khung, tên CBB…)
+                o_ = om.get(k_)
+                if o_:
+                    for f_ in ("chassis", "name", "issued", "bank"):
+                        if not v_.get(f_) and o_.get(f_):
+                            v_[f_] = o_[f_]
             om.update(part)
             print(f"• File OPES (Mã DAO): {os.path.basename(f)} — {len(part)} HĐ, mới {new}")
         print(f"  → Tổng sau khi gộp: {len(om)} HĐ có Mã DAO")
