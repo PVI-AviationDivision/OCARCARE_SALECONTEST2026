@@ -18,6 +18,8 @@ except ImportError:
     sys.exit("Thiếu thư viện openpyxl. Chạy: pip install openpyxl")
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Từ 27/10/2026: dữ liệu có thể nằm ở thư mục chung (OCARCARE Report\DuLieu) — update.bat của Monitor đặt biến OCAR_DATA
+DATA_ROOT = os.environ.get("OCAR_DATA") or ROOT
 
 # ---------------------------------------------------------------- CẤU HÌNH THỂ LỆ
 CONFIG = {
@@ -335,8 +337,8 @@ def main():
     ap.add_argument("--out", default=os.path.join(ROOT, "docs"))
     a = ap.parse_args()
 
-    report = a.report or latest(os.path.join(ROOT, "input", "*.xls*"))
-    mfile = a.mapping or latest(os.path.join(ROOT, "mapping", "*.xls*"))
+    report = a.report or latest(os.path.join(DATA_ROOT, "input", "*.xls*"))
+    mfile = a.mapping or latest(os.path.join(DATA_ROOT, "mapping", "*.xls*"))
     if not report:
         sys.exit("Không có file báo cáo trong thư mục input/")
     if not mfile:
@@ -492,7 +494,7 @@ def main():
     if a.opes:
         ofiles = [a.opes]
     else:
-        ofiles = [f for f in glob.glob(os.path.join(ROOT, "input_opes", "*.xls*"))
+        ofiles = [f for f in glob.glob(os.path.join(DATA_ROOT, "input_opes", "*.xls*"))
                   if not os.path.basename(f).startswith("~$")]
         ofiles.sort(key=lambda f: (file_date(f) or dt.date.min, os.path.getmtime(f)))
     ofile = ofiles[-1] if ofiles else None
