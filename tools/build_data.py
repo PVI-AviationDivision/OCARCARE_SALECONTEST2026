@@ -34,6 +34,11 @@ CONFIG = {
         {"from": 301, "to": 500, "reward": 200000, "label": "200 HĐBH tiếp theo"},
         {"from": 501, "to": 600, "reward": 100000, "label": "100 HĐBH cuối cùng"},
     ]},
+    # Trang tổng kết "Về đích": bật enabled=True SAU KHI đã đối soát & chốt kết quả chính thức với OPES
+    "final": {"enabled": False,
+              "official": False,     # True khi danh sách giải đã được OPES/VPBank/BH PVI thống nhất
+              "payout_note": "Dự kiến thanh toán cuối tháng 11/2026, sau khi thu phí tháng 10 từ OPES",
+              "hub_manager": None},  # danh sách Trưởng phòng Hub do OPES cung cấp: [{"name":..,"hub":..,"premium":..}]
     "individual": {"threshold": 125_000_000, "prizes": [5_000_000, 4_000_000, 3_000_000],
                    "note": "Tạm tính theo Mã DAO cán bộ bán (file OPES cập nhật hằng tuần) — kết quả chính thức công bố sau 31/10/2026"},
     "branch": {"threshold": 250_000_000, "prizes": [7_000_000, 5_000_000, 3_000_000]},
@@ -315,10 +320,14 @@ def aggregate_pos(recs, mapping, rdate):
             p = pos[rec["code"]] = dict(c=rec["code"], n=rec["name"], t=rec["type"] or kind, k=kind,
                                         u=uid, un=uname, v=rec["pvi"] or "Chưa xác định",
                                         region=rec["region"], premium=0.0, policies=0,
-                                        today_premium=0.0, today_policies=0, last=None)
+                                        today_premium=0.0, today_policies=0, last=None, first=None, _days=set())
         p["premium"] += x["fee"]
         if new_pol and x["issued"] and (not p["last"] or x["issued"].isoformat() > p["last"]):
             p["last"] = x["issued"].isoformat()        # ngày cấp HĐBH gần nhất
+        if new_pol and x["issued"]:
+            p["_days"].add(x["issued"])
+            if not p["first"] or x["issued"].isoformat() < p["first"]:
+                p["first"] = x["issued"].isoformat()
         p["policies"] += 1 if new_pol else 0
         if x["issued"] == rdate:
             p["today_premium"] += x["fee"]
@@ -326,6 +335,7 @@ def aggregate_pos(recs, mapping, rdate):
     out = sorted(pos.values(), key=lambda z: (-z["premium"], z["n"]))
     for z in out:
         z["premium"] = round(z["premium"]); z["today_premium"] = round(z["today_premium"])
+        z["nd"] = len(z.pop("_days"))                   # số ngày có đơn (cả chương trình)
     return out
 
 def main():
@@ -597,6 +607,28 @@ def main():
     else:
         print("  ℹ Chưa có file OPES trong input_opes/ → bảng cá nhân giữ trạng thái khoá")
 
+    # ---- số liệu phục vụ trang tổng kết
+    pol_fee = defaultdict(float); pol_info = {}
+    for x in recs:
+        pol_fee[x["pol"]] += x["fee"]
+        if not x["sdbs"]:
+            pol_info[x["pol"]] = (x["issued"], x["bank"])
+    by_d = defaultdict(lambda: [0, 0.0]); seen_d = set()
+    for x in recs:
+        by_d[x["issued"]][1] += x["fee"]
+        if not x["sdbs"] and x["pol"] not in seen_d:
+            seen_d.add(x["pol"]); by_d[x["issued"]][0] += 1
+    bd = max(by_d.items(), key=lambda kv: (kv[1][0], kv[1][1])) if by_d else None
+    bp = max(by_d.items(), key=lambda kv: kv[1][1]) if by_d else None
+    mp = max(((k, v) for k, v in pol_fee.items() if k in pol_info), key=lambda kv: kv[1], default=None)
+    records = dict(
+        best_day_n=dict(d=bd[0].isoformat(), n=bd[1][0], p=round(bd[1][1])) if bd else None,
+        best_day_p=dict(d=bp[0].isoformat(), n=bp[1][0], p=round(bp[1][1])) if bp else None,
+        max_policy=dict(p=round(mp[1]), d=pol_info[mp[0]][0].isoformat(),
+                        n=(mapping.get(pol_info[mp[0]][1]) or {}).get("name", pol_info[mp[0]][1])) if mp else None,
+        points_total=len(mapping),
+    )
+
     total_prem = sum(x["fee"] for x in recs)
     today_recs = [x for x in recs if x["issued"] == rdate]
     data = dict(
@@ -613,6 +645,7 @@ def main():
         config=CONFIG,
         branches=branches, hubs=hubs, lookup=lookup, daily=daily,
         regions=group("region"), pvi_units=pvi_units, pos=pos, indiv=indiv,
+        records=records,
     )
 
     # ---- kiểm tra dữ liệu
