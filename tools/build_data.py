@@ -11,6 +11,7 @@ Yêu cầu: pip install openpyxl
 """
 import argparse, datetime as dt, glob, json, os, re, sys, unicodedata
 from collections import defaultdict
+import collections
 
 try:
     import openpyxl
@@ -28,6 +29,9 @@ CONFIG = {
         "start": "2026-09-21",
         "end": "2026-10-31",
         "channel_keyword": "OPES",          # lọc cột "Danh mục Kênh bán hàng"
+        # Mã KM của chương trình VPBank O.CarCare. Từ 27/10 báo cáo gộp thêm sản phẩm OPES khác (KM222,
+        # không qua VPBank, không có Mã chi nhánh Bank) cùng kênh "CT ĐỒNG BH VCX OPES" → phải lọc theo Mã KM.
+        "promo_codes": ["KM218"],
     },
     "early": {"tiers": [
         {"from": 1,   "to": 300, "reward": 300000, "label": "300 HĐBH đầu tiên"},
@@ -182,6 +186,7 @@ def load_report(path):
         bank=find_col([rows[hi]], "mã chi nhánh bank"),
         partner=find_col([rows[hi]], "số đơn bh từ đối tác"),
         chassis=find_col([rows[hi]], "số khung"),
+        km=find_col([rows[hi]], "mã km"),
     )
     if c["fee"] is None or c["bank"] is None or c["pol"] is None or c["issued"] is None:
         sys.exit(f"Báo cáo thiếu cột bắt buộc: {c}")
@@ -201,6 +206,7 @@ def load_report(path):
             bank=str(r[c["bank"]] or "").strip().upper(),
             partner=str(r[c["partner"]] or "").strip().upper() if c["partner"] is not None and c["partner"] < len(r) else "",
             chassis=str(r[c["chassis"]] or "").strip().upper() if c["chassis"] is not None and c["chassis"] < len(r) else "",
+            km=str(r[c["km"]] or "").strip().upper() if c["km"] is not None and c["km"] < len(r) else "",
         ))
     # dòng SĐBS để trống Mã chi nhánh Bank → kế thừa từ đơn gốc
     origin = {x["pol"]: x["bank"] for x in out if x["bank"] and not x["sdbs"]}
@@ -368,9 +374,24 @@ def main():
     P = CONFIG["program"]
     start, end = dt.date.fromisoformat(P["start"]), dt.date.fromisoformat(P["end"])
     kw = P["channel_keyword"].lower()
+    codes = {k.upper() for k in P.get("promo_codes") or []}
     recs = [x for x in recs_all if x["issued"] and start <= x["issued"] <= end
             and (not x["channel"] or kw in x["channel"].lower())]
-    print(f"• Dòng dữ liệu: {len(recs_all)} | trong kỳ & kênh {P['channel_keyword']}: {len(recs)}")
+    other_km = collections.Counter(x["km"] for x in recs if codes and x["km"] and x["km"] not in codes)
+    if other_km:
+        recs = [x for x in recs if not (x["km"] and x["km"] not in codes)]
+    if codes:
+        # dòng không có kênh & không có Mã KM: chỉ giữ nếu là SĐBS của một HĐ KM218 đã có
+        okpol = {x["pol"] for x in recs if x["km"] in codes}
+        nokm = [x for x in recs if not x["km"] and not x["channel"] and x["pol"] not in okpol]
+        if nokm:
+            recs = [x for x in recs if not (not x["km"] and not x["channel"] and x["pol"] not in okpol)]
+            other_km["(trống kênh & Mã KM)"] = len(nokm)
+    print(f"• Dòng dữ liệu: {len(recs_all)} | trong kỳ & kênh {P['channel_keyword']}"
+          f"{' (Mã KM ' + ', '.join(sorted(codes)) + ')' if codes else ''}: {len(recs)}")
+    if other_km:
+        print("  ℹ Đã loại " + ", ".join(f"{v} dòng {k}" for k, v in other_km.items())
+              + " — sản phẩm OPES khác, không thuộc chương trình VPBank")
 
     # ngày báo cáo
     rdate = None

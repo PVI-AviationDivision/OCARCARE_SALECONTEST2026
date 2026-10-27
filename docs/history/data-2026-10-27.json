@@ -2,16 +2,16 @@
  "report_date": "2026-10-27",
  "report_time": "08:20",
  "model": "diem-ban",
- "generated_at": "2026-10-27 08:43",
+ "generated_at": "2026-10-27 08:48",
  "source": "Báo cáo 8h20 ngày 27102026 VPBank.xlsx",
- "total_policies": 1153,
- "total_premium": 8157804942,
- "today_policies": 1,
- "today_premium": 8138612,
+ "total_policies": 995,
+ "total_premium": 7020794691,
+ "today_policies": 0,
+ "today_premium": 0,
  "active_units": 125,
  "unmapped": {
-  "premium": 1137010251,
-  "policies": 158
+  "premium": 0,
+  "policies": 0
  },
  "branches": [
   {
