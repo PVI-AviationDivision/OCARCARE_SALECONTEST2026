@@ -42,7 +42,9 @@ CONFIG = {
     "final": {"enabled": False,
               "official": False,     # True khi danh sách giải đã được OPES/VPBank/BH PVI thống nhất
               "payout_note": "Dự kiến thanh toán cuối tháng 11/2026, sau khi thu phí tháng 10 từ OPES",
-              "hub_manager": None},  # danh sách Trưởng phòng Hub do OPES cung cấp: [{"name":..,"hub":..,"premium":..}]
+              "hub_manager": None,
+              # 01/11 → ngày bật trang tổng kết: trang hiện màn "Ban tổ chức đang tổng kết", hẹn quay lại ngày này
+              "return_date": "2026-11-05"},  # danh sách Trưởng phòng Hub do OPES cung cấp: [{"name":..,"hub":..,"premium":..}]
     "individual": {"threshold": 125_000_000, "prizes": [5_000_000, 4_000_000, 3_000_000],
                    "note": "Tạm tính theo Mã DAO cán bộ bán (file OPES cập nhật hằng tuần) — kết quả chính thức công bố sau 31/10/2026"},
     "branch": {"threshold": 250_000_000, "prizes": [7_000_000, 5_000_000, 3_000_000]},
@@ -419,6 +421,14 @@ def main():
         rdate = max((x["issued"] for x in recs), default=dt.date.today())
         print(f"  ℹ Tên file không có ngày → lấy ngày cấp mới nhất trong dữ liệu: {rdate:%d/%m/%Y}")
 
+    # Sau 31/10: số liệu CHỐT tại vạch đích — mọi phép tính quy về ngày 31/10 (chỉ lấy đơn cấp ≤ 31/10;
+    # báo cáo các ngày sau chỉ bổ sung đơn cấp ≤ 31/10 nhập muộn)
+    src_date = rdate
+    closed = rdate > end
+    if closed:
+        rdate = end
+        print(f"  🏁 Chương trình đã kết thúc → số liệu CHỐT ngày {end:%d/%m/%Y} (nguồn: báo cáo ngày {src_date:%d/%m/%Y})")
+
     mh = re.search(r"(?<!\d)(\d{1,2})\s*[hH](\d{2})?(?![a-zA-Z])", os.path.basename(report))
     report_time = f"{int(mh.group(1)):02d}:{mh.group(2) or '00'}" if mh and int(mh.group(1)) < 24 else "17:00"
 
@@ -669,6 +679,7 @@ def main():
             report_date=rdate.isoformat(), report_time=report_time, model="diem-ban",
             generated_at=dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
             source=os.path.basename(report),
+            closed=closed, source_date=src_date.isoformat(),
             total_policies=total_pol, total_premium=round(total_prem),
             today_policies=total_pol - prev_pol,
             today_premium=round(sum(x["fee"] for x in today_recs)),
@@ -725,10 +736,12 @@ def main():
     tiers = CONFIG["early"]["tiers"]
     cur_t = next((t for t in tiers if total_pol < t["to"]), None)
     days_left = max(0, (end - rdate).days)
-    L = [f"🏁 CHÀO SÂN OCARCARE – cập nhật {report_time.replace(':00','h')} ngày {rdate:%d/%m}",
-         f"• Tổng: {total_pol} HĐBH | {tr(total_prem)} (chưa VAT)" + (f" | hôm nay +{data['meta']['today_policies']} HĐ" if data['meta']['today_policies'] else ""),
+    L = [(f"🏁 CHÀO SÂN OCARCARE – VỀ ĐÍCH! Số liệu chốt ngày {end:%d/%m}" if closed else
+          f"🏁 CHÀO SÂN OCARCARE – cập nhật {report_time.replace(':00','h')} ngày {rdate:%d/%m}"),
+         f"• Tổng: {total_pol} HĐBH | {tr(total_prem)} (chưa VAT)" + (f" | {'ngày 31/10' if closed else 'hôm nay'} +{data['meta']['today_policies']} HĐ" if data['meta']['today_policies'] else ""),
          (f"• Còn {cur_t['to'] - total_pol} suất thưởng {cur_t['reward']//1000}K/HĐBH" if cur_t else "• Đã đủ 600 HĐBH được thưởng"),
-         f"• Còn {days_left} ngày đến vạch đích 31/10", "",
+         ("• Chương trình đã kết thúc 31/10 — kết quả chính thức công bố sau khi đối soát 3 bên OPES – VPBank – BH PVI"
+          if closed else f"• Còn {days_left} ngày đến vạch đích 31/10"), "",
          "🏆 Top 3 điểm bán (CN/PGD/TTTC):"]
     for b in branches[:3]:
         L.append(f"{b['rank']}. {b['name']} – {tr(b['premium'])} ({b['policies']} HĐ)")

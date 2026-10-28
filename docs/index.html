@@ -306,6 +306,8 @@ footer li{margin:3px 0}
 .err{padding:40px 16px;text-align:center;color:var(--ink2)}
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+.closed-note{margin:14px auto 0;max-width:680px;padding:12px 16px;border-radius:14px;background:#ffc93c14;border:1px solid #ffc93c66;color:var(--ink);font-size:13.5px;line-height:1.55;text-align:left}
+.closed-note b{color:var(--gold)}
 </style>
 </head>
 <body>
@@ -428,7 +430,7 @@ window.ocTrack = function(path, title){
 };
 </script>
 <script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="data.js?v=20261028093001"></script>
+<script src="data.js?v=20261028155831"></script>
 <script>
 (function(){
 "use strict";
@@ -464,7 +466,15 @@ function observe(root){ if(io){ root.querySelectorAll('.lane,.hub,.podium,.e-tra
 (function(){const s=$('#speed');let h='';for(let i=0;i<18;i++){const top=Math.random()*100,w=60+Math.random()*180,dur=1.2+Math.random()*2.4,del=-Math.random()*3;h+=`<i class="${i%4==0?'o':''}" style="top:${top}%;width:${w}px;animation-duration:${dur}s;animation-delay:${del}s"></i>`;}s.innerHTML=h;})();
 
 /* ---------- hero ---------- */
-$('#upd').textContent = `${M.report_time} · ${dmy(M.report_date)}`;
+const CLOSED = !!M.closed, TL = CLOSED ? 'ngày 31/10' : 'hôm nay';
+$('#upd').textContent = CLOSED ? `chốt ${dmy(M.report_date)}` : `${M.report_time} · ${dmy(M.report_date)}`;
+if(CLOSED){
+  const lv=document.querySelector('.hero .live'); if(lv){ lv.style.animation='none'; lv.style.background='var(--gold)'; }
+  const pl=$('#upd').closest('.pill'); if(pl) pl.firstChild.nextSibling.textContent=' Số liệu ';
+  const cdEl=$('#cd'); const nb=document.createElement('div'); nb.className='closed-note';
+  nb.innerHTML=`🏁 <b>Chương trình đã về đích ngày 31/10/2026.</b> Bảng xếp hạng dưới đây là số liệu chốt (HĐBH cấp đến hết 31/10, theo báo cáo BH PVI ngày ${dmy(M.source_date||M.report_date)}). Kết quả chính thức sẽ công bố sau khi đối soát 3 bên OPES – VPBank – BH PVI.`;
+  cdEl.parentNode.insertBefore(nb, cdEl.nextSibling);
+}
 const start = new Date(C.program.start+'T00:00:00+07:00'), end = new Date(C.program.end+'T23:59:59+07:00');
 const totalDays = Math.round((end-start)/864e5);
 const rDay = Math.min(totalDays, Math.round((new Date(M.report_date+'T12:00:00+07:00')-start)/864e5)+1);
@@ -474,15 +484,15 @@ function tickCD(){
   let ms = Math.max(0,end-new Date());
   const d=Math.floor(ms/864e5); ms-=d*864e5; const h=Math.floor(ms/36e5); ms-=h*36e5; const m=Math.floor(ms/6e4); const s=Math.floor((ms-m*6e4)/1e3);
   const p=n=>String(n).padStart(2,'0');
-  $('#cd').innerHTML = (end-new Date()>0)
+  $('#cd').innerHTML = (!CLOSED && end-new Date()>0)
     ? `<div class="cd"><div class="num">${d}</div><small>ngày</small></div><div class="cd"><div class="num">${p(h)}</div><small>giờ</small></div><div class="cd"><div class="num">${p(m)}</div><small>phút</small></div><div class="cd"><div class="num">${p(s)}</div><small>giây</small></div><div class="cd-lbl">còn lại đến vạch đích 31/10/2026</div>`
     : `<div class="cd"><div class="num">🏁</div><small>đã về đích</small></div><div class="cd-lbl">Chương trình đã kết thúc — chờ kết quả chính thức</div>`;
 }
 tickCD(); setInterval(tickCD,1000);
 
 const kpis = [
-  {l:'Tổng HĐBH', v:M.total_policies, f:vi, d:M.today_policies?`+${M.today_policies} hôm nay`:'', c:'#2f7bff'},
-  {l:'Doanh thu (chưa VAT)', v:M.total_premium, f:n=>money(n), d:M.today_premium?`+${money(M.today_premium)} hôm nay`:'', c:'#ff7a1a'},
+  {l:'Tổng HĐBH', v:M.total_policies, f:vi, d:M.today_policies?`+${M.today_policies} ${TL}`:'', c:'#2f7bff'},
+  {l:'Doanh thu (chưa VAT)', v:M.total_premium, f:n=>money(n), d:M.today_premium?`+${money(M.today_premium)} ${TL}`:'', c:'#ff7a1a'},
   {l:'Điểm bán đã ghi điểm', v:M.active_units, f:vi, d:'', c:'#e8263f'},
   {l:'Phí bình quân / HĐBH', v:M.total_policies?M.total_premium/M.total_policies:0, f:n=>money(n), d:'', c:'#14b8a6'},
 ];
@@ -552,7 +562,7 @@ async function shareCard(o){
   g=x.createLinearGradient(120,0,120+bw,0);g.addColorStop(0,'#1f55d6');g.addColorStop(1,'#ff7a1a');x.fillStyle=g;x.beginPath();x.roundRect(120,py,Math.max(22,bw*pr),22,11);x.fill();
   C2(o.status,py+70,`700 29px ${BF}`,o.premium>=o.thr?'#35d07f':'#ffd9b0');
   C2('TĂNG TỐC HÔM NAY – DẪN ĐẦU NGÀY MAI!',1272,`italic 800 46px ${HF}`,'#ffffff');
-  C2(`Cập nhật ${M.report_time.replace(':00','h')} ${dmy(M.report_date)} · pvi-aviationdivision.github.io/OCARCARE_SALECONTEST2026`,1320,`500 22px ${BF}`,'#7f90bd');
+  C2(`${CLOSED?'Số liệu chốt '+dmy(M.report_date):'Cập nhật '+M.report_time.replace(':00','h')+' '+dmy(M.report_date)} · pvi-aviationdivision.github.io/OCARCARE_SALECONTEST2026`,1320,`500 22px ${BF}`,'#7f90bd');
   const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
   const fname='OCARCARE_'+fold(o.name).replace(/[^a-z0-9]+/g,'_')+'.png';
   ocTrack('chia-se-anh/'+fold(o.name).replace(/[^a-z0-9]+/g,'-'),'Ảnh thành tích: '+o.name);
@@ -561,7 +571,7 @@ async function shareCard(o){
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fname;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);
 }
 function cardFromBranch(b){
-  const mv = b.rank7&&b.rank7>b.rank?`▲${b.rank7-b.rank} bậc trong tuần`:(b.prev_rank&&b.prev_rank>b.rank?`▲${b.prev_rank-b.rank} bậc hôm nay`:'');
+  const mv = b.rank7&&b.rank7>b.rank?`▲${b.rank7-b.rank} bậc trong tuần`:(b.prev_rank&&b.prev_rank>b.rank?`▲${b.prev_rank-b.rank} bậc ${TL}`:'');
   return {cat:({CN:'CHI NHÁNH',PGD:'PHÒNG GIAO DỊCH',TTTC:'TRUNG TÂM THẾ CHẤP',HHB:'HOUSE HOLD'}[b.kind]||'ĐIỂM BÁN')+' · VPBANK',name:b.name,rank:b.rank,total:B.length,unitLabel:'điểm bán',move:mv,premium:b.premium,policies:b.policies,thr:BT,
     status:b.premium>=BT?'✔ ĐÃ ĐẠT NGƯỠNG '+money(BT).toUpperCase():`Còn ${money(BT-b.premium)} tới ngưỡng ${money(BT)} · cần ~${money(perDay(BT,b.premium))}/ngày`};
 }
@@ -699,7 +709,7 @@ function laneHtml(b){
       <div class="ln"><div class="n">${esc(b.name)}</div><div class="m"><span class="kind ${b.kind==='CN'?'':String(b.kind).toLowerCase()}">${b.kind}</span>${esc(b.region||'')}${b.pvi?' · '+esc(b.pvi):''}</div></div>
       <div class="rv"><div class="v num">${money(b.premium)}</div>${mvHtml(b)}</div></div>
     <div class="road"><div class="thr" style="left:${pct(BT,bScaleMax)}%"></div><div class="trail" data-w="${pct(b.premium,bScaleMax)}"></div><div class="pj ${proj(b.premium)>bScaleMax?'over':''}" style="left:${pct(proj(b.premium),bScaleMax)}%" title="Dự kiến 31/10: ${money(proj(b.premium))}"></div><div class="car" data-l="${pct(b.premium,bScaleMax)}">${CAR()}</div></div>
-    <div class="foot"><span>${b.policies} HĐBH${b.today_policies>0?` · <b class="ok">+${b.today_policies} hôm nay</b>`:''}</span>${gap}</div>
+    <div class="foot"><span>${b.policies} HĐBH${b.today_policies>0?` · <b class="ok">+${b.today_policies} ${TL}</b>`:''}</span>${gap}</div>
     <div class="pl">${projHtml(b.premium,BT)}<button class="shr" data-share="b:${esc(b.id)}">📤 Ảnh thành tích</button></div></div>`;
 }
 let showAll=false; const TOPN=10;
@@ -781,7 +791,7 @@ $('#hubs').innerHTML = H.map((h,i)=>{
   const next = HC.milestones.find(m=>h.premium<m.value);
   return (i===1?'<div class="vs">VS</div>':'')+`<div class="hub" style="--lc:${col}">
     <div class="top" style="display:flex;align-items:center;gap:10px"><div class="rk ${i===0?'g':'s'}">${h.rank}</div>
-      <div class="ln" style="flex:1"><div class="n" style="font-weight:800;font-size:16px">${esc(hubName(h))}</div><div class="m dim" style="font-size:11.5px">${esc(h.name)} · ${h.policies} HĐBH${h.today_policies>0?` · <span class="ok">+${h.today_policies} hôm nay</span>`:''}</div></div>
+      <div class="ln" style="flex:1"><div class="n" style="font-weight:800;font-size:16px">${esc(hubName(h))}</div><div class="m dim" style="font-size:11.5px">${esc(h.name)} · ${h.policies} HĐBH${h.today_policies>0?` · <span class="ok">+${h.today_policies} ${TL}</span>`:''}</div></div>
       <div class="rv"><div class="v num" style="font-size:22px">${money(h.premium)}</div>${mvHtml(h)}</div></div>
     <div class="road">${HC.milestones.map((m,j)=>`<div class="${j===0?'thr':'ms'}" style="left:${pct(m.value,hubMax)}%"></div>`).join('')}<div class="trail" data-w="${pct(h.premium,hubMax)}"></div><div class="car" data-l="${pct(h.premium,hubMax)}">${CAR(58,26)}</div></div>
     <div class="hub-ms">${HC.milestones.map(m=>`<span style="left:${pct(m.value,hubMax)}%"><b>${money(m.value)}</b>${esc(m.label)}</span>`).join('')}</div>
@@ -808,7 +818,7 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
   const RD = addDays(M.report_date,0);
   const ago = iso=>iso?Math.round((RD-addDays(iso,0))/864e5):null;
   const lastTag = iso=>{ const d=ago(iso); if(d===null) return '';
-    const cls=d<=3?'g':d<=7?'o':'r'; const txt=d===0?'có đơn hôm nay':d===1?'hôm qua':`${d} ngày chưa có đơn`;
+    const cls=d<=3?'g':d<=7?'o':'r'; const txt=d===0?`có đơn ${TL}`:d===1?'hôm qua':`${d} ngày chưa có đơn`;
     return `<span class="lst ${cls}" title="HĐBH gần nhất cấp ngày ${ddmm(addDays(iso,0))}">${d>7?'⚠ ':''}${ddmm(addDays(iso,0))} · ${txt}</span>`; };
   function render(v){
     const g = byName[v]; if(!g) return;
@@ -830,14 +840,14 @@ $('#hubMgr').innerHTML = `<div class="blur" style="grid-template-columns:repeat(
       <div class="pv-head"><div><div class="t">${esc(g.name)}</div><div class="rk2">Hạng <b>#${g.rank}</b>/${PU.length} đơn vị BH PVI theo doanh thu${lastAll?` · đơn gần nhất ${lastTag(lastAll)}`:''}</div></div>
         <button class="btn-s" id="pvCopy">🔗 Sao chép link đơn vị</button></div>
       <div class="pv-kpis">
-        <div class="kpi" style="--c:#2f7bff"><div class="l">HĐBH</div><div class="v num">${vi(g.policies)}</div><div class="d">${g.today_policies?`+${g.today_policies} hôm nay`:'&nbsp;'}</div></div>
-        <div class="kpi" style="--c:#ff7a1a"><div class="l">Doanh thu (chưa VAT)</div><div class="v num">${money(g.premium)}</div><div class="d">${g.today_premium?`+${money(g.today_premium)} hôm nay`:'&nbsp;'}</div></div>
+        <div class="kpi" style="--c:#2f7bff"><div class="l">HĐBH</div><div class="v num">${vi(g.policies)}</div><div class="d">${g.today_policies?`+${g.today_policies} ${TL}`:'&nbsp;'}</div></div>
+        <div class="kpi" style="--c:#ff7a1a"><div class="l">Doanh thu (chưa VAT)</div><div class="v num">${money(g.premium)}</div><div class="d">${g.today_premium?`+${money(g.today_premium)} ${TL}`:'&nbsp;'}</div></div>
         <div class="kpi" style="--c:#a855f7"><div class="l">Độ phủ điểm bán</div><div class="v num">${g.points_active}/${g.points_total}</div><div class="cov"><i data-w="${cov}"></i></div></div>
         <div class="kpi" style="--c:#14b8a6"><div class="l">Phí BQ / HĐBH</div><div class="v num">${g.policies?money(g.premium/g.policies):'—'}</div><div class="d">&nbsp;</div></div>
       </div>
       <div class="sub-h" style="margin-top:18px">Điểm bán đã có đơn (${pts.length})</div>
       ${pts.length?`<div class="pv-sort">Xếp theo: <button data-s="dt" class="${pvSort==='dt'?'on':''}">Doanh thu</button><button data-s="last" class="${pvSort==='last'?'on':''}">Lâu chưa ra đơn nhất</button>${stale?`<span>· <b style="color:#ff9aa8">${stale}</b> điểm đã quá 7 ngày chưa có đơn mới</span>`:''}</div>`:''}
-      ${pts.length?`<div class="pt hd"><div>Điểm bán</div><div style="text-align:right">HĐBH</div><div style="text-align:right">Doanh thu</div></div>`+pts.map(z=>`<div class="pt"><div class="nm2"><div class="a">${kindTag(z.t)}${esc(z.n)}</div><div class="b">${z.k==='HUB'?'Hạng mục Hub xe':z.un!==z.n?'Thuộc '+esc(z.un):esc(z.region||'')}${lastTag(z.last)}</div></div><div class="n1">${z.policies}</div><div class="n2">${money(z.premium)}${z.today_policies?`<small>+${z.today_policies} hôm nay</small>`:''}</div></div>`).join(''):'<div class="dim">Chưa có điểm bán nào phát sinh HĐBH — ghi điểm ngay từ hợp đồng đầu tiên!</div>'}
+      ${pts.length?`<div class="pt hd"><div>Điểm bán</div><div style="text-align:right">HĐBH</div><div style="text-align:right">Doanh thu</div></div>`+pts.map(z=>`<div class="pt"><div class="nm2"><div class="a">${kindTag(z.t)}${esc(z.n)}</div><div class="b">${z.k==='HUB'?'Hạng mục Hub xe':z.un!==z.n?'Thuộc '+esc(z.un):esc(z.region||'')}${lastTag(z.last)}</div></div><div class="n1">${z.policies}</div><div class="n2">${money(z.premium)}${z.today_policies?`<small>+${z.today_policies} ${TL}</small>`:''}</div></div>`).join(''):'<div class="dim">Chưa có điểm bán nào phát sinh HĐBH — ghi điểm ngay từ hợp đồng đầu tiên!</div>'}
       ${cont.length||hubs.length?`<div class="sub-h" style="margin-top:18px">Thứ hạng thi đua các điểm bán của đơn vị</div>
       <div class="dim" style="font-size:12px;margin:-4px 0 6px">Mỗi CN/PGD/TTTC/House Hold xếp hạng độc lập · ngưỡng ${money(BT)} áp dụng cho từng điểm.</div>`+
         cont.map(b=>`<div class="cst"><div class="rk ${b.rank===1?'g':b.rank===2?'s':b.rank===3?'b':''}">${b.rank}</div><div><b>${esc(b.name)}</b><div class="dim" style="font-size:11.5px">${b.policies} HĐBH · ${money(b.premium)}</div></div><div class="gp">${b.qualified?'<span class="ok"><b>✔ Đạt ngưỡng</b></span>':`Còn <b>${money(BT-b.premium)}</b> tới ${money(BT)}`}<br>${b.rank<=3?'<span class="ok">Trong Top 3</span>':third?`Cách Top 3: <b>${money(third.premium-b.premium+1)}</b>`:''}</div></div>`).join('')+
@@ -1174,5 +1184,84 @@ const wm=document.getElementById('fWallMore'); if(wm) wm.onclick=()=>{document.q
 </script>
 <!-- ================= HẾT TRANG TỔNG KẾT ================= -->
 
+
+<!-- ===== Màn chờ tổng kết (01/11 → khi bật trang Về đích) ===== -->
+<style>
+#inter{display:none}
+body.inter > *:not(#inter):not(script):not(style){display:none!important}
+body.inter #inter{display:flex}
+#inter{min-height:100vh;min-height:100dvh;position:relative;overflow:hidden;align-items:center;justify-content:center;text-align:center;padding:60px 16px;
+  background:radial-gradient(900px 520px at 50% 0%,#ffc93c1f,transparent 60%),radial-gradient(700px 500px at 100% 100%,#2f7bff22,transparent 60%),var(--bg)}
+#inter .ck{position:absolute;left:0;right:0;height:22px;background:repeating-conic-gradient(#fff 0 25%,#0b1636 0 50%) 0 0/22px 22px}
+#inter .ck.t{top:0;opacity:.9}#inter .ck.b{bottom:0;opacity:.3}
+#inter .in{max-width:640px;width:100%;position:relative}
+#inter .brand{font-weight:800;letter-spacing:3px;color:var(--ink2);font-size:13px}
+#inter .prog{font-family:var(--f-head);font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(20px,5vw,28px);margin-top:4px}
+#inter .prog span{color:var(--orange)}
+#inter .flag{font-size:64px;line-height:1;margin:22px 0 6px;display:inline-block;transform-origin:10% 90%;animation:iwave 2.4s ease-in-out infinite}
+@keyframes iwave{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(8deg)}}
+#inter h1{font-family:var(--f-head);font-weight:800;font-style:italic;text-transform:uppercase;line-height:1.12;padding-top:.08em;margin:6px 0 10px;
+  font-size:clamp(34px,9vw,64px);background:linear-gradient(180deg,#fff,#ffe08a 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+#inter .lead{color:var(--ink2);font-size:15.5px;line-height:1.6;margin:0 auto;max-width:520px}
+#inter .steps{display:grid;gap:10px;margin:26px auto 0;max-width:460px;text-align:left}
+#inter .st{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:#ffffff0a;border:1px solid var(--line)}
+#inter .st .ic{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px}
+#inter .st.done .ic{background:#35d07f22;color:#35d07f;border:1px solid #35d07f66}
+#inter .st.now .ic{border:3px solid #ffffff22;border-top-color:var(--orange);animation:ispin 1s linear infinite}
+#inter .st.next .ic{background:#ffffff0d;color:var(--ink3);border:1px dashed #ffffff33}
+@keyframes ispin{to{transform:rotate(360deg)}}
+#inter .st b{display:block;font-size:14.5px}#inter .st small{color:var(--ink3);font-size:12.5px}
+#inter .st.now b{color:var(--orange2)}
+#inter .back{margin:28px auto 0;display:inline-block;padding:16px 22px;border-radius:18px;background:#ffc93c14;border:1px solid #ffc93c66}
+#inter .back .l{font-size:12.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink2);font-weight:700}
+#inter .back .d{font-family:var(--f-head);font-weight:800;font-size:clamp(30px,8vw,44px);color:var(--gold);line-height:1.1}
+#inter .icd{display:flex;gap:8px;justify-content:center;margin-top:10px}
+#inter .icd div{min-width:58px;padding:8px 6px;border-radius:12px;background:#ffffff0d;border:1px solid var(--line)}
+#inter .icd b{display:block;font-family:var(--f-head);font-weight:800;font-size:26px;line-height:1}
+#inter .icd small{font-size:10.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px}
+#inter .thx{margin-top:26px;color:var(--ink2);font-size:14px;line-height:1.6}
+#inter .thx b{color:#fff}
+#inter .iroad{position:relative;height:40px;max-width:420px;margin:18px auto 0}
+#inter .iroad i{position:absolute;left:0;right:0;top:30px;border-top:3px dashed #ffffff22}
+#inter .icar{position:absolute;top:6px;right:6%;color:var(--orange);filter:drop-shadow(0 0 8px var(--orange));animation:ibob 1.6s ease-in-out infinite}
+@keyframes ibob{50%{transform:translateY(-2px)}}
+@media (prefers-reduced-motion:reduce){#inter .flag,#inter .st.now .ic,#inter .icar{animation:none}}
+</style>
+<section id="inter" aria-live="polite"></section>
+<script>
+(function(){
+const D=window.RACE_DATA; if(!D) return;
+const C=D.config, F=C.final||{}, M=D.meta;
+const q=location.search;
+if(!M.closed || F.enabled || /[?&](tongket|xem)=1\b/.test(q)) return;
+const rd=F.return_date||'2026-11-05';
+const [y,m,d]=rd.split('-'); const back=new Date(rd+'T08:00:00+07:00');
+const wd=['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'][back.getDay()];
+const car=(typeof CAR==='function')?CAR(46,21):'🚗';
+const el=document.getElementById('inter');
+el.innerHTML=`<div class="ck t"></div><div class="ck b"></div><div class="in">
+  <div class="brand">BẢO HIỂM PVI · OPES · VPBANK</div>
+  <div class="prog">Chào sân <span>OCarCare</span> — Launch Sprint</div>
+  <div class="flag">🏁</div>
+  <h1>Ban tổ chức<br>đang tổng kết</h1>
+  <p class="lead">Chương trình đã chính thức về đích ngày <b>31/10/2026</b>. Cảm ơn các anh chị đã cùng tăng tốc suốt 41 ngày đua!
+  Ban tổ chức đang đối soát số liệu để công bố kết quả chính xác nhất.</p>
+  <div class="iroad"><i></i><span class="icar">${car}</span></div>
+  <div class="steps">
+    <div class="st done"><span class="ic">✓</span><div><b>Chốt số liệu</b><small>HĐBH cấp từ 21/09 đến hết 31/10/2026</small></div></div>
+    <div class="st now"><span class="ic"></span><div><b>Đối soát 3 bên</b><small>OPES – VPBank – Bảo hiểm PVI</small></div></div>
+    <div class="st next"><span class="ic">3</span><div><b>Công bố kết quả &amp; vinh danh</b><small>Bảng tổng kết, bục vinh quang, giấy chứng nhận</small></div></div>
+  </div>
+  <div class="back"><div class="l">Mời quay lại xem kết quả tổng kết</div><div class="d">${wd}, ${d}/${m}/${y}</div><div class="icd" id="icd"></div></div>
+  <div class="thx">Mọi thắc mắc về số liệu, vui lòng liên hệ <b>đầu mối OPES</b> phụ trách đơn vị.</div>
+</div>`;
+document.body.classList.add('inter'); window.scrollTo(0,0);
+function t(){const ms=back-new Date(), box=document.getElementById('icd'); if(!box) return;
+  if(ms<=0){box.innerHTML='<small style="font-size:12.5px;text-transform:none;letter-spacing:0">Kết quả sẽ được công bố trong thời gian sớm nhất</small>';return;}
+  const dd=Math.floor(ms/864e5), hh=Math.floor(ms%864e5/36e5), mm=Math.floor(ms%36e5/6e4), p=n=>String(n).padStart(2,'0');
+  box.innerHTML=`<div><b>${dd}</b><small>ngày</small></div><div><b>${p(hh)}</b><small>giờ</small></div><div><b>${p(mm)}</b><small>phút</small></div>`;}
+t(); setInterval(t,30000);
+})();
+</script>
 </body>
 </html>
