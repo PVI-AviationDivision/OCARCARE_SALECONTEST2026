@@ -430,7 +430,7 @@ window.ocTrack = function(path, title){
 };
 </script>
 <script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="data.js?v=20261028155831"></script>
+<script src="data.js?v=20261029090550"></script>
 <script>
 (function(){
 "use strict";
@@ -472,7 +472,7 @@ if(CLOSED){
   const lv=document.querySelector('.hero .live'); if(lv){ lv.style.animation='none'; lv.style.background='var(--gold)'; }
   const pl=$('#upd').closest('.pill'); if(pl) pl.firstChild.nextSibling.textContent=' Số liệu ';
   const cdEl=$('#cd'); const nb=document.createElement('div'); nb.className='closed-note';
-  nb.innerHTML=`🏁 <b>Chương trình đã về đích ngày 31/10/2026.</b> Bảng xếp hạng dưới đây là số liệu chốt (HĐBH cấp đến hết 31/10, theo báo cáo BH PVI ngày ${dmy(M.source_date||M.report_date)}). Kết quả chính thức sẽ công bố sau khi đối soát 3 bên OPES – VPBank – BH PVI.`;
+  nb.innerHTML=`🏁 <b>Chương trình đã về đích ngày 31/10/2026.</b> Bảng xếp hạng dưới đây là số liệu chốt (HĐBH cấp đến hết 31/10, theo báo cáo BH PVI ngày ${dmy(M.source_date||M.report_date)}). HĐBH huỷ / giảm phí đến hết ${dmy(C.final&&C.final.lock_date||'2026-11-15')} sẽ được trừ. Kết quả chính thức công bố sau khi đối soát 3 bên OPES – VPBank – BH PVI.`;
   cdEl.parentNode.insertBefore(nb, cdEl.nextSibling);
 }
 const start = new Date(C.program.start+'T00:00:00+07:00'), end = new Date(C.program.end+'T23:59:59+07:00');
@@ -1234,7 +1234,8 @@ const D=window.RACE_DATA; if(!D) return;
 const C=D.config, F=C.final||{}, M=D.meta;
 const q=location.search;
 if(!M.closed || F.enabled || /[?&](tongket|xem)=1\b/.test(q)) return;
-const rd=F.return_date||'2026-11-05';
+const rd=F.return_date||'2026-11-18', ld=F.lock_date||'2026-11-15';
+const lk=new Date()>new Date(ld+'T23:59:59+07:00'); const ldm=ld.slice(8,10)+'/'+ld.slice(5,7);
 const [y,m,d]=rd.split('-'); const back=new Date(rd+'T08:00:00+07:00');
 const wd=['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'][back.getDay()];
 const car=(typeof CAR==='function')?CAR(46,21):'🚗';
@@ -1245,12 +1246,13 @@ el.innerHTML=`<div class="ck t"></div><div class="ck b"></div><div class="in">
   <div class="flag">🏁</div>
   <h1>Ban tổ chức<br>đang tổng kết</h1>
   <p class="lead">Chương trình đã chính thức về đích ngày <b>31/10/2026</b>. Cảm ơn các anh chị đã cùng tăng tốc suốt 41 ngày đua!
-  Ban tổ chức đang đối soát số liệu để công bố kết quả chính xác nhất.</p>
+  Ban tổ chức đang khoá số và đối soát để công bố kết quả chính xác nhất.</p>
   <div class="iroad"><i></i><span class="icar">${car}</span></div>
   <div class="steps">
     <div class="st done"><span class="ic">✓</span><div><b>Chốt số liệu</b><small>HĐBH cấp từ 21/09 đến hết 31/10/2026</small></div></div>
-    <div class="st now"><span class="ic"></span><div><b>Đối soát 3 bên</b><small>OPES – VPBank – Bảo hiểm PVI</small></div></div>
-    <div class="st next"><span class="ic">3</span><div><b>Công bố kết quả &amp; vinh danh</b><small>Bảng tổng kết, bục vinh quang, giấy chứng nhận</small></div></div>
+    <div class="st ${lk?'done':'now'}"><span class="ic">${lk?'✓':''}</span><div><b>Khoá số đến hết ${ldm}</b><small>HĐBH huỷ / giảm phí đến hết ngày này sẽ được trừ khỏi kết quả</small></div></div>
+    <div class="st ${lk?'now':'next'}"><span class="ic">${lk?'':'3'}</span><div><b>Đối soát 3 bên</b><small>OPES – VPBank – Bảo hiểm PVI</small></div></div>
+    <div class="st next"><span class="ic">4</span><div><b>Công bố kết quả &amp; vinh danh</b><small>Bảng tổng kết, bục vinh quang, giấy chứng nhận</small></div></div>
   </div>
   <div class="back"><div class="l">Mời quay lại xem kết quả tổng kết</div><div class="d">${wd}, ${d}/${m}/${y}</div><div class="icd" id="icd"></div></div>
   <div class="thx">Mọi thắc mắc về số liệu, vui lòng liên hệ <b>đầu mối OPES</b> phụ trách đơn vị.</div>

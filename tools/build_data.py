@@ -44,7 +44,9 @@ CONFIG = {
               "payout_note": "Dự kiến thanh toán cuối tháng 11/2026, sau khi thu phí tháng 10 từ OPES",
               "hub_manager": None,
               # 01/11 → ngày bật trang tổng kết: trang hiện màn "Ban tổ chức đang tổng kết", hẹn quay lại ngày này
-              "return_date": "2026-11-05"},  # danh sách Trưởng phòng Hub do OPES cung cấp: [{"name":..,"hub":..,"premium":..}]
+              "return_date": "2026-11-18",
+              # khoá số: đơn huỷ/giảm phí (SĐBS) của HĐBH cấp trong kỳ, phát sinh đến hết ngày này vẫn bị trừ
+              "lock_date": "2026-11-15"},  # danh sách Trưởng phòng Hub do OPES cung cấp: [{"name":..,"hub":..,"premium":..}]
     "individual": {"threshold": 125_000_000, "prizes": [5_000_000, 4_000_000, 3_000_000],
                    "note": "Tạm tính theo Mã DAO cán bộ bán (file OPES cập nhật hằng tuần) — kết quả chính thức công bố sau 31/10/2026"},
     "branch": {"threshold": 250_000_000, "prizes": [7_000_000, 5_000_000, 3_000_000]},
@@ -282,7 +284,8 @@ def file_date(path):
 
 # ---------------------------------------------------------------- tổng hợp
 def rank(items):
-    items.sort(key=lambda x: (-x["premium"], -x["policies"], x["name"]))
+    # bằng doanh thu → ai đạt mức đó SỚM HƠN (ngày cấp HĐBH cuối cùng sớm hơn) xếp trên (thống nhất 29/10/2026)
+    items.sort(key=lambda x: (-round(x["premium"]), x.get("last") or "9999", x["name"]))
     for i, x in enumerate(items, 1):
         x["rank"] = i
     return items
@@ -312,8 +315,10 @@ def aggregate(recs, mapping, cutoff=None):
                                   region=base["region"] or rec["region"],
                                   province=base["province"] or rec["province"],
                                   pvi=base["pvi"] or rec["pvi"],
-                                  premium=0.0, policies=0)
+                                  premium=0.0, policies=0, last="")
         u["premium"] += x["fee"]
+        if x["issued"] and x["issued"].isoformat() > u["last"]:
+            u["last"] = x["issued"].isoformat()
         u["policies"] += 1 if new_pol else 0
     return units, unmapped, len(seen)
 
@@ -412,7 +417,7 @@ def main():
                     cand = dt.date(a3, a2, a1) if order == "dmy" else dt.date(a1, a2, a3)
                 except ValueError:
                     continue
-                if start <= cand <= end + dt.timedelta(days=7):
+                if start <= cand <= end + dt.timedelta(days=30):
                     rdate = cand
                     break
             if rdate:
@@ -424,7 +429,7 @@ def main():
     # Sau 31/10: số liệu CHỐT tại vạch đích — mọi phép tính quy về ngày 31/10 (chỉ lấy đơn cấp ≤ 31/10;
     # báo cáo các ngày sau chỉ bổ sung đơn cấp ≤ 31/10 nhập muộn)
     src_date = rdate
-    closed = rdate > end
+    closed = rdate > end or dt.date.today() > end
     if closed:
         rdate = end
         print(f"  🏁 Chương trình đã kết thúc → số liệu CHỐT ngày {end:%d/%m/%Y} (nguồn: báo cáo ngày {src_date:%d/%m/%Y})")
@@ -607,6 +612,8 @@ def main():
             e = P[dao]
             e["premium"] += x["fee"]
             e["policies"] += 0 if x["sdbs"] else 1
+            tl = first[x["pol"]][0] if x["pol"] in first else dt.datetime.combine(x["issued"], dt.time(23, 59, 59))
+            e["last"] = max(e.get("last") or tl, tl)
             if x["issued"] >= wk_start:
                 e["week_premium"] += x["fee"]
             e["banks"].add(x["bank"])
@@ -620,7 +627,8 @@ def main():
                                premium=round(e["premium"]), policies=e["policies"],
                                week_premium=round(e["week_premium"]), bonus=e["bonus"], early=e["early"],
                                qualified=e["premium"] >= thr))
-        people.sort(key=lambda z: (-z["premium"], -z["policies"], z["id"]))
+        lastt = {dao: e.get("last") for dao, e in P.items()}
+        people.sort(key=lambda z: (-z["premium"], lastt.get(z["id"]) or dt.datetime.max, z["id"]))  # bằng doanh thu → ai đạt sớm hơn
         for i, z in enumerate(people, 1):
             z["rank"] = i
         odate = file_date(ofile)
