@@ -647,7 +647,7 @@ def main():
                       if k not in rep_keys and o["issued"] and o["issued"].date() < rdate)
         if miss:
             opes_warns.append(f"{len(miss)} HĐ có trong file OPES (phát hành trước {rdate:%d/%m}) nhưng KHÔNG có trong báo cáo BH PVI: "
-                              + ", ".join(f"{k} ({t:%d/%m})" for t, k in miss[:10]))
+                              + ", ".join(f"{k} ({t:%d/%m})" for t, k in miss))
         diff_bank = sum(1 for x in recs if not x["sdbs"] and opes_of(x) and om[opes_of(x)]["bank"]
                         and om[opes_of(x)]["bank"] != x["bank"])
         if diff_bank:
