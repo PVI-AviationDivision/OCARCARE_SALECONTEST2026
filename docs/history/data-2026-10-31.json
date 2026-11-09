@@ -1,13 +1,13 @@
 {
  "report_date": "2026-10-31",
- "report_time": "08:20",
+ "report_time": "08:14",
  "model": "diem-ban",
- "generated_at": "2026-11-06 08:44",
- "source": "BC_8h20_06112026_VPBank.xlsx",
+ "generated_at": "2026-11-09 08:44",
+ "source": "Báo cáo 8h14 ngày 09112026 VPBank.xlsx",
  "closed": true,
- "source_date": "2026-11-06",
- "total_policies": 1182,
- "total_premium": 8349856207,
+ "source_date": "2026-11-09",
+ "total_policies": 1191,
+ "total_premium": 8385382207,
  "today_policies": 14,
  "today_premium": 99678900,
  "active_units": 129,
@@ -40,8 +40,8 @@
   {
    "id": "VN0010170",
    "name": "CN Kiên Giang",
-   "premium": 256272460,
-   "policies": 36,
+   "premium": 259605460,
+   "policies": 37,
    "rank": 4
   },
   {
@@ -108,38 +108,38 @@
    "rank": 13
   },
   {
+   "id": "VN0010418",
+   "name": "TTTC Vùng 5",
+   "premium": 134339000,
+   "policies": 20,
+   "rank": 14
+  },
+  {
    "id": "VN0010138",
    "name": "PGD Cẩm Phả",
    "premium": 130432000,
    "policies": 21,
-   "rank": 14
+   "rank": 15
   },
   {
-   "id": "VN0010418",
-   "name": "TTTC Vùng 5",
-   "premium": 129749000,
-   "policies": 19,
-   "rank": 15
+   "id": "VN0010445",
+   "name": "TTTC R9.2",
+   "premium": 127413000,
+   "policies": 17,
+   "rank": 16
   },
   {
    "id": "VN0010279",
    "name": "CN Móng Cái",
    "premium": 127352750,
    "policies": 20,
-   "rank": 16
+   "rank": 17
   },
   {
    "id": "VN0010360",
    "name": "CN Lạng Sơn",
    "premium": 125614000,
    "policies": 23,
-   "rank": 17
-  },
-  {
-   "id": "VN0010445",
-   "name": "TTTC R9.2",
-   "premium": 123003000,
-   "policies": 16,
    "rank": 18
   },
   {
@@ -164,24 +164,24 @@
    "rank": 21
   },
   {
+   "id": "VN0010229",
+   "name": "CN Bình Thuận",
+   "premium": 103750450,
+   "policies": 16,
+   "rank": 22
+  },
+  {
    "id": "VN0010392",
    "name": "PGD Điện Biên",
    "premium": 102408000,
    "policies": 16,
-   "rank": 22
+   "rank": 23
   },
   {
    "id": "VN0010137",
    "name": "PGD Đống Đa",
    "premium": 100830000,
    "policies": 16,
-   "rank": 23
-  },
-  {
-   "id": "VN0010229",
-   "name": "CN Bình Thuận",
-   "premium": 100817450,
-   "policies": 15,
    "rank": 24
   },
   {
@@ -229,29 +229,29 @@
   {
    "id": "VN0010379",
    "name": "TTTC Vùng 2",
-   "premium": 68560150,
-   "policies": 10,
+   "premium": 72509150,
+   "policies": 11,
    "rank": 31
+  },
+  {
+   "id": "VN0010131",
+   "name": "CN Vĩnh Phúc",
+   "premium": 70207000,
+   "policies": 9,
+   "rank": 32
   },
   {
    "id": "VN0010435",
    "name": "CN Sở Giao Dịch 2",
    "premium": 68046087,
    "policies": 6,
-   "rank": 32
+   "rank": 33
   },
   {
    "id": "VN0010434",
    "name": "PGD Yên Khánh",
    "premium": 67863000,
    "policies": 7,
-   "rank": 33
-  },
-  {
-   "id": "VN0010131",
-   "name": "CN Vĩnh Phúc",
-   "premium": 66555000,
-   "policies": 8,
    "rank": 34
   },
   {
@@ -924,8 +924,8 @@
   {
    "id": "VN0010478",
    "name": "TTKD OTO MIEN BAC",
-   "premium": 839264940,
-   "policies": 114,
+   "premium": 851923940,
+   "policies": 117,
    "rank": 1
   },
   {
