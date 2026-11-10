@@ -1,13 +1,13 @@
 {
  "report_date": "2026-10-31",
- "report_time": "08:14",
+ "report_time": "12:00",
  "model": "diem-ban",
- "generated_at": "2026-11-09 08:44",
- "source": "Báo cáo 8h14 ngày 09112026 VPBank.xlsx",
+ "generated_at": "2026-11-10 13:16",
+ "source": "BC_12h00_10112026 VPBank.xlsx",
  "closed": true,
- "source_date": "2026-11-09",
- "total_policies": 1191,
- "total_premium": 8385382207,
+ "source_date": "2026-11-10",
+ "total_policies": 1197,
+ "total_premium": 8414478207,
  "today_policies": 14,
  "today_premium": 99678900,
  "active_units": 129,
@@ -108,31 +108,31 @@
    "rank": 13
   },
   {
+   "id": "VN0010279",
+   "name": "CN Móng Cái",
+   "premium": 138959750,
+   "policies": 21,
+   "rank": 14
+  },
+  {
    "id": "VN0010418",
    "name": "TTTC Vùng 5",
    "premium": 134339000,
    "policies": 20,
-   "rank": 14
+   "rank": 15
   },
   {
    "id": "VN0010138",
    "name": "PGD Cẩm Phả",
    "premium": 130432000,
    "policies": 21,
-   "rank": 15
+   "rank": 16
   },
   {
    "id": "VN0010445",
    "name": "TTTC R9.2",
    "premium": 127413000,
    "policies": 17,
-   "rank": 16
-  },
-  {
-   "id": "VN0010279",
-   "name": "CN Móng Cái",
-   "premium": 127352750,
-   "policies": 20,
    "rank": 17
   },
   {
@@ -185,17 +185,17 @@
    "rank": 24
   },
   {
+   "id": "VN0010220",
+   "name": "CN Hòa Bình",
+   "premium": 88433000,
+   "policies": 15,
+   "rank": 25
+  },
+  {
    "id": "VN0010363",
    "name": "PGD Phú Quốc",
    "premium": 87470966,
    "policies": 10,
-   "rank": 25
-  },
-  {
-   "id": "VN0010220",
-   "name": "CN Hòa Bình",
-   "premium": 83829000,
-   "policies": 14,
    "rank": 26
   },
   {
@@ -297,24 +297,24 @@
    "rank": 40
   },
   {
+   "id": "VN0010163",
+   "name": "PGD Nguyễn Thiện Thuật",
+   "premium": 54199000,
+   "policies": 8,
+   "rank": 41
+  },
+  {
    "id": "VN0010252",
    "name": "PGD Linh Đàm",
    "premium": 53406000,
    "policies": 6,
-   "rank": 41
+   "rank": 42
   },
   {
    "id": "VN0010206",
    "name": "CN Bình Định",
    "premium": 52848000,
    "policies": 9,
-   "rank": 42
-  },
-  {
-   "id": "VN0010163",
-   "name": "PGD Nguyễn Thiện Thuật",
-   "premium": 48997000,
-   "policies": 6,
    "rank": 43
   },
   {
@@ -409,24 +409,24 @@
    "rank": 56
   },
   {
+   "id": "VN0010262",
+   "name": "CN Vũng Tàu",
+   "premium": 34379000,
+   "policies": 6,
+   "rank": 57
+  },
+  {
    "id": "VN0010350",
    "name": "CN Đà Lạt",
    "premium": 33046000,
    "policies": 5,
-   "rank": 57
+   "rank": 58
   },
   {
    "id": "VN0010201",
    "name": "PGD Hàng Xanh",
    "premium": 32473000,
    "policies": 1,
-   "rank": 58
-  },
-  {
-   "id": "VN0010262",
-   "name": "CN Vũng Tàu",
-   "premium": 30497000,
-   "policies": 5,
    "rank": 59
   },
   {
@@ -931,8 +931,8 @@
   {
    "id": "VN0010479",
    "name": "TTKD OTO MIEN NAM",
-   "premium": 534086392,
-   "policies": 77,
+   "premium": 537887392,
+   "policies": 78,
    "rank": 2
   }
  ]
