@@ -1,13 +1,13 @@
 {
  "report_date": "2026-10-31",
- "report_time": "12:00",
+ "report_time": "08:15",
  "model": "diem-ban",
- "generated_at": "2026-11-10 16:46",
- "source": "BC_12h00_10112026 VPBank.xlsx",
+ "generated_at": "2026-11-11 09:24",
+ "source": "Báo cáo 8h15 ngày 11112026 VPBank.xlsx",
  "closed": true,
- "source_date": "2026-11-10",
+ "source_date": "2026-11-11",
  "total_policies": 1197,
- "total_premium": 8414478207,
+ "total_premium": 8420206873,
  "today_policies": 14,
  "today_premium": 99678900,
  "active_units": 129,
@@ -33,7 +33,7 @@
   {
    "id": "VN0010155",
    "name": "CN Đồng Nai",
-   "premium": 303426900,
+   "premium": 303664590,
    "policies": 42,
    "rank": 3
   },
@@ -110,7 +110,7 @@
   {
    "id": "VN0010279",
    "name": "CN Móng Cái",
-   "premium": 138959750,
+   "premium": 139476750,
    "policies": 21,
    "rank": 14
   },
@@ -234,17 +234,17 @@
    "rank": 31
   },
   {
+   "id": "VN0010435",
+   "name": "CN Sở Giao Dịch 2",
+   "premium": 70795387,
+   "policies": 6,
+   "rank": 32
+  },
+  {
    "id": "VN0010131",
    "name": "CN Vĩnh Phúc",
    "premium": 70207000,
    "policies": 9,
-   "rank": 32
-  },
-  {
-   "id": "VN0010435",
-   "name": "CN Sở Giao Dịch 2",
-   "premium": 68046087,
-   "policies": 6,
    "rank": 33
   },
   {
@@ -334,22 +334,22 @@
   {
    "id": "VN0010157",
    "name": "CN Long An",
-   "premium": 46710000,
+   "premium": 46834963,
    "policies": 6,
    "rank": 46
+  },
+  {
+   "id": "VN0010147",
+   "name": "CN Nha Trang",
+   "premium": 45416000,
+   "policies": 6,
+   "rank": 47
   },
   {
    "id": "VN0010400",
    "name": "CN Ninh Thuận",
    "premium": 45412000,
    "policies": 7,
-   "rank": 47
-  },
-  {
-   "id": "VN0010147",
-   "name": "CN Nha Trang",
-   "premium": 45303000,
-   "policies": 6,
    "rank": 48
   },
   {
@@ -924,14 +924,14 @@
   {
    "id": "VN0010478",
    "name": "TTKD OTO MIEN BAC",
-   "premium": 851923940,
+   "premium": 853885003,
    "policies": 117,
    "rank": 1
   },
   {
    "id": "VN0010479",
    "name": "TTKD OTO MIEN NAM",
-   "premium": 537887392,
+   "premium": 537913042,
    "policies": 78,
    "rank": 2
   }
