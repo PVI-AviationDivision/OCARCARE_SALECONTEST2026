@@ -1,13 +1,13 @@
 {
  "report_date": "2026-10-31",
- "report_time": "08:15",
+ "report_time": "09:00",
  "model": "diem-ban",
- "generated_at": "2026-11-11 09:25",
- "source": "Báo cáo 8h15 ngày 11112026 VPBank.xlsx",
+ "generated_at": "2026-11-12 10:42",
+ "source": "Báo cáo 9h ngày 12112026 VPBank.xlsx",
  "closed": true,
- "source_date": "2026-11-11",
+ "source_date": "2026-11-12",
  "total_policies": 1197,
- "total_premium": 8420206873,
+ "total_premium": 8409705873,
  "today_policies": 14,
  "today_premium": 99678900,
  "active_units": 129,
@@ -297,24 +297,24 @@
    "rank": 40
   },
   {
-   "id": "VN0010163",
-   "name": "PGD Nguyễn Thiện Thuật",
-   "premium": 54199000,
-   "policies": 8,
-   "rank": 41
-  },
-  {
    "id": "VN0010252",
    "name": "PGD Linh Đàm",
    "premium": 53406000,
    "policies": 6,
-   "rank": 42
+   "rank": 41
   },
   {
    "id": "VN0010206",
    "name": "CN Bình Định",
    "premium": 52848000,
    "policies": 9,
+   "rank": 42
+  },
+  {
+   "id": "VN0010163",
+   "name": "PGD Nguyễn Thiện Thuật",
+   "premium": 51598000,
+   "policies": 8,
    "rank": 43
   },
   {
@@ -521,255 +521,255 @@
    "rank": 72
   },
   {
-   "id": "VN0010156",
-   "name": "CN An Giang",
-   "premium": 15607000,
-   "policies": 2,
-   "rank": 73
-  },
-  {
    "id": "VN0010454",
    "name": "PGD Long Khánh",
    "premium": 15602000,
    "policies": 2,
-   "rank": 74
+   "rank": 73
   },
   {
    "id": "VN0010188",
    "name": "PGD Tây Sài Gòn",
    "premium": 15408000,
    "policies": 2,
-   "rank": 75
+   "rank": 74
   },
   {
    "id": "VN0010415",
    "name": "PGD Đức Trọng",
    "premium": 15283000,
    "policies": 3,
-   "rank": 76
+   "rank": 75
   },
   {
    "id": "VN0010122",
    "name": "PGD Chợ Lớn",
    "premium": 15068000,
    "policies": 2,
-   "rank": 77
+   "rank": 76
   },
   {
    "id": "VN0010107",
    "name": "CN Cần Thơ",
    "premium": 15044000,
    "policies": 2,
-   "rank": 78
+   "rank": 77
   },
   {
    "id": "VN0010168",
    "name": "PGD Khâm Thiên",
    "premium": 14864000,
    "policies": 2,
-   "rank": 79
+   "rank": 78
   },
   {
    "id": "VN0010144",
    "name": "PGD Hòa Hưng",
    "premium": 14414000,
    "policies": 1,
-   "rank": 80
+   "rank": 79
   },
   {
    "id": "VN0010234",
    "name": "PGD Diễn Châu",
    "premium": 14275000,
    "policies": 2,
-   "rank": 81
+   "rank": 80
   },
   {
    "id": "VN0010302",
    "name": "PGD Phương Mai",
    "premium": 14226000,
    "policies": 1,
-   "rank": 82
+   "rank": 81
   },
   {
    "id": "VN0010355",
    "name": "CN Quận 11",
    "premium": 14079000,
    "policies": 2,
-   "rank": 83
+   "rank": 82
   },
   {
    "id": "VN0010364",
    "name": "CN Tây Ninh",
    "premium": 13838000,
    "policies": 2,
-   "rank": 84
+   "rank": 83
   },
   {
    "id": "VN0010270",
    "name": "PGD Ba Đình",
    "premium": 13635150,
    "policies": 2,
-   "rank": 85
+   "rank": 84
   },
   {
    "id": "VN0010105",
    "name": "CN Huế",
    "premium": 13554000,
    "policies": 2,
-   "rank": 86
+   "rank": 85
   },
   {
    "id": "HS1208001",
    "name": "HH - CA MAU",
    "premium": 13297000,
    "policies": 1,
-   "rank": 87
+   "rank": 86
   },
   {
    "id": "VN0010149",
    "name": "PGD Lạch Tray",
    "premium": 13162000,
    "policies": 2,
-   "rank": 88
+   "rank": 87
   },
   {
    "id": "VN0010361",
    "name": "CN Hưng Yên",
    "premium": 12710000,
    "policies": 2,
-   "rank": 89
+   "rank": 88
   },
   {
    "id": "VN0010292",
    "name": "PGD Thành Sen",
    "premium": 12386000,
    "policies": 1,
-   "rank": 90
+   "rank": 89
   },
   {
    "id": "VN0010228",
    "name": "CN Vĩnh Long",
    "premium": 12243000,
    "policies": 2,
-   "rank": 91
+   "rank": 90
   },
   {
    "id": "VN0010211",
    "name": "PGD Phước Hải",
    "premium": 12173070,
    "policies": 1,
-   "rank": 92
+   "rank": 91
   },
   {
    "id": "VN0010223",
    "name": "CN Hà Tĩnh",
    "premium": 12075000,
    "policies": 2,
-   "rank": 93
+   "rank": 92
   },
   {
    "id": "VN0010239",
    "name": "PGD Núi Thành",
    "premium": 11395000,
    "policies": 1,
-   "rank": 94
+   "rank": 93
   },
   {
    "id": "HH1005002",
    "name": "HH - PHU HOI 1",
    "premium": 10702000,
    "policies": 1,
-   "rank": 95
+   "rank": 94
   },
   {
    "id": "VN0010285",
    "name": "PGD Bến Thủy",
    "premium": 9816000,
    "policies": 1,
-   "rank": 96
+   "rank": 95
   },
   {
    "id": "VN0010231",
    "name": "PGD Đông Anh",
    "premium": 9815000,
    "policies": 2,
-   "rank": 97
+   "rank": 96
   },
   {
    "id": "VN0010413",
    "name": "PGD Sóc Sơn",
    "premium": 9617000,
    "policies": 2,
-   "rank": 98
+   "rank": 97
   },
   {
    "id": "VN0010322",
    "name": "PGD Long Thành",
    "premium": 9185000,
    "policies": 1,
-   "rank": 99
+   "rank": 98
   },
   {
    "id": "VN0010367",
    "name": "PGD Dĩ An",
    "premium": 9055000,
    "policies": 1,
-   "rank": 100
+   "rank": 99
   },
   {
    "id": "VN0010438",
    "name": "PGD Ứng Hòa",
    "premium": 8780400,
    "policies": 1,
-   "rank": 101
+   "rank": 100
   },
   {
    "id": "VN0010303",
    "name": "PGD Trần Thái Tông",
    "premium": 8696000,
    "policies": 1,
-   "rank": 102
+   "rank": 101
   },
   {
    "id": "VN0010247",
    "name": "PGD An Sương",
    "premium": 8661000,
    "policies": 1,
-   "rank": 103
+   "rank": 102
   },
   {
    "id": "VN0010283",
    "name": "PGD Ninh Kiều",
    "premium": 8648000,
    "policies": 1,
-   "rank": 104
+   "rank": 103
   },
   {
    "id": "VN0010341",
    "name": "CN Trần Não",
    "premium": 8379000,
    "policies": 1,
-   "rank": 105
+   "rank": 104
   },
   {
    "id": "VN0010280",
    "name": "PGD Đội Cung",
    "premium": 8213000,
    "policies": 1,
-   "rank": 106
+   "rank": 105
   },
   {
    "id": "VN0010353",
    "name": "CN Tiền Giang",
    "premium": 8098000,
    "policies": 1,
-   "rank": 107
+   "rank": 106
   },
   {
    "id": "HH0602001",
    "name": "HH - CAN THO 1",
    "premium": 7936000,
    "policies": 1,
+   "rank": 107
+  },
+  {
+   "id": "VN0010156",
+   "name": "CN An Giang",
+   "premium": 7707000,
+   "policies": 2,
    "rank": 108
   },
   {
