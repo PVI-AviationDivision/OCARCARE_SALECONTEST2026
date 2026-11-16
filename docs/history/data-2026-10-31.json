@@ -1,13 +1,13 @@
 {
  "report_date": "2026-10-31",
- "report_time": "08:10",
+ "report_time": "08:20",
  "model": "diem-ban",
- "generated_at": "2026-11-13 15:56",
- "source": "Báo cáo 8h10 ngày 13112026 VpBank.xlsx",
+ "generated_at": "2026-11-16 08:28",
+ "source": "Báo cáo 8h20 ngày 16112026 VPBank.xlsx",
  "closed": true,
- "source_date": "2026-11-13",
- "total_policies": 1197,
- "total_premium": 8409705873,
+ "source_date": "2026-11-16",
+ "total_policies": 1198,
+ "total_premium": 8413402873,
  "today_policies": 14,
  "today_premium": 99678900,
  "active_units": 129,
@@ -129,17 +129,17 @@
    "rank": 16
   },
   {
+   "id": "VN0010360",
+   "name": "CN Lạng Sơn",
+   "premium": 129311000,
+   "policies": 24,
+   "rank": 17
+  },
+  {
    "id": "VN0010445",
    "name": "TTTC R9.2",
    "premium": 127413000,
    "policies": 17,
-   "rank": 17
-  },
-  {
-   "id": "VN0010360",
-   "name": "CN Lạng Sơn",
-   "premium": 125614000,
-   "policies": 23,
    "rank": 18
   },
   {
