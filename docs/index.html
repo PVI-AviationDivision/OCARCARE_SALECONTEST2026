@@ -430,7 +430,7 @@ window.ocTrack = function(path, title){
 };
 </script>
 <script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="data.js?v=20261118085547"></script>
+<script src="data.js?v=20261118090748"></script>
 <script>
 (function(){
 "use strict";
@@ -980,6 +980,15 @@ body.fin header.hero,body.fin .ticker{display:none}
 #finale .go .wall span{animation:fpop .4s ease forwards}
 @keyframes fpop{to{opacity:1;transform:none}}
 #finale .wall span b{color:var(--gold)}
+#finale .ebg{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px}
+#finale .eb{background:#ffffff08;border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+#finale .eb .h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+#finale .eb .n{font-weight:700;font-size:14.5px}
+#finale .eb .s{font-size:12px;color:var(--ink3);margin:2px 0 8px}
+#finale .eb .m{color:var(--gold);font-weight:800;font-size:15px;white-space:nowrap}
+#finale .eb .pp{display:flex;flex-wrap:wrap;gap:4px}
+#finale .eb .pp span{font-size:11.5px;padding:3px 8px;border-radius:999px;background:#ffffff0d;border:1px solid var(--line)}
+#finale .eb .pp b{color:var(--gold)}
 #finale .recs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 #finale .rec{background:#ffffff0a;border:1px solid var(--line);border-radius:18px;padding:16px;position:relative;overflow:hidden}
 #finale .rec .ic{font-size:26px}#finale .rec .t{font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--orange2);font-weight:800;margin-top:6px}
@@ -1084,6 +1093,10 @@ function journey(){
   return `<svg viewBox="0 0 ${W} ${Hh}" style="--len:2000">${g}</svg>`;
 }
 
+/* ---------- 600 HĐBH đầu tiên theo chi nhánh / PGD ---------- */
+const EBP=IP.filter(p=>p.bonus>0), EBM={};
+EBP.forEach(p=>{const k=p.k==='HUB'?hubName(p.u):(p.u||'Chưa xác định'); const g=EBM[k]=EBM[k]||{n:k,v:p.v,b:0,c:0,h:0,ppl:[]}; g.b+=p.bonus; g.c++; g.h+=(p.early||[]).reduce((s,x)=>s+x,0); g.ppl.push(p);});
+const EL=Object.values(EBM).sort((a,b)=>b.b-a.b||b.c-a.c);
 /* ---------- dựng trang ---------- */
 const hm=F.hub_manager;
 const st=(v,l,c)=>`<div class="f-stat"><div class="v" data-to="${v}" data-f="${c||'n'}">0</div><div class="l">${l}</div></div>`;
@@ -1114,9 +1127,10 @@ $('#finale').innerHTML=`
       ${q?`<button class="cert" data-cert="${certs.length-1}" style="font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;border:1px solid #ffffff33;background:#ffffff10;color:#fff;cursor:pointer">🎖 Giấy chứng nhận</button>`:''}</div>`;}).join('')}</div>
   <div class="f-card" style="margin-top:12px"><b>Trưởng phòng Hub</b> · Top 4, điều kiện ≥ ${money(C.hub.manager.threshold)}<div class="f-note" style="margin-top:6px">${hm&&hm.length?hm.slice(0,4).map((m,i)=>`${i+1}. <b style="color:#fff">${esc(m.name)}</b> (${esc(m.hub||'')}) · ${money(m.premium)} · ${tr(C.hub.manager.prizes[i])}`).join('<br>'):(hm&&F.hub_teams_top&&F.hub_teams_top.length?`Không có team đạt ngưỡng ${money(C.hub.manager.threshold)}. Cao nhất: <b style="color:#fff">${esc(F.hub_teams_top[0].name)}</b> (${esc(F.hub_teams_top[0].hub)}) · ${money(F.hub_teams_top[0].premium)}.`:'Đang chờ OPES cung cấp số liệu phân tách theo phòng/nhóm của Hub. Kết quả sẽ được cập nhật tại đây.')}</div></div></section>
 
-<section class="f-sec"><div class="f-h"><div class="n">05</div><div><div class="t">600 HĐBH đầu tiên</div><div class="s">Cảm ơn ${IP.filter(p=>p.bonus>0).length} cán bộ đã góp mặt trong 600 hợp đồng đầu tiên · tổng thưởng ${money(early)}</div></div></div>
-  <div class="f-card"><div class="wall" id="fWall">${IP.filter(p=>p.bonus>0).sort((a,b)=>b.bonus-a.bonus).map((p,i)=>`<span${i>=40?' class="xw" hidden':''} style="animation-delay:${Math.min(i,40)*25}ms">${esc(p.nm||('DAO '+p.id))} · <b>${money(p.bonus)}</b></span>`).join('')}</div>
-    ${IP.filter(p=>p.bonus>0).length>40?`<button class="cert" id="fWallMore" style="margin-top:12px">Xem tất cả ${IP.filter(p=>p.bonus>0).length} cán bộ</button>`:''}</div></section>
+<section class="f-sec"><div class="f-h"><div class="n">05</div><div><div class="t">600 HĐBH đầu tiên</div><div class="s">${EBP.length} cán bộ tại ${EL.length} chi nhánh / phòng giao dịch góp mặt trong 600 hợp đồng đầu tiên · tổng thưởng ${money(early)}</div></div></div>
+  <div class="ebg" id="fWall">${EL.map((g,i)=>`<div class="eb${i>=12?' xw':''}"${i>=12?' hidden':''}><div class="h"><div><div class="n">${i+1}. ${esc(g.n)}</div><div class="s">${esc(g.v||'')} · ${g.c} cán bộ · ${g.h} HĐBH</div></div><div class="m">${money(g.b)}</div></div>
+    <div class="pp">${g.ppl.sort((a,b)=>b.bonus-a.bonus).map(p=>`<span>${esc(p.nm||('DAO '+p.id))} · <b>${money(p.bonus)}</b></span>`).join('')}</div></div>`).join('')}</div>
+  ${EL.length>12?`<button class="cert" id="fWallMore" style="margin-top:12px">Xem tất cả ${EL.length} chi nhánh / phòng giao dịch</button>`:''}</section>
 
 <section class="f-sec"><div class="f-h"><div class="n">06</div><div><div class="t">Kỷ lục & danh hiệu</div><div class="s">Những con số ấn tượng của chặng đua</div></div></div>
   <div class="recs">${recs.map(r=>`<div class="rec"><div class="ic">${r[0]}</div><div class="t">${r[1]}</div><div class="v">${r[2]}</div><div class="d">${r[3]}</div></div>`).join('')}</div></section>
@@ -1181,7 +1195,7 @@ async function cert(o){
   if(window.ocTrack) window.ocTrack('chung-nhan','Tải chứng nhận');
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-cert]'); if(b) cert(certs[+b.dataset.cert]);});
-const wm=document.getElementById('fWallMore'); if(wm) wm.onclick=()=>{document.querySelectorAll('#fWall .xw').forEach(x=>{x.hidden=false;x.style.animationDelay='0ms';}); wm.remove();};
+const wm=document.getElementById('fWallMore'); if(wm) wm.onclick=()=>{document.querySelectorAll('#fWall .xw').forEach(x=>{x.hidden=false;}); wm.remove();};
 })();
 </script>
 <!-- ================= HẾT TRANG TỔNG KẾT ================= -->
