@@ -430,7 +430,7 @@ window.ocTrack = function(path, title){
 };
 </script>
 <script data-goatcounter="https://tung.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<script src="data.js?v=20261116082838"></script>
+<script src="data.js?v=20261118085547"></script>
 <script>
 (function(){
 "use strict";
@@ -472,7 +472,7 @@ if(CLOSED){
   const lv=document.querySelector('.hero .live'); if(lv){ lv.style.animation='none'; lv.style.background='var(--gold)'; }
   const pl=$('#upd').closest('.pill'); if(pl) pl.firstChild.nextSibling.textContent=' Số liệu ';
   const cdEl=$('#cd'); const nb=document.createElement('div'); nb.className='closed-note';
-  nb.innerHTML=`🏁 <b>Chương trình đã về đích ngày 31/10/2026.</b> Bảng xếp hạng dưới đây là số liệu chốt (HĐBH cấp đến hết 31/10, theo báo cáo BH PVI ngày ${dmy(M.source_date||M.report_date)}). HĐBH huỷ / giảm phí đến hết ${dmy(C.final&&C.final.lock_date||'2026-11-15')} sẽ được trừ. Kết quả chính thức công bố sau khi đối soát 3 bên OPES – VPBank – BH PVI.`;
+  nb.innerHTML=M.official?`🏆 <b>Kết quả chính thức.</b> Bảng xếp hạng dưới đây là kết quả đã được OPES và BH PVI đối soát thống nhất (HĐBH cấp 21/09 – 31/10/2026, đã trừ HĐBH huỷ / giảm phí đến hết ${dmy(C.final&&C.final.lock_date||'2026-11-15')}).`:`🏁 <b>Chương trình đã về đích ngày 31/10/2026.</b> Bảng xếp hạng dưới đây là số liệu chốt (HĐBH cấp đến hết 31/10, theo báo cáo BH PVI ngày ${dmy(M.source_date||M.report_date)}). HĐBH huỷ / giảm phí đến hết ${dmy(C.final&&C.final.lock_date||'2026-11-15')} sẽ được trừ. Kết quả chính thức công bố sau khi đối soát 3 bên OPES – VPBank – BH PVI.`;
   cdEl.parentNode.insertBefore(nb, cdEl.nextSibling);
 }
 const start = new Date(C.program.start+'T00:00:00+07:00'), end = new Date(C.program.end+'T23:59:59+07:00');
@@ -1007,7 +1007,9 @@ body.fin header.hero,body.fin .ticker{display:none}
 const D=window.RACE_DATA; if(!D) return;
 const C=D.config, F=C.final||{}, M=D.meta;
 const preview=/[?&]tongket=1\b/.test(location.search);
-if(!(F.enabled||preview)) return;
+// trang tổng kết tự mở từ 00:00 ngày công bố (giờ Việt Nam)
+const live=F.enabled&&(!F.return_date||Date.now()>=new Date(F.return_date+'T00:00:00+07:00').getTime());
+if(!(live||preview)) return;
 document.body.classList.add('fin');
 const FIN=document.getElementById('finale'); const HERO=document.querySelector('header.hero'); if(HERO) HERO.parentNode.insertBefore(FIN,HERO);
 const $=s=>document.querySelector(s);
@@ -1110,7 +1112,7 @@ $('#finale').innerHTML=`
     return `<div class="f-card hubc"><div class="nm">${hubName(h.name)}</div><div class="vv">${money(h.premium)}</div><div class="s" style="color:var(--ink2);font-size:13px">${h.policies} HĐBH · ${q?`<b style="color:var(--green)">✔ Đạt điều kiện · ${tr(C.hub.prizes[hubQ.indexOf(h)]+hubBonus(h))}</b>`:`Chưa đạt ngưỡng ${money(C.hub.threshold)}`}</div>
       <div class="bar"><b data-w="${h.premium/mx*100}"></b>${C.hub.milestones.map(m=>`<i style="left:${m.value/mx*100}%"><span>${money(m.value)}</span></i>`).join('')}</div>
       ${q?`<button class="cert" data-cert="${certs.length-1}" style="font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;border:1px solid #ffffff33;background:#ffffff10;color:#fff;cursor:pointer">🎖 Giấy chứng nhận</button>`:''}</div>`;}).join('')}</div>
-  <div class="f-card" style="margin-top:12px"><b>Trưởng phòng Hub</b> · Top 4, điều kiện ≥ ${money(C.hub.manager.threshold)}<div class="f-note" style="margin-top:6px">${hm&&hm.length?hm.slice(0,4).map((m,i)=>`${i+1}. <b style="color:#fff">${esc(m.name)}</b> (${esc(m.hub||'')}) · ${money(m.premium)} · ${tr(C.hub.manager.prizes[i])}`).join('<br>'):'Đang chờ OPES cung cấp số liệu phân tách theo phòng/nhóm của Hub. Kết quả sẽ được cập nhật tại đây.'}</div></div></section>
+  <div class="f-card" style="margin-top:12px"><b>Trưởng phòng Hub</b> · Top 4, điều kiện ≥ ${money(C.hub.manager.threshold)}<div class="f-note" style="margin-top:6px">${hm&&hm.length?hm.slice(0,4).map((m,i)=>`${i+1}. <b style="color:#fff">${esc(m.name)}</b> (${esc(m.hub||'')}) · ${money(m.premium)} · ${tr(C.hub.manager.prizes[i])}`).join('<br>'):(hm&&F.hub_teams_top&&F.hub_teams_top.length?`Không có team đạt ngưỡng ${money(C.hub.manager.threshold)}. Cao nhất: <b style="color:#fff">${esc(F.hub_teams_top[0].name)}</b> (${esc(F.hub_teams_top[0].hub)}) · ${money(F.hub_teams_top[0].premium)}.`:'Đang chờ OPES cung cấp số liệu phân tách theo phòng/nhóm của Hub. Kết quả sẽ được cập nhật tại đây.')}</div></div></section>
 
 <section class="f-sec"><div class="f-h"><div class="n">05</div><div><div class="t">600 HĐBH đầu tiên</div><div class="s">Cảm ơn ${IP.filter(p=>p.bonus>0).length} cán bộ đã góp mặt trong 600 hợp đồng đầu tiên · tổng thưởng ${money(early)}</div></div></div>
   <div class="f-card"><div class="wall" id="fWall">${IP.filter(p=>p.bonus>0).sort((a,b)=>b.bonus-a.bonus).map((p,i)=>`<span${i>=40?' class="xw" hidden':''} style="animation-delay:${Math.min(i,40)*25}ms">${esc(p.nm||('DAO '+p.id))} · <b>${money(p.bonus)}</b></span>`).join('')}</div>
@@ -1233,7 +1235,8 @@ body.inter #inter{display:flex}
 const D=window.RACE_DATA; if(!D) return;
 const C=D.config, F=C.final||{}, M=D.meta;
 const q=location.search;
-if(!M.closed || F.enabled || /[?&](tongket|xem)=1\b/.test(q)) return;
+const live_=F.enabled&&(!F.return_date||Date.now()>=new Date(F.return_date+'T00:00:00+07:00').getTime());
+if(!M.closed || live_ || /[?&](tongket|xem)=1\b/.test(q)) return;
 const rd=F.return_date||'2026-11-18', ld=F.lock_date||'2026-11-15';
 const lk=new Date()>new Date(ld+'T23:59:59+07:00'); const ldm=ld.slice(8,10)+'/'+ld.slice(5,7);
 const [y,m,d]=rd.split('-'); const back=new Date(rd+'T08:00:00+07:00');
